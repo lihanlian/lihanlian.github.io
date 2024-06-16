@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Academic Pages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "Hi, I'm Lihan Lian (廉立涵)."
 author_profile: true
 redirect_from: 
   - /about/
@@ -8,7 +8,7 @@ redirect_from:
 ---
 ## About me
 
-I am a Master student at the [University of Michigan, Ann Arbor](https://www.umich.edu/), supervised by [Prof. Uduak Inyang-Udoh](https://me.engin.umich.edu/people/faculty/uduak-inyang-udoh/). Previously, I obtained my Bachelor's degree in Mechanical Engineering and minor in Computer Science from [University of Michigan, Ann Arbor](https://www.umich.edu/), advised by [Prof. Jingwen Hu](https://me.engin.umich.edu/people/faculty/jingwen-hu/).
+I am currently a Master's student studying Robotics at the University of Michigan, Ann Arbor, supervised by [Prof. Uduak Inyang-Udoh](https://me.engin.umich.edu/people/faculty/uduak-inyang-udoh/). Previously, I obtained my Bachelor's degree in Mechanical Engineering with a minor in Computer Science from the University of Michigan, Ann Arbor, where I was advised by [Prof. Jingwen Hu](https://me.engin.umich.edu/people/faculty/jingwen-hu/). During my undergraduate studies, I focused on parametric human modeling, with a particular emphasis on [thoracic spine modeling](https://saemobilus.sae.org/articles/a-parametric-thoracic-spine-model-accounting-geometric-variations-age-sex-stature-body-mass-index-09-11-02-0012).
 
 My research interests lie in robotics, optimal control, and reinforcement learning. 
 
