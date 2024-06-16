@@ -15,11 +15,11 @@ My research interests lie in robotics, optimal control, and reinforcement learni
 
 ## Education
 
-- **University of Michigan - Ann Arbor**<br>
+- **University of Michigan - Ann Arbor** December, 2024 (Expected)<br>
   *M.S. - Major: Robotics*  
   Courses: MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, [AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), [MECHENG 599 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), MECHENG 599 **Applied Optimal Control**, NAVARCH 599 **Computational Symmetry in AI & Robotics**
 
-- **University of Michigan - Ann Arbor**<br>
+- **University of Michigan - Ann Arbor** (April, 2023)<br>
   *B.S. - Major: Mechanical Engineering, Minor: Computer Science*  
   Courses: MECHENG 461 **Automatic Control**, EECS 445 **Intro to Machine Learning**, EECS 461 **Embedded Control Systems**, EECS 492 **Intro to Artificial Intelligence**
 
