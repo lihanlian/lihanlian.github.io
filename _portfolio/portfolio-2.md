@@ -1,6 +1,6 @@
 ---
 title: "simple-mpc-cbf"
-excerpt: "Simple scripts that are used for solving motion planning & obstacle avoidance problem via MPC and control barrier function.<br/><img src='/project-simple-mpc-cbf.gif'>"
+excerpt: "Simple scripts that are used for solving motion planning & obstacle avoidance problem via MPC and control barrier function.<br/><img src='/images/project-simple-mpc-cbf.gif'>"
 collection: portfolio
 redirect_to: "https://github.com/lihanlian/simple-mpc-cbf"
 ---
