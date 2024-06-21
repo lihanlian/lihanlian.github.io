@@ -10,17 +10,19 @@ redirect_from:
 
 I am currently a Master's student studying Robotics at the University of Michigan, Ann Arbor, supervised by [Prof. Uduak Inyang-Udoh](https://me.engin.umich.edu/people/faculty/uduak-inyang-udoh/). My projects are mainly related to using data-driven methods for solving optimal control problem. Previously, I obtained my Bachelor's degree in Mechanical Engineering with a minor in Computer Science from the University of Michigan, Ann Arbor, where I was advised by [Prof. Jingwen Hu](https://me.engin.umich.edu/people/faculty/jingwen-hu/). During my undergraduate studies, I focused on parametric human modeling, with a particular emphasis on [thoracic spine modeling](https://saemobilus.sae.org/articles/a-parametric-thoracic-spine-model-accounting-geometric-variations-age-sex-stature-body-mass-index-09-11-02-0012).
 
+I'm interested in robtics, optimal control, physics informed deep learning, reinforcement learing.
+
 <!-- My research interests lie in robotics, optimal control, and reinforcement learning.  -->
 
 ## Education
 
 - **University of Michigan - Ann Arbor**<br>
   *M.S. - Robotics (December, 2024 Expected)*  
-  Courses: MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, [AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), [MECHENG 599 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), MECHENG 599 **Applied Optimal Control**, NAVARCH 599 **Computational Symmetry in AI & Robotics**
+  Key Courses: MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, [AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), [MECHENG 599 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), MECHENG 599 **Applied Optimal Control**, NAVARCH 599 **Computational Symmetry in AI & Robotics**
 
 - **University of Michigan - Ann Arbor**<br>
   *B.S.E. - Mechanical Engineering, Minor - Computer Science (April, 2023)*  
-  Courses: MECHENG 461 **Automatic Control**, EECS 445 **Intro to Machine Learning**, EECS 461 **Embedded Control Systems**, EECS 492 **Intro to Artificial Intelligence**
+  Key Courses: MECHENG 461 **Automatic Control**, EECS 445 **Intro to Machine Learning**, EECS 461 **Embedded Control Systems**, EECS 492 **Intro to Artificial Intelligence**
 
 <!-- This is the front page of a website that is powered by the [Academic Pages template](https://github.com/academicpages/academicpages.github.io) and hosted on GitHub pages. [GitHub pages](https://pages.github.com) is a free service in which websites are built and hosted from code and data stored in a GitHub repository, automatically updating when a new commit is made to the respository. This template was forked from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/) created by Michael Rose, and then extended to support the kinds of content that academics have: publications, talks, teaching, a portfolio, blog posts, and a dynamically-generated CV. You can fork [this repository](https://github.com/academicpages/academicpages.github.io) right now, modify the configuration and markdown files, add your own PDFs and other content, and have your own site for free, with no ads! An older version of this template powers my own personal website at [stuartgeiger.com](http://stuartgeiger.com), which uses [this Github repository](https://github.com/staeiou/staeiou.github.io).
 
