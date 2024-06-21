@@ -17,7 +17,7 @@ I'm interested in robtics, optimal control, physics informed deep learning, rein
 ## Education
 
 - **University of Michigan - Ann Arbor**<br>
-  *M.S. - Robotics (December, 2024 Expected)*  
+  *M.S. - Robotics (Expected December, 2024)*  
   Key Courses: MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, [AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), [MECHENG 599 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), MECHENG 599 **Applied Optimal Control**, NAVARCH 599 **Computational Symmetry in AI & Robotics**
 
 - **University of Michigan - Ann Arbor**<br>
