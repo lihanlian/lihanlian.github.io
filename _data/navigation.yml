@@ -12,7 +12,7 @@ main:
     url: /portfolio/
         
   - title: "Blog Posts"
-    url: /year-archive/
+    url: /blog-post/
 
   - title: "Resources"
     url: /resources/ 
