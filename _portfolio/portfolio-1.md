@@ -1,8 +1,8 @@
 ---
-title: "basic&fast-neural-style-transfer [Code]"
+title: "basic-and-fast-neural-style-transfer [Code]"
 excerpt: "Implementation of basic neural style transfer and a simplified version of fast neural style transfer. [[Blog Post]](/files/report-trajectory-tracking-ilc.pdf)<br/><img src='/images/project-trajectory-tracking-ilc.png'>"
 collection: portfolio
-redirect_to: "https://github.com/lihanlian/trajectory-tracking-ilc"
+redirect_to: "https://github.com/lihanlian/basic-and-fast-neural-style-transfer"
 ---
 <!-- **Code:** [GitHub Repository](https://github.com/lihanlian/trajectory-tracking-ilc)
 
