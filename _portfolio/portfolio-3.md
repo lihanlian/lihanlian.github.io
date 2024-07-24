@@ -1,6 +1,6 @@
 ---
-title: "basic&fast-neural-style-transfer [Code]"
-excerpt: "Implementation of basic neural style transfer and a simplified version of fast neural style transfer. [[Blog Post]](/files/report-trajectory-tracking-ilc.pdf)<br/><img src='/images/project-trajectory-tracking-ilc.png'>"
+title: "trajectory-tracking-ilc [Code]"
+excerpt: "Use iterative learning control (ILC) for trajectory tracking task with the existence of model mismatch. MPC is also used for comparison. [[Report]](/files/report-trajectory-tracking-ilc.pdf)<br/><img src='/images/project-trajectory-tracking-ilc.png'>"
 collection: portfolio
 redirect_to: "https://github.com/lihanlian/trajectory-tracking-ilc"
 ---
