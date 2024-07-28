@@ -12,7 +12,25 @@ I am currently a Master's student studying Robotics at the University of Michiga
 
 I'm interested in robotics (e.g., legged robot, manipulation, autonomous driving), optimal control, physics informed deep learning and reinforcement learning.
 
-<!-- My research interests lie in robotics, optimal control, and reinforcement learning.  -->
+
+## News
+
+<div class="news-section">
+  <ul class="news-list">
+    <li>
+      <div class="news-date">May 29, 2024</div>
+      <div class="news-content">This is a TESTESTTESTEST  This is a TESTESTTESTEST This is a TESTESTTESTEST</div>
+    </li>
+    <li>
+      <div class="news-date">May 22, 2024</div>
+      <div class="news-content">This is a TESTESTTESTEST <a href="#">This is a TESTESTTESTEST</a> This is a TESTESTTESTESTThis is a TESTESTTESTEST This is a TESTESTTESTEST</div>
+    </li>
+    <li>
+      <div class="news-date">May 23, 2023</div>
+      <div class="news-content">I am honored to have given an oral presentation at the <a href="https://ibrc.osu.edu/past-symposiums/">18th Injury Biomechanics Symposium </a> on our work concerning parametric thoracic spine modeling.</div> 
+    </li>
+  </ul>
+</div>
 
 ## Education
 
