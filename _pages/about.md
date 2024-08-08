@@ -18,10 +18,6 @@ I'm interested in robotics (e.g., legged robot, manipulation, autonomous driving
 <div class="news-section">
   <ul class="news-list">
     <li>
-      <div class="news-date">May 29, 2024</div>
-      <div class="news-content">This is a TESTESTTESTEST  This is a TESTESTTESTEST This is a TESTESTTESTEST</div>
-    </li>
-    <li>
       <div class="news-date">May 22, 2024</div>
       <div class="news-content">This is a TESTESTTESTEST <a href="#">This is a TESTESTTESTEST</a> This is a TESTESTTESTESTThis is a TESTESTTESTEST This is a TESTESTTESTEST</div>
     </li>

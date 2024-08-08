@@ -374,9 +374,9 @@
 
 
 /*
-   Related
+   News
    ========================================================================== */
-   .news-section {
+  .news-section {
     max-height: 200px;
     overflow-y: scroll;
     border: 1px solid #ccc;
@@ -416,3 +416,24 @@
   }
   
 
+/*
+   In-page Quote
+   ========================================================================== */
+  .quote {
+    background-color: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+    text-align: center;
+  }
+
+  .quote p {
+    display: inline-block;
+    margin: 0;
+  }
+
+  .quote footer {
+    text-align: right;
+    margin-top: 10px;
+  }
