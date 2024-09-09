@@ -10,7 +10,9 @@ redirect_from:
 
 I am currently a Master's student studying Robotics at the University of Michigan, Ann Arbor, supervised by [Prof. Uduak Inyang-Udoh](https://me.engin.umich.edu/people/faculty/uduak-inyang-udoh/) at [Autonomous & Intelligent Systems Lab (AI-Sys Lab)](https://aisys.engin.umich.edu/). My projects are mainly related to using data-driven methods for solving optimal control problem. Previously, I obtained my Bachelor's degree in Mechanical Engineering with a minor in Computer Science from the University of Michigan, Ann Arbor, where I was advised by [Prof. Jingwen Hu](https://me.engin.umich.edu/people/faculty/jingwen-hu/) at the [University of Michigan Transportation Research Institute (UMTRI)](https://www.umtri.umich.edu/). During my undergraduate studies, I focused on parametric human modeling, with a particular emphasis on [thoracic spine modeling](https://saemobilus.sae.org/articles/a-parametric-thoracic-spine-model-accounting-geometric-variations-age-sex-stature-body-mass-index-09-11-02-0012).
 
-I'm interested in robotics (e.g., legged robot, manipulation, autonomous driving), optimal control, physics informed deep learning and reinforcement learning.
+I am passionate about robotics, particularly in areas such as legged robots, robotic manipulation, and autonomous driving. My research interests include, but are not limited to, optimal control, physics-informed deep learning, meta-learning and reinforcement learning.
+
+<!-- I'm interested in robotics (e.g., legged robot, manipulation, autonomous driving), optimal control, physics informed deep learning and reinforcement learning. -->
 
 
 ## News
@@ -32,7 +34,7 @@ I'm interested in robotics (e.g., legged robot, manipulation, autonomous driving
 
 - **University of Michigan - Ann Arbor**<br>
   **_M.S. - Robotics (Expected December, 2024)_**  
-  <span style="color: red;">**Key Courses:** </span><br> MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, <br>[AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), [MECHENG 599-004 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), MECHENG 599-006 **Applied Optimal Control**, <br>IOE 512 **Dynamic Programming**, NAVARCH 583 **Aaptive Control** (Audit)
+  <span style="color: red;">**Key Courses:** </span><br> MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, <br>[AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), [MECHENG 599-004 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), MECHENG 599-006 **Applied Optimal Control**, <br>IOE 512 **Dynamic Programming**, NAVARCH 583 **Adaptive Control** (Audit)
 
 - **University of Michigan - Ann Arbor**<br>
   **_B.S.E. - Mechanical Engineering, Minor - Computer Science (April, 2023)_**  
