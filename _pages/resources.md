@@ -5,11 +5,16 @@ permalink: /resources/
 author_profile: true
 ---
 
-In my journey of exploring and learning topics like robotics, optimization, control, and deep learning, I have encountered numerous invaluable resources. These include insightful YouTube videos and comprehensive blog posts that I have discovered and benefited from. To share these execellent learning materials with others who are on a similar path, I have curated a list of these resources organized by topic as shown below.
+In my journey of exploring and learning topics like robotics, optimization, control, and deep learning, I have encountered numerous invaluable resources. These include insightful YouTube videos and comprehensive blog posts that I have discovered and benefited from. 
+
+To share these execellent learning materials with others who are on a similar path, I have curated a list of these resources organized by topic as shown below.
 
 ## Control
 - [Optimal Control (CMU 16-745) [YouTubue]](https://www.youtube.com/watch?v=6rUdAOCNXAU&list=PLZnJoM76RM6KugDT9sw5zhAmqKnGeoLRa) by Prof. Zac Manchester.
--  [Reinforcement Learning [YouTubue]](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by Prof. Steve Brunton
+- Digital Control
+    - [ELEC 3004 Digital Linear Systems: Signals & Control](https://elec3004.uqcloud.net/2016/lectures.html) (University of Queesland)
+    - [ECE 4540 Digital Control Systems](http://mocha-java.uccs.edu/ECE4540/) (University of Colorado)
+- [Reinforcement Learning [YouTubue]](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by Prof. Steve Brunton
 
 ## Optimization
  - [Intro to Optimization [YouTubue]](https://www.youtube.com/watch?v=BdXrkmbvGHY&list=PLHAS_3-nESXV6XgW53wSkZHazVE7ZkHAV) by Prof. 
