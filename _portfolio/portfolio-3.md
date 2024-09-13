@@ -1,6 +1,6 @@
 ---
 title: "▪ <span style='color: blue;'>trajectory-tracking-ilc </span>"
-excerpt: "Use iterative learning control (ILC) for trajectory tracking task with the existence of model mismatch. MPC is also used for comparison. <br/>[[Code]](https://github.com/lihanlian/trajectory-tracking-ilc) [[Report]](/files/report-trajectory-tracking-ilc.pdf)<br/><img src='/images/project-trajectory-tracking-ilc.png'>"
+excerpt: "Use iterative learning control (ILC) for trajectory tracking task with the existence of model mismatch. MPC is also used for comparison. <br/>[**[Code]**](https://github.com/lihanlian/trajectory-tracking-ilc) [**[Report]**](/files/report-trajectory-tracking-ilc.pdf)<br/><img src='/images/project-trajectory-tracking-ilc.png'>"
 collection: portfolio
 # redirect_to: "https://github.com/lihanlian/trajectory-tracking-ilc"
 ---

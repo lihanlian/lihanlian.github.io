@@ -8,9 +8,9 @@ redirect_from:
 ---
 <p style="color: #333333; font-family: 'Helvetica', sans-serif;">
     I am a robotics enthusiast with a deep admiration for the pioneers of classical control theory, including 
-    <span style="font-style: italic; color: #1E90FF;">Lev Pontryagin</span>, 
-    <span style="font-style: italic; color: #1E90FF;">Richard Bellman</span>, 
-    and <span style="font-style: italic; color: #1E90FF;">Rudolf Kalman</span>.
+    <span style="font-style: italic; color: blue;">Lev Pontryagin</span>, 
+    <span style="font-style: italic; color: blue;">Richard Bellman</span>, 
+    and <span style="font-style: italic; color: blue;">Rudolf Kalman</span>.
 </p>
 ## About me
 
@@ -31,7 +31,7 @@ I am passionate about robotics, particularly in areas such as legged robots, rob
     </li>
     <li>
       <div class="news-date">May 23, 2023</div>
-      <div class="news-content">I am honored to have given an oral presentation at the <a href="https://ibrc.osu.edu/past-symposiums/">18th Injury Biomechanics Symposium </a> on our work concerning parametric thoracic spine modeling.</div> 
+      <div class="news-content">I am honored to have given an oral presentation at the <span style="color:blue">18th Injury Biomechanics Symposium</span> on our work concerning parametric thoracic spine modeling.</div> 
     </li>
   </ul>
 </div>
