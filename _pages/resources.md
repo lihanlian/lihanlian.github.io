@@ -24,8 +24,8 @@ Lewis Mitchell
 
 ## Robotics
  - [AI and Machine Learning for Robots [YouTubue]](https://www.youtube.com/watch?v=Kf_HGHahUPM&list=PLyXDCTF4yPcQ1GozC3vPmrJuN-icTFOW0) by Prof. Wenhua Yu
- - [Mujoco Simulator Tutorial](https://www.youtube.com/watch?v=u6tNfvLXK-I&list=PLc7bpbeTIk75dgBVd07z6_uKN1KQkwFRK) by Prof. Pranav Bhounsule
- 
+ - Mujoco Simulator
+   - [Mujoco Bootcamp [Website]](https://pab47.github.io/mujoco.html) and corresponding tutorials that programming in both <br> [C++ [YouTube]](https://www.youtube.com/watch?v=j1nCeqtfySQ&list=PLc7bpbeTIk758Ad3fkSywdxHWpBh9PM0G&index=6) and [Python [YouTube]](https://www.youtube.com/watch?v=u6tNfvLXK-I&list=PLc7bpbeTIk75dgBVd07z6_uKN1KQkwFRK) by Prof. Pranav Bhounsule.
 
 ## Deep Learning
  - [Physics Informed Machine Learning [YouTubue]](https://www.youtube.com/watch?v=JoFW2uSd3Uo&list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa) by Prof. 
