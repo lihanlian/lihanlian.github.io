@@ -36,7 +36,7 @@ I am passionate about robotics, particularly in areas such as legged robots, rob
 ## Education
 
 - **University of Michigan - Ann Arbor**<br>
-  **_M.S. - Robotics (Expected December, 2024)_**  
+  **_M.S. - Robotics (December, 2024)_**  
   <span style="color: red;">**Key Courses:** </span><br> MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, <br>[AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), [MECHENG 599-004 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), MECHENG 599-006 **Applied Optimal Control**, <br>IOE 512 **Dynamic Programming**, NAVARCH 583 **Adaptive Control** (Audit)
 
 - **University of Michigan - Ann Arbor**<br>
