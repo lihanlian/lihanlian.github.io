@@ -17,7 +17,7 @@ I am passionate about robotics, particularly in areas such as **legged robots**,
 
 <blockquote class="quote">
     <p>To take risks and make mistakes.</p>
-    <footer>&#8211; <a href="https://www.youtube.com/watch?v=myC0TGPPYiA" target="_blank">Michigan Engineering: Pursue Bold Ideas</a></footer>
+    <footer>&#8211; <i class="fab fa-youtube"></i> <a href="https://www.youtube.com/watch?v=myC0TGPPYiA" target="_blank">Michigan Engineering: Pursue Bold Ideas </a> </footer>
 </blockquote>
 
 ## About me
