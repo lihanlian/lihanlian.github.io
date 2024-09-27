@@ -7,6 +7,6 @@ collection: publications
 # venue: 'SAE International Journal of Transportation Safety'
 # redirect_to: 'https://sae.org/publications/technical-papers/content/09-11-02-0012/'
 ---
-Collection of small-scale projects for testing robotics algorithms in the MuJoCo simulator
+Collection of small-scale projects for testing robotics algorithms in the MuJoCo simulator. (Ongoing project)
 <br/> <i class="fa-brands fa-github"></i> [**[Code]**](https://github.com/lihanlian/basic-and-fast-neural-style-transfer) <br>
 <img src='/images/project-basic-and-fast-nst.jpg'>
