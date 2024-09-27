@@ -41,12 +41,12 @@ I am currently a Master's student studying Robotics at the University of Michiga
 
 ## Education
 
-- **University of Michigan - Ann Arbor**<br>
-  **_M.S. - Robotics (December, 2024)_**  
-  <span style="color: red;">**Key Courses:** </span><br> MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, <br>[AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), [MECHENG 599-004 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), MECHENG 599-006 **Applied Optimal Control**, <br>IOE 512 **Dynamic Programming**, NAVARCH 583 **Adaptive Control** (Audit)
+- <i class="fa-solid fa-school"></i> **University of Michigan - Ann Arbor**<br>
+  <i class="fa-solid fa-graduation-cap"></i> **_M.S. - Robotics (December, 2024)_**  
+  <span style="color: red;">**Key Courses:** </span><br> MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, <br> <i class="fa-brands fa-github"></i> [AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), <i class="fa-brands fa-github"></i> [MECHENG 599-004 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), MECHENG 599-006 **Applied Optimal Control**, <br>IOE 512 **Dynamic Programming**, NAVARCH 583 **Adaptive Control** (Audit)
 
-- **University of Michigan - Ann Arbor**<br>
-  **_B.S.E. - Mechanical Engineering, Minor - Computer Science (April, 2023)_**  
+- <i class="fa-solid fa-school"></i> **University of Michigan - Ann Arbor**<br>
+  <i class="fa-solid fa-graduation-cap"></i> **_B.S.E. - Mechanical Engineering, Minor - Computer Science (April, 2023)_**  
   <span style="color: red;">**Key Courses:** </span><br> MECHENG 461 **Automatic Control**, EECS 281 **Data Structures & Algorithms**, <br>EECS 445 **Intro to Machine Learning**, EECS 492 **Intro to Artificial Intelligence**
 
 <!-- This is the front page of a website that is powered by the [Academic Pages template](https://github.com/academicpages/academicpages.github.io) and hosted on GitHub pages. [GitHub pages](https://pages.github.com) is a free service in which websites are built and hosted from code and data stored in a GitHub repository, automatically updating when a new commit is made to the respository. This template was forked from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/) created by Michael Rose, and then extended to support the kinds of content that academics have: publications, talks, teaching, a portfolio, blog posts, and a dynamically-generated CV. You can fork [this repository](https://github.com/academicpages/academicpages.github.io) right now, modify the configuration and markdown files, add your own PDFs and other content, and have your own site for free, with no ads! An older version of this template powers my own personal website at [stuartgeiger.com](http://stuartgeiger.com), which uses [this Github repository](https://github.com/staeiou/staeiou.github.io).
