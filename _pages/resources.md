@@ -14,7 +14,7 @@ To share these execellent learning materials with others who are on a similar pa
  - <span style="color:red">**Robotics Simulator**</span>
 
     <i class="fa-brands fa-github"></i> [**Mujoco**](https://github.com/google-deepmind/mujoco) developed by <span style="color:blue">*Google DeepMind*</span>
-    - <i class="fa-brands fa-chrome"></i> [Mujoco Bootcamp [Website]](https://pab47.github.io/mujoco.html) and corresponding tutorials that programming in both <br> <i class="fab fa-youtube"></i> [C++ [YouTube]](https://www.youtube.com/watch?v=j1nCeqtfySQ&list=PLc7bpbeTIk758Ad3fkSywdxHWpBh9PM0G&index=6) and <i class="fab fa-youtube"></i> [Python [YouTube]](https://www.youtube.com/watch?v=u6tNfvLXK-I&list=PLc7bpbeTIk75dgBVd07z6_uKN1KQkwFRK) by Prof. Pranav Bhounsule.
+    - <i class="fa-brands fa-chrome"></i> [Mujoco Bootcamp](https://pab47.github.io/mujoco.html) and corresponding tutorials that programming in both <br> <i class="fab fa-youtube"></i> [C++](https://www.youtube.com/watch?v=j1nCeqtfySQ&list=PLc7bpbeTIk758Ad3fkSywdxHWpBh9PM0G&index=6) and <i class="fab fa-youtube"></i> [Python](https://www.youtube.com/watch?v=u6tNfvLXK-I&list=PLc7bpbeTIk75dgBVd07z6_uKN1KQkwFRK) by Prof. Pranav Bhounsule.
 
     <i class="fa-brands fa-github"></i> [**Isaac Lab**](https://github.com/isaac-sim/IsaacLab) and <i class="fa-brands fa-chrome"></i> [**Isaac Sim**](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html) developed by <span style="color:blue">*Nvidia*</span>
     - <i class="fa-brands fa-chrome"></i> [Official Tutorial [Self-Paced Course]](https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-OV-03+V1) and [many others](https://learn.nvidia.com/en-us/training/self-paced-courses) by <span style="color:blue">*Nvidia*</span>
