@@ -1,5 +1,5 @@
 ---
-title: "▪ <span style='color: blue;'>mujoco-playground</span>"
+title: "▪ mujoco-playground"
 collection: publications
 # permalink: /publications/2023-09-20-pub1
 # excerpt: 'This paper is about fixing template issue #693.'

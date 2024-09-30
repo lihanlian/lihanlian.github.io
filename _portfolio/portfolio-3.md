@@ -1,5 +1,5 @@
 ---
-title: "▪ <span style='color: blue;'>simple-mpc-cbf </span>"
+title: "▪ simple-mpc-cbf"
 collection: publication
 # redirect_to: "https://github.com/lihanlian/simple-mpc-cbf"
 ---

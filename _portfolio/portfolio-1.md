@@ -1,5 +1,5 @@
 ---
-title: "▪ <span style='color: blue;'>basic-and-fast-neural-style-transfer</span>"
+title: "▪ basic-and-fast-neural-style-transfer"
 collection: publications
 # permalink: /publications/2023-09-20-pub1
 # excerpt: 'This paper is about fixing template issue #693.'

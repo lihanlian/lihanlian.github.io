@@ -1,5 +1,5 @@
 ---
-title: "▪ <span style='color: blue;'>trajectory-tracking-ilc </span>"
+title: "▪ trajectory-tracking-ilc"
 collection: publication
 # redirect_to: "https://github.com/lihanlian/simple-mpc-cbf"
 ---
