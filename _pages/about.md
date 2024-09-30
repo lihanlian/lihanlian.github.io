@@ -28,10 +28,10 @@ I am currently a Master's student studying Robotics at the University of Michiga
 
 <div class="news-section">
   <ul class="news-list">
-    <li>
+    <!-- <li>
       <div class="news-date">Sep 30, 2024</div>
       <div class="news-content"> Our paper "Co-state Neural Network for Realtime Nonlinear Optimal Control with Input Constraints" has been submitted to <span style="color:blue; font-style: italic;"> American Control Conference (ACC) 2025</span>.</div>
-    </li>
+    </li> -->
     <li>
       <div class="news-date">May 23, 2023</div>
       <div class="news-content">I am honored to have given an oral presentation at the <span style="color:blue; font-style: italic;">18th Injury Biomechanics Symposium</span> on our work concerning parametric thoracic spine modeling.</div> 
