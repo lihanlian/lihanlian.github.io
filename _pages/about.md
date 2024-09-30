@@ -30,7 +30,7 @@ I am currently a Master's student studying Robotics at the University of Michiga
   <ul class="news-list">
     <li>
       <div class="news-date">Sep 30, 2024</div>
-      <div class="news-content">This is a TESTESTTESTEST <span style="color:blue; font-style: italic;"> American Control Conference 2025</span> This is a TESTESTTESTESTThis is a TESTESTTESTEST This is a TESTESTTESTEST</div>
+      <div class="news-content"> Our paper "Co-state Neural Network for Realtime Nonlinear Optimal Control with Input Constraints" has been submitted to <span style="color:blue; font-style: italic;"> American Control Conference (ACC) 2025</span>.</div>
     </li>
     <li>
       <div class="news-date">May 23, 2023</div>
