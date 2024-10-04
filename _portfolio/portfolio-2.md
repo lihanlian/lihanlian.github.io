@@ -9,4 +9,5 @@ collection: publications
 ---
 Collection of small-scale projects for testing robotics algorithms in the MuJoCo simulator. (Ongoing project)
 <br/> <i class="fa-brands fa-github"></i> [**[Code]**](https://github.com/lihanlian/mujoco-playground) <br>
-<!-- <img src='/images/project-basic-and-fast-nst.jpg'> -->
+<img src='/images/manipulator_test.gif' style='width:400px;'>
+<img src='/images/inverted_double_pendulum.gif' style='width:400px;'>
