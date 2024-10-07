@@ -22,6 +22,8 @@ To share these execellent learning materials with others who are on a similar pa
 
   - **Legged Robots**
 
+    - <i class="fab fa-youtube"></i> [Robot Manipulator Control ](https://www.youtube.com/watch?v=jtei695t4VY&list=PLWH0s-b_VS9Hf67pR5x1wVkyJEdTHvB6D)
+
     - <i class="fab fa-youtube"></i> [Legged Robotics](https://www.youtube.com/watch?v=Am2PJmDh0GE&list=PLc7bpbeTIk74esZj1hd7LF3VYeJM3NYo5) by Prof. Pranav Bhounsule.
 
     - <i class="fab fa-youtube"></i> [Contact-Aware Control](https://www.youtube.com/watch?v=ntvMtCwxYpw&list=PLlxR_sEKjSpRZwJ1Bv56iRfgOs-cALCwT)
@@ -34,10 +36,18 @@ To share these execellent learning materials with others who are on a similar pa
 
 ## Control
 - <i class="fab fa-youtube"></i> [Optimal Control (CMU 16-745)](https://www.youtube.com/watch?v=6rUdAOCNXAU&list=PLZnJoM76RM6KugDT9sw5zhAmqKnGeoLRa) by *Prof. Zac Manchester*.
+
 - Digital Control
+    - <i class="fa-brands fa-youtube"></i> [Discrete Control](https://www.youtube.com/watch?v=14cMhrp5wlk&list=PLUMWjy5jgHK0MLv6Ksf-NHi7Ur8NRNU4Z) by *Brian Douglas*
     - <i class="fa-brands fa-chrome"></i> [ELEC 3004 Digital Linear Systems: Signals & Control](https://elec3004.uqcloud.net/2016/lectures.html) (University of Queesland)
     - <i class="fa-brands fa-chrome"></i> [ECE 4540 Digital Control Systems](http://mocha-java.uccs.edu/ECE4540/) (University of Colorado)
-- <i class="fab fa-youtube"></i> [Reinforcement Learning](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by *Prof. Steve Brunton*
+
+- Adaptive Control
+    - <i class="fa-brands fa-youtube"></i> [System Identification and Adaptive Controls](https://www.youtube.com/watch?v=veMbs3ahgYk&list=PLujcneWPG6EATpZZAqt9UGzaPhOHhe0CP) by *Prof Xu Chen*
+    - <i class="fa-brands fa-youtube"></i> [Adaptive Control and Intersections with Reinforcement Learning](https://www.youtube.com/watch?v=klLqFXmrvH0) from *Princeton (seminar)*
+
+- Reinforcement Learning
+    - <i class="fab fa-youtube"></i> [Reinforcement Learning: Machine Learning Meets Control Theory](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by *Prof. Steve Brunton*
 
 ## Optimization
  - <i class="fab fa-youtube"></i> [Intro to Optimization](https://www.youtube.com/watch?v=BdXrkmbvGHY&list=PLHAS_3-nESXV6XgW53wSkZHazVE7ZkHAV) by Prof. Lewis Mitchell
