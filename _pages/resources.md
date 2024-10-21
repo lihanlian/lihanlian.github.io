@@ -20,7 +20,9 @@ To share these execellent learning materials with others who are on a similar pa
     - <i class="fa-brands fa-chrome"></i> [Official Tutorial [Self-Paced Course]](https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-OV-03+V1) and [many others](https://learn.nvidia.com/en-us/training/self-paced-courses) by *Nvidia*
     - <i class="fab fa-youtube"></i> [Issac Sim Tutorial (in Korean)](https://www.youtube.com/watch?v=uRdfy5IacOg&list=PL12w7vYWefUwnjvrXZKzRrUnIpnoGXhoh) (I watched by using auto-generated English subtitles)
 
-  - **Legged Robots**
+  - **Roboitc Manipulation and Legged Robots**
+
+    - <i class="fa-brands fa-chrome"></i> [Robotic Manipulation](https://manipulation.mit.edu/index.html) and <i class="fa-brands fa-chrome"></i> [Underactuated Robotics](https://underactuated.csail.mit.edu/index.html) by *Prof. Russ Tedrake*
 
     - <i class="fab fa-youtube"></i> [Robot Manipulator Control ](https://www.youtube.com/watch?v=jtei695t4VY&list=PLWH0s-b_VS9Hf67pR5x1wVkyJEdTHvB6D)
 
