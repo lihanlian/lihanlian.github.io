@@ -18,7 +18,7 @@ To share these execellent learning materials with others who are on a similar pa
 
     <i class="fa-brands fa-github"></i> [**Isaac Lab**](https://github.com/isaac-sim/IsaacLab) and <i class="fa-brands fa-chrome"></i> [**Isaac Sim**](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html) developed by *Nvidia*
     - <i class="fa-brands fa-chrome"></i> [Official Tutorial [Self-Paced Course]](https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-OV-03+V1) and [many others](https://learn.nvidia.com/en-us/training/self-paced-courses) by *Nvidia*
-    - <i class="fab fa-youtube"></i> [Issac Sim Tutorial (in Korean)](https://www.youtube.com/watch?v=uRdfy5IacOg&list=PL12w7vYWefUwnjvrXZKzRrUnIpnoGXhoh) (I watched by using auto-generated English subtitles)
+    - <i class="fab fa-youtube"></i> [Issac Sim Tutorial (in Korean)](https://www.youtube.com/watch?v=uRdfy5IacOg&list=PL12w7vYWefUwnjvrXZKzRrUnIpnoGXhoh) and <i class="fab fa-youtube"></i> [Issac Gym Tutorial (in Korean)](https://www.youtube.com/watch?v=rMlwqXs3h84&list=PL77aT3OTHDbV_1rSKGjcVTMSpdMPC44yp) (I watched by using auto-generated English subtitles)
 
   - **Roboitc Manipulation and Legged Robots**
 
