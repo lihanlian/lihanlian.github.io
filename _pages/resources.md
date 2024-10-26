@@ -24,11 +24,12 @@ To share these execellent learning materials with others who are on a similar pa
 
     - <i class="fa-brands fa-chrome"></i> [Robotic Manipulation](https://manipulation.mit.edu/index.html) and <i class="fa-brands fa-chrome"></i> [Underactuated Robotics](https://underactuated.csail.mit.edu/index.html) by *Prof. Russ Tedrake*
 
-    - <i class="fab fa-youtube"></i> [Robot Manipulator Control ](https://www.youtube.com/watch?v=jtei695t4VY&list=PLWH0s-b_VS9Hf67pR5x1wVkyJEdTHvB6D)
+    - <i class="fa-brands fa-github"></i> [pinocchio](https://github.com/stack-of-tasks/pinocchio), <i class="fa-brands fa-github"></i> [pyroboplan](https://github.com/sea-bass/pyroboplan) (<i class="fa-brands fa-chrome"></i> [documentation](https://pyroboplan.readthedocs.io/en/latest/motion_planning.html#))
+    
+    - <i class="fab fa-youtube"></i> [Robot Manipulator Control ](https://www.youtube.com/watch?v=jtei695t4VY&list=PLWH0s-b_VS9Hf67pR5x1wVkyJEdTHvB6D) and <i class="fab fa-youtube"></i> [Contact-Aware Control](https://www.youtube.com/watch?v=ntvMtCwxYpw&list=PLlxR_sEKjSpRZwJ1Bv56iRfgOs-cALCwT)
 
     - <i class="fab fa-youtube"></i> [Legged Robotics](https://www.youtube.com/watch?v=Am2PJmDh0GE&list=PLc7bpbeTIk74esZj1hd7LF3VYeJM3NYo5) by Prof. Pranav Bhounsule.
 
-    - <i class="fab fa-youtube"></i> [Contact-Aware Control](https://www.youtube.com/watch?v=ntvMtCwxYpw&list=PLlxR_sEKjSpRZwJ1Bv56iRfgOs-cALCwT)
 
   - **Algorithms Related**
 
