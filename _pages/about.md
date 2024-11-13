@@ -8,9 +8,9 @@ redirect_from:
 ---
 <p style="color: #333333; font-family: 'Helvetica', sans-serif;">
     I am a robotics enthusiast with a deep admiration for the pioneers of modern control theory, including 
-    <span style="font-style: italic">Lev Pontryagin</span>, 
-    <span style="font-style: italic">Richard Bellman</span>, 
-    and <span style="font-style: italic">Rudolf Kalman</span>.
+    <span style="color:blue; font-style: italic">Lev Pontryagin</span>, 
+    <span style="color:blue; font-style: italic">Richard Bellman</span>, 
+    and <span style="color:blue; font-style: italic">Rudolf Kalman</span>.
 </p>
 
 I am passionate about robotics, particularly in areas such as **legged robots**, **robotic manipulation**, and **autonomous driving**. My research interests include, but are not limited to, **optimal control**, **iterative learning control**, **reinforcement learning** and **meta-learning**.
@@ -22,7 +22,7 @@ I am passionate about robotics, particularly in areas such as **legged robots**,
 
 ## About me
 
-I am currently a Master's student studying Robotics at the University of Michigan, Ann Arbor, supervised by [Prof. Uduak Inyang-Udoh](https://me.engin.umich.edu/people/faculty/uduak-inyang-udoh/) at [Autonomous & Intelligent Systems Lab (AI-Sys Lab)](https://aisys.engin.umich.edu/). My projects are mainly related to using **data-driven methods** for solving **optimal control problems**. Previously, I obtained my Bachelor's degree in Mechanical Engineering with a minor in Computer Science from the University of Michigan, Ann Arbor, where I was advised by [Prof. Jingwen Hu](https://me.engin.umich.edu/people/faculty/jingwen-hu/) at the [University of Michigan Transportation Research Institute (UMTRI)](https://www.umtri.umich.edu/). During my undergraduate studies, I focused on **parametric human modeling**, with a particular emphasis on [thoracic spine modeling](https://saemobilus.sae.org/articles/a-parametric-thoracic-spine-model-accounting-geometric-variations-age-sex-stature-body-mass-index-09-11-02-0012).
+I am currently a Master's student studying Robotics at the <span style="color:blue">*University of Michigan, Ann Arbor*</span>, supervised by [Prof. Uduak Inyang-Udoh](https://me.engin.umich.edu/people/faculty/uduak-inyang-udoh/) at [Autonomous & Intelligent Systems Lab (AI-Sys Lab)](https://aisys.engin.umich.edu/). My projects are mainly related to using **data-driven methods** for solving **optimal control problems**. Previously, I obtained my Bachelor's degree in Mechanical Engineering with a minor in Computer Science from the <span style="color:blue">*University of Michigan, Ann Arbor*</span>, where I was advised by [Prof. Jingwen Hu](https://me.engin.umich.edu/people/faculty/jingwen-hu/) at the [University of Michigan Transportation Research Institute (UMTRI)](https://www.umtri.umich.edu/). During my undergraduate studies, I focused on **parametric human modeling**, with a particular emphasis on [thoracic spine modeling](https://saemobilus.sae.org/articles/a-parametric-thoracic-spine-model-accounting-geometric-variations-age-sex-stature-body-mass-index-09-11-02-0012).
 
 ## News
 
