@@ -43,7 +43,7 @@ I am currently a Master's student studying Robotics at the <span style="color:bl
 
 - **University of Michigan - Ann Arbor**<br>
   **_M.S. - Robotics (December, 2024)_** <br>
-  **Key Courses:** <br> MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, <br> <i class="fa-brands fa-github"></i> [AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), <i class="fa-brands fa-github"></i> [MECHENG 599-004 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), MECHENG 599-006 **Applied Optimal Control**, <br>IOE 512 **Dynamic Programming**, NAVARCH 583 **Adaptive Control** (Audit)
+  **Key Courses:** <br> MECHENG 564 **Linear System Theory**, AEROSP 551 **Nonlinear System & Control**, <br> <i class="fa-brands fa-github"></i> [AEROSP 740 **Model Predictive Control**](https://github.com/lihanlian/simple-mpc-cbf), <i class="fa-brands fa-github"></i> [MECHENG 599-004 **Data Driven Method for Control Systems**](https://github.com/lihanlian/trajectory-tracking-ilc), <i class="fa-brands fa-github"></i> [MECHENG 599-006 **Applied Optimal Control**](https://github.com/lihanlian/motion-planning-mpc), <br>IOE 512 **Dynamic Programming**, NAVARCH 583 **Adaptive Control** (Audit)
 
 - **University of Michigan - Ann Arbor**<br>
   **_B.S.E. - Mechanical Engineering, Minor - Computer Science (April, 2023)_** <br>
