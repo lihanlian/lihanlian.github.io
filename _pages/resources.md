@@ -55,7 +55,7 @@ To share these execellent learning materials with others who are on a similar pa
 ## Optimization
  - <i class="fab fa-youtube"></i> [Intro to Optimization](https://www.youtube.com/watch?v=BdXrkmbvGHY&list=PLHAS_3-nESXV6XgW53wSkZHazVE7ZkHAV) by Prof. Lewis Mitchell
  - <i class="fab fa-youtube"></i> [Approximate Dynamic Programming](https://www.youtube.com/watch?v=6CaUxbFX8Oc&list=PLiCLbsFQNFAxOmVeqPhI5er1LGf2-L9I4) by *Prof. Dimitri P. Bertsekas*
-- <i class="fab fa-youtube"></i> [Automatic Differentiation, Adjoint & Sensitivities](https://www.youtube.com/watch?v=vlFN4qMtoH4&list=PLISXH-iEM4Jk27AmSvISooRRKH4WtlWKP&index=1)
+- <i class="fab fa-youtube"></i> [Automatic Differentiation, Adjoints & Sensitivities](https://www.youtube.com/watch?v=vlFN4qMtoH4&list=PLISXH-iEM4Jk27AmSvISooRRKH4WtlWKP&index=1)
  - <i class="fa-solid fa-blog"></i> [Deriving the Adjoint Equation for Neural ODEs using Lagrange Multipliers](https://vaipatel.com/posts/deriving-the-adjoint-equation-for-neural-odes-using-lagrange-multipliers/#fn:2)
 
 ## Deep Learning
