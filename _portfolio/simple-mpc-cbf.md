@@ -6,5 +6,5 @@ collection: publication
 Simple scripts that are used for solving motion planning & obstacle avoidance problems via Model Predictive Control (MPC) & Control Barrier Function (CBF).<br/> 
 <i class="fa-brands fa-github"></i> [**[Code]**](https://github.com/lihanlian/simple-mpc-cbf) &nbsp;&nbsp;&nbsp;&nbsp;
 <i class="fa-solid fa-file"></i> [**[Report]**](/files/report-simple-mpc-cbf.pdf) &nbsp;&nbsp;&nbsp;&nbsp;
-<i class="fa-solid fa-file"></i> [**[Slides]**](/files/presentation-simple-mpc-cbf.pdf) <br>
+<i class="fa-solid fa-file"></i> [**[Slide]**](/files/presentation-simple-mpc-cbf.pdf) <br>
 <img src='/images/project-simple-mpc-cbf.gif'>
