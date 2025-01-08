@@ -51,6 +51,7 @@ To share these execellent learning materials with others who are on a similar pa
 
 - Reinforcement Learning
     - <i class="fab fa-youtube"></i> [Reinforcement Learning: Machine Learning Meets Control Theory](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by *Prof. Steve Brunton*
+    - <i class="fab fa-youtube"></i> [Reinforcement Learning: Machine Learning Meets Control Theory](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by *Prof. Steve Brunton*
 
 ## Optimization
  - <i class="fab fa-youtube"></i> [Intro to Optimization](https://www.youtube.com/watch?v=BdXrkmbvGHY&list=PLHAS_3-nESXV6XgW53wSkZHazVE7ZkHAV) by Prof. Lewis Mitchell
