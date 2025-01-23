@@ -29,7 +29,7 @@ I am currently a Master's student studying Robotics at the <span style="color:bl
 <div class="news-section">
   <ul class="news-list">
     <li>
-      <div class="news-date">Jan 17, 2026</div>
+      <div class="news-date">Jan 17, 2025</div>
       <div class="news-content"> Paper "Co-state Neural Network for Realtime Nonlinear Optimal Control with Input Constraints" has been accepted!</div>
     </li>
     <li>
