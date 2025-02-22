@@ -14,7 +14,7 @@ To share these execellent learning materials with others who are on a similar pa
  - **Robotics Simulator**
 
     <i class="fa-brands fa-github"></i> [**MuJoCo**](https://github.com/google-deepmind/mujoco) developed by *Google DeepMind*
-    - <i class="fa-brands fa-chrome"></i> [MuJoCo Bootcamp](https://pab47.github.io/mujoco.html) and corresponding tutorials that programming in both <br> <i class="fab fa-youtube"></i> [C++](https://www.youtube.com/watch?v=j1nCeqtfySQ&list=PLc7bpbeTIk758Ad3fkSywdxHWpBh9PM0G&index=6) and <i class="fab fa-youtube"></i> [Python](https://www.youtube.com/watch?v=u6tNfvLXK-I&list=PLc7bpbeTIk75dgBVd07z6_uKN1KQkwFRK) by Prof. Pranav Bhounsule.
+    - <i class="fa-brands fa-chrome"></i> [MuJoCo Bootcamp](https://pab47.github.io/mujoco.html) that programming in both <i class="fab fa-youtube"></i> [C++](https://www.youtube.com/watch?v=j1nCeqtfySQ&list=PLc7bpbeTIk758Ad3fkSywdxHWpBh9PM0G&index=6) and <i class="fab fa-youtube"></i> [Python](https://www.youtube.com/watch?v=u6tNfvLXK-I&list=PLc7bpbeTIk75dgBVd07z6_uKN1KQkwFRK) by Prof. Pranav Bhounsule.
 
     <i class="fa-brands fa-github"></i> [**Isaac Lab**](https://github.com/isaac-sim/IsaacLab) and <i class="fa-brands fa-chrome"></i> [**Isaac Sim**](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html) developed by *Nvidia*
     - <i class="fa-brands fa-chrome"></i> [Official Tutorial [Self-Paced Course]](https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-OV-03+V1) and [many others](https://learn.nvidia.com/en-us/training/self-paced-courses) by *Nvidia*
@@ -61,5 +61,10 @@ To share these execellent learning materials with others who are on a similar pa
 
 ## Deep Learning
 
-  - <i class="fab fa-youtube"></i> [Physics Informed Machine Learning](https://www.youtube.com/watch?v=JoFW2uSd3Uo&list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa) by *Prof. Steve Brunton*
-  - <i class="fab fa-youtube"></i> [Natural Language Processing and Large Language Models](https://www.youtube.com/watch?v=OxCpWwDCDFQ&list=PLs8w1Cdi-zvYskDS2icIItfZgxclApVLv) by Serrano.Academy
+- Neural Networks Architecture
+  - <i class="fab fa-youtube"></i> [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
+  - <i class="fab fa-youtube"></i> [Illustrated Guide to LSTM's and GRU's: A step by step explanation](https://www.youtube.com/watch?v=8HyCNIVRbSU)
+
+- <i class="fab fa-youtube"></i> [Physics Informed Machine Learning](https://www.youtube.com/watch?v=JoFW2uSd3Uo&list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa) by *Prof. Steve Brunton*
+
+- <i class="fab fa-youtube"></i> [Natural Language Processing and Large Language Models](https://www.youtube.com/watch?v=OxCpWwDCDFQ&list=PLs8w1Cdi-zvYskDS2icIItfZgxclApVLv) by Serrano.Academy
