@@ -30,11 +30,11 @@ I am currently a Master's student studying Robotics at the <span style="color:bl
   <ul class="news-list">
     <li>
       <div class="news-date">Jan 17, 2025</div>
-      <div class="news-content"> Paper "Co-state Neural Network for Realtime Nonlinear Optimal Control with Input Constraints" has been accepted!</div>
+      <div class="news-content"> Paper "Co-state Neural Network for Real-time Nonlinear Optimal Control with Input Constraints" has been accepted!</div>
     </li>
     <li>
       <div class="news-date">Oct 02, 2024</div>
-      <div class="news-content"> Our paper "Co-state Neural Network for Realtime Nonlinear Optimal Control with Input Constraints" has been submitted to <span style="color:blue; font-style: italic;"> American Control Conference (ACC) 2025</span>.</div>
+      <div class="news-content"> Our paper "Co-state Neural Network for Real-time Nonlinear Optimal Control with Input Constraints" has been submitted to <span style="color:blue; font-style: italic;"> American Control Conference (ACC) 2025</span>.</div>
     </li>
     <li>
       <div class="news-date">May 23, 2023</div>
