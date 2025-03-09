@@ -18,8 +18,7 @@ To share these execellent learning materials with others who are on a similar pa
 
     <i class="fa-brands fa-github"></i> [**Isaac Lab**](https://github.com/isaac-sim/IsaacLab) and <i class="fa-brands fa-chrome"></i> [**Isaac Sim**](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html) developed by *Nvidia*
     - <i class="fa-brands fa-chrome"></i> [Official Tutorial [Self-Paced Course]](https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-OV-03+V1) and [many others](https://learn.nvidia.com/en-us/training/self-paced-courses) by *Nvidia*
-    - <i class="fab fa-youtube"></i> [Issac Sim Tutorial (in Korean)](https://www.youtube.com/watch?v=uRdfy5IacOg&list=PL12w7vYWefUwnjvrXZKzRrUnIpnoGXhoh) and <i class="fab fa-youtube"></i> [Issac Gym Tutorial (in Korean)](https://www.youtube.com/watch?v=rMlwqXs3h84&list=PL77aT3OTHDbV_1rSKGjcVTMSpdMPC44yp) (I watched by using auto-generated English subtitles)
-
+    - <i class="fab fa-youtube"></i> [Issac Sim Tutorial (in Korean)](https://www.youtube.com/watch?v=uRdfy5IacOg&list=PL12w7vYWefUwnjvrXZKzRrUnIpnoGXhoh) and <i class="fab fa-youtube"></i> [Issac Gym Tutorial (in Korean)](https://www.youtube.com/watch?v=rMlwqXs3h84&list=PL77aT3OTHDbV_1rSKGjcVTMSpdMPC44yp)
   - **Roboitc Manipulation and Legged Robots**
 
     - <i class="fa-brands fa-chrome"></i> [Robotic Manipulation](https://manipulation.mit.edu/index.html) and <i class="fa-brands fa-chrome"></i> [Underactuated Robotics](https://underactuated.csail.mit.edu/index.html) by *Prof. Russ Tedrake*
@@ -51,7 +50,8 @@ To share these execellent learning materials with others who are on a similar pa
 
 - Reinforcement Learning
     - <i class="fab fa-youtube"></i> [Reinforcement Learning: Machine Learning Meets Control Theory](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by *Prof. Steve Brunton*
-    - <i class="fab fa-youtube"></i> [Reinforcement Learning: Machine Learning Meets Control Theory](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by *Prof. Steve Brunton*
+    - <i class="fab fa-youtube"></i> [CS 182 Lecture 15-16](https://www.youtube.com/watch?v=_AYvYUrDohw&list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A&index=45) by *Prof. Sergey Levine*
+    - <i class="fab fa-youtube"></i> [深度强化学习基础](https://www.youtube.com/watch?v=vmkRMvhCW5c&list=PLvOO0btloRnsiqM72G4Uid0UWljikENlU)
 
 ## Optimization
  - <i class="fab fa-youtube"></i> [Intro to Optimization](https://www.youtube.com/watch?v=BdXrkmbvGHY&list=PLHAS_3-nESXV6XgW53wSkZHazVE7ZkHAV) by Prof. Lewis Mitchell
