@@ -11,7 +11,7 @@ To share these execellent learning materials with others who are on a similar pa
 
 ## Robotics
 
- - **Robotics Simulator**
+ - **Robotics Simulation**
 
     <i class="fa-brands fa-github"></i> [**MuJoCo**](https://github.com/google-deepmind/mujoco) developed by *Google DeepMind*
     - <i class="fa-brands fa-chrome"></i> [MuJoCo Bootcamp](https://pab47.github.io/mujoco.html) that programming in both <i class="fab fa-youtube"></i> [C++](https://www.youtube.com/watch?v=j1nCeqtfySQ&list=PLc7bpbeTIk758Ad3fkSywdxHWpBh9PM0G&index=6) and <i class="fab fa-youtube"></i> [Python](https://www.youtube.com/watch?v=u6tNfvLXK-I&list=PLc7bpbeTIk75dgBVd07z6_uKN1KQkwFRK) by Prof. Pranav Bhounsule.
@@ -51,7 +51,7 @@ To share these execellent learning materials with others who are on a similar pa
 - Reinforcement Learning
     - <i class="fab fa-youtube"></i> [Reinforcement Learning: Machine Learning Meets Control Theory](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by *Prof. Steve Brunton*
     - <i class="fab fa-youtube"></i> [CS 182 Lecture 15-16](https://www.youtube.com/watch?v=_AYvYUrDohw&list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A&index=45) by *Prof. Sergey Levine*
-    - <i class="fab fa-youtube"></i> [深度强化学习基础](https://www.youtube.com/watch?v=vmkRMvhCW5c&list=PLvOO0btloRnsiqM72G4Uid0UWljikENlU)
+    - <i class="fab fa-youtube"></i> [Foundations of Deep RL Series](https://www.youtube.com/watch?v=2GwBez0D20A&list=PLwRJQ4m4UJjNymuBM9RdmB3Z9N5-0IlY0) by *Prof. Pieter Abbeel*
 
 ## Optimization
  - <i class="fab fa-youtube"></i> [Intro to Optimization](https://www.youtube.com/watch?v=BdXrkmbvGHY&list=PLHAS_3-nESXV6XgW53wSkZHazVE7ZkHAV) by Prof. Lewis Mitchell
@@ -60,6 +60,8 @@ To share these execellent learning materials with others who are on a similar pa
  - <i class="fa-solid fa-blog"></i> [Deriving the Adjoint Equation for Neural ODEs using Lagrange Multipliers](https://vaipatel.com/posts/deriving-the-adjoint-equation-for-neural-odes-using-lagrange-multipliers/#fn:2)
 
 ## Deep Learning
+
+- <i class="fa-solid fa-blog"></i> [Towards Geometric Deep Learning](https://thegradient.pub/towards-geometric-deep-learning/)
 
 - Neural Networks Architecture
   - <i class="fab fa-youtube"></i> [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
