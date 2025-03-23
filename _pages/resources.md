@@ -11,15 +11,19 @@ To share these execellent learning materials with others who are on a similar pa
 
 ## Robotics
 
- - **Robotics Simulation**
+ - **Simulators and Differentiable Simulation** 
 
     <i class="fa-brands fa-github"></i> [**MuJoCo**](https://github.com/google-deepmind/mujoco) developed by *Google DeepMind*
     - <i class="fa-brands fa-chrome"></i> [MuJoCo Bootcamp](https://pab47.github.io/mujoco.html) that programming in both <i class="fab fa-youtube"></i> [C++](https://www.youtube.com/watch?v=j1nCeqtfySQ&list=PLc7bpbeTIk758Ad3fkSywdxHWpBh9PM0G&index=6) and <i class="fab fa-youtube"></i> [Python](https://www.youtube.com/watch?v=u6tNfvLXK-I&list=PLc7bpbeTIk75dgBVd07z6_uKN1KQkwFRK) by Prof. Pranav Bhounsule.
 
     <i class="fa-brands fa-github"></i> [**Isaac Lab**](https://github.com/isaac-sim/IsaacLab) and <i class="fa-brands fa-chrome"></i> [**Isaac Sim**](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html) developed by *Nvidia*
     - <i class="fa-brands fa-chrome"></i> [Official Tutorial [Self-Paced Course]](https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-OV-03+V1) and [many others](https://learn.nvidia.com/en-us/training/self-paced-courses) by *Nvidia*
-    - <i class="fab fa-youtube"></i> [Issac Sim Tutorial (in Korean)](https://www.youtube.com/watch?v=uRdfy5IacOg&list=PL12w7vYWefUwnjvrXZKzRrUnIpnoGXhoh) and <i class="fab fa-youtube"></i> [Issac Gym Tutorial (in Korean)](https://www.youtube.com/watch?v=rMlwqXs3h84&list=PL77aT3OTHDbV_1rSKGjcVTMSpdMPC44yp)
-  - **Roboitc Manipulation and Legged Robots**
+    - <i class="fab fa-youtube"></i> [Issac Sim Tutorial](https://www.youtube.com/watch?v=yJwdIx9KEfw&list=PLqVtSQw2sXKkFVwObWwVGewPhz5wOBWY5&index=8) and <i class="fab fa-youtube"></i> [Issac Gym Tutorial (in Korean)](https://www.youtube.com/watch?v=rMlwqXs3h84&list=PL77aT3OTHDbV_1rSKGjcVTMSpdMPC44yp)
+
+    <i class="fa-brands fa-github"></i> [**Nvidia warp**](https://github.com/NVIDIA/warp) and <i class="fa-brands fa-github"></i> [**mujoco_warp**](https://github.com/google-deepmind/mujoco_warp)
+    - <i class="fab fa-youtube"></i> [Introduction, CoRL 2024 Workshop on Differentiable Optimization Everywhere](https://www.youtube.com/watch?v=KdZd4wCWqIw&list=PLmNNvPTKxRvZY_pM8ZCd_zaiwAe8z69XL)
+
+  - **Manipulation and Locomotion**
 
     - <i class="fa-brands fa-chrome"></i> [Robotic Manipulation](https://manipulation.mit.edu/index.html) and <i class="fa-brands fa-chrome"></i> [Underactuated Robotics](https://underactuated.csail.mit.edu/index.html) by *Prof. Russ Tedrake*
 
@@ -30,7 +34,7 @@ To share these execellent learning materials with others who are on a similar pa
     - <i class="fab fa-youtube"></i> [Legged Robotics](https://www.youtube.com/watch?v=Am2PJmDh0GE&list=PLc7bpbeTIk74esZj1hd7LF3VYeJM3NYo5) by Prof. Pranav Bhounsule.
 
 
-  - **Algorithms Related**
+  - **Algorithms**
 
     - <i class="fab fa-youtube"></i> [106B/206B Discussion](https://www.youtube.com/watch?v=dl4FUx3xLGQ&list=PLU2v_5UVjn7dQRsw4Ld4ycMXk4AxsQP2V) at *UC Berkeley*
 
