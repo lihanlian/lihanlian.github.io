@@ -132,7 +132,30 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
+            We propose a novel unsupervised learning frame-
+            work for solving nonlinear optimal control problems (OCPs)
+            with input constraints in real-time. In this framework, a neural
+            network (NN) learns to predict the optimal co-state trajectory
+            that minimizes the control Hamiltonian for a given system,
+            at any system's state, based on the Pontryagin's Minimum
+            Principle (PMP). Specifically, the NN is trained to find the
+            norm-optimal co-state solution that simultaneously satisfies the
+            nonlinear system dynamics and minimizes a quadratic regula-
+            tion cost. The control input is then extracted from the predicted
+            optimal co-state trajectory by solving a quadratic program
+            (QP) to satisfy input constraints and optimality conditions. We
+            coin the term neural co-state regulator (NCR) to describe the
+            combination of the costate NN and control input QP solver.
+            To demonstrate the effectiveness of the NCR, we compare its
+            feedback control performance with that of an expert nonlinear
+            model predictive control (MPC) solver on a unicycle model.
+            Because the NCR's training does not rely on expert nonlinear
+            control solvers which are often suboptimal, the NCR is able to
+            produce solutions that outperform the nonlinear MPC solver
+            in terms of convergence error and input trajectory smoothness
+            even for system conditions that are outside its original training
+            domain. At the same time, the NCR offers two orders of
+            magnitude less computational time than the nonlinear MPC.
           </p>
         </div>
       </div>
@@ -151,7 +174,7 @@
         <figure class="image ">
           <img src="static/images/ncr_N30_h50_a.png" alt="Description 1">
         </figure>
-        <p class="subtitle is-6 mt-2">NCR state and control input trajectories</p>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
       </div>
 
       <!-- Second Image -->
@@ -159,7 +182,7 @@
         <figure class="image">
           <img src="static/images/animation_a.gif" alt="Description 2">
         </figure>
-        <p class="subtitle is-6 mt-2">CoNN predicted co-state trajectories over time</p>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
       </div>
     </div>
   </div>
@@ -175,7 +198,7 @@
         <figure class="image ">
           <img src="static/images/ncr_N30_h50_b.png" alt="Description 1">
         </figure>
-        <p class="subtitle is-6 mt-2">NCR state and control input trajectories</p>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
       </div>
 
       <!-- Second Image -->
@@ -183,7 +206,7 @@
         <figure class="image">
           <img src="static/images/animation_b.gif" alt="Description 2">
         </figure>
-        <p class="subtitle is-6 mt-2">CoNN predicted co-state trajectories over time</p>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
       </div>
     </div>
   </div>
@@ -200,7 +223,7 @@
         <figure class="image ">
           <img src="static/images/ncr_N30_h50_c.png" alt="Description 1">
         </figure>
-        <p class="subtitle is-6 mt-2">NCR state and control input trajectories</p>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
       </div>
 
       <!-- Second Image -->
@@ -208,7 +231,7 @@
         <figure class="image">
           <img src="static/images/animation_c.gif" alt="Description 2">
         </figure>
-        <p class="subtitle is-6 mt-2">CoNN predicted co-state trajectories over time</p>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
       </div>
     </div>
   </div>
