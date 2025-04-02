@@ -68,7 +68,7 @@ To share these execellent learning materials with others who are on a similar pa
 - <i class="fa-solid fa-blog"></i> [Towards Geometric Deep Learning](https://thegradient.pub/towards-geometric-deep-learning/)
 
 - Neural Networks Architecture
-  - <i class="fab fa-youtube"></i> [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
+  - <i class="fab fa-youtube"></i>[Fool-proof RNN explanation - What are RNNs, how do they work?](https://www.youtube.com/watch?v=y9PLF2GsD-c) & <i class="fab fa-youtube"></i> [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
   - <i class="fab fa-youtube"></i> [Illustrated Guide to LSTM's and GRU's: A step by step explanation](https://www.youtube.com/watch?v=8HyCNIVRbSU)
 
 - <i class="fab fa-youtube"></i> [Physics Informed Machine Learning](https://www.youtube.com/watch?v=JoFW2uSd3Uo&list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa) by *Prof. Steve Brunton*
