@@ -42,6 +42,7 @@ To share these execellent learning materials with others who are on a similar pa
 
 ## Control
 - <i class="fab fa-youtube"></i> [Optimal Control (CMU 16-745)](https://www.youtube.com/watch?v=6rUdAOCNXAU&list=PLZnJoM76RM6KugDT9sw5zhAmqKnGeoLRa) by *Prof. Zac Manchester*.
+- <i class="fab fa-youtube"></i> [Pontryagin meets Bellman](https://www.youtube.com/watch?v=ue-BkPE2dY0) from *IFAC*
 
 - Digital Control
     - <i class="fa-brands fa-youtube"></i> [Discrete Control](https://www.youtube.com/watch?v=14cMhrp5wlk&list=PLUMWjy5jgHK0MLv6Ksf-NHi7Ur8NRNU4Z) by *Brian Douglas*
@@ -54,7 +55,7 @@ To share these execellent learning materials with others who are on a similar pa
 
 - Reinforcement Learning
     - <i class="fab fa-youtube"></i> [Reinforcement Learning: Machine Learning Meets Control Theory](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by *Prof. Steve Brunton*
-    - <i class="fab fa-youtube"></i> [CS 182 Lecture 15-16](https://www.youtube.com/watch?v=_AYvYUrDohw&list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A&index=45) by *Prof. Sergey Levine*
+    - <i class="fab fa-youtube"></i> [CS 182 Lecture 15-16](https://www.youtube.com/watch?v=_AYvYUrDohw&list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A&index=45) & [CS 285](https://www.youtube.com/watch?v=SupFHGbytvA&list=PL_iWQOsE6TfVYGEGiAOMaOzzv41Jfm_Ps&index=1) by *Prof. Sergey Levine*
     - <i class="fab fa-youtube"></i> [Foundations of Deep RL Series](https://www.youtube.com/watch?v=2GwBez0D20A&list=PLwRJQ4m4UJjNymuBM9RdmB3Z9N5-0IlY0) by *Prof. Pieter Abbeel*
 
 ## Optimization
@@ -63,12 +64,15 @@ To share these execellent learning materials with others who are on a similar pa
 - <i class="fab fa-youtube"></i> [Automatic Differentiation, Adjoints & Sensitivities](https://www.youtube.com/watch?v=vlFN4qMtoH4&list=PLISXH-iEM4Jk27AmSvISooRRKH4WtlWKP&index=1)
  - <i class="fa-solid fa-blog"></i> [Deriving the Adjoint Equation for Neural ODEs using Lagrange Multipliers](https://vaipatel.com/posts/deriving-the-adjoint-equation-for-neural-odes-using-lagrange-multipliers/#fn:2)
 
+## Differential Geometry
+ - <i class="fa-solid fa-book-open"></i> [Geometric tracking control of a quadrotor UAV on SE(3)](https://ieeexplore.ieee.org/document/5717652)
+
 ## Deep Learning
 
 - <i class="fa-solid fa-blog"></i> [Towards Geometric Deep Learning](https://thegradient.pub/towards-geometric-deep-learning/)
 
 - Neural Networks Architecture
-  - <i class="fab fa-youtube"></i>[What are RNNs, how do they work?](https://www.youtube.com/watch?v=y9PLF2GsD-c) & <i class="fab fa-youtube"></i> [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
+  - <i class="fab fa-youtube"></i>[What are RNNs, how do they work?](https://www.youtube.com/watch?v=y9PLF2GsD-c) & [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
   - <i class="fab fa-youtube"></i> [Illustrated Guide to LSTM's and GRU's: A step by step explanation](https://www.youtube.com/watch?v=8HyCNIVRbSU)
   - <i class="fab fa-youtube"></i> [MIT 6.S191: Recurrent Neural Networks, Transformers, and Attention](https://www.youtube.com/watch?v=GvezxUdLrEk)
 
