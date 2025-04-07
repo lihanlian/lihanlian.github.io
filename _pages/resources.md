@@ -42,15 +42,19 @@ To share these execellent learning materials with others who are on a similar pa
 
 ## Control
 - <i class="fab fa-youtube"></i> [Optimal Control (CMU 16-745)](https://www.youtube.com/watch?v=6rUdAOCNXAU&list=PLZnJoM76RM6KugDT9sw5zhAmqKnGeoLRa) by *Prof. Zac Manchester*.
-- <i class="fab fa-youtube"></i> [Pontryagin meets Bellman](https://www.youtube.com/watch?v=ue-BkPE2dY0) from *IFAC*
+- <i class="fab fa-youtube"></i> [Pontryagin meets Bellman](https://www.youtube.com/watch?v=ue-BkPE2dY0) from *IFAC Seminar*
+
+- Adaptive Control
+    - <i class="fa-brands fa-youtube"></i> [System Identification and Adaptive Controls](https://www.youtube.com/watch?v=veMbs3ahgYk&list=PLujcneWPG6EATpZZAqt9UGzaPhOHhe0CP) by *Prof Xu Chen*
+    - <i class="fa-brands fa-youtube"></i> [Adaptive Control and Intersections with Reinforcement Learning](https://www.youtube.com/watch?v=klLqFXmrvH0) from *Princeton (seminar)*
 
 - Digital Control
     - <i class="fa-brands fa-youtube"></i> [Discrete Control](https://www.youtube.com/watch?v=14cMhrp5wlk&list=PLUMWjy5jgHK0MLv6Ksf-NHi7Ur8NRNU4Z) by *Brian Douglas*
     - <i class="fa-brands fa-chrome"></i> [ELEC 3004 Digital Linear Systems: Signals & Control](https://elec3004.uqcloud.net/2016/lectures.html) (University of Queesland)
     - <i class="fa-brands fa-chrome"></i> [ECE 4540 Digital Control Systems](http://mocha-java.uccs.edu/ECE4540/) (University of Colorado)
 
-- Adaptive Control
-    - <i class="fa-brands fa-youtube"></i> [System Identification and Adaptive Controls](https://www.youtube.com/watch?v=veMbs3ahgYk&list=PLujcneWPG6EATpZZAqt9UGzaPhOHhe0CP) by *Prof Xu Chen*
+- Hybrid System Control
+    - <i class="fa-brands fa-youtube"></i> [Model Predictive Control of Hybrid Dynamical Systems](https://www.youtube.com/watch?v=XihAwlYdBuM) from *Stanford Seminar*
     - <i class="fa-brands fa-youtube"></i> [Adaptive Control and Intersections with Reinforcement Learning](https://www.youtube.com/watch?v=klLqFXmrvH0) from *Princeton (seminar)*
 
 - Reinforcement Learning
