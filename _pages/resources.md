@@ -34,15 +34,17 @@ To share these execellent learning materials with others who are on a similar pa
 ## Deep Learning
 
 - <i class="fa-solid fa-blog"></i> [Towards Geometric Deep Learning](https://thegradient.pub/towards-geometric-deep-learning/)
+- <i class="fab fa-youtube"></i> [Physics Informed Machine Learning](https://www.youtube.com/watch?v=JoFW2uSd3Uo&list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa) by Prof. Steve Brunton
+- <i class="fab fa-youtube"></i> [Natural Language Processing and Large Language Models](https://www.youtube.com/watch?v=OxCpWwDCDFQ&list=PLs8w1Cdi-zvYskDS2icIItfZgxclApVLv) by Serrano.Academy
 
 - Neural Networks Architecture
   - <i class="fab fa-youtube"></i>[What are RNNs, how do they work?](https://www.youtube.com/watch?v=y9PLF2GsD-c) & [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
   - <i class="fab fa-youtube"></i> [Illustrated Guide to LSTM's and GRU's: A step by step explanation](https://www.youtube.com/watch?v=8HyCNIVRbSU)
   - <i class="fab fa-youtube"></i> [MIT 6.S191: Recurrent Neural Networks, Transformers, and Attention](https://www.youtube.com/watch?v=GvezxUdLrEk)
 
-- <i class="fab fa-youtube"></i> [Physics Informed Machine Learning](https://www.youtube.com/watch?v=JoFW2uSd3Uo&list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa) by Prof. Steve Brunton
+- Generative Models
+  - <i class="fab fa-youtube"></i>[What are RNNs, how do they work?](https://www.youtube.com/watch?v=y9PLF2GsD-c) & [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
 
-- <i class="fab fa-youtube"></i> [Natural Language Processing and Large Language Models](https://www.youtube.com/watch?v=OxCpWwDCDFQ&list=PLs8w1Cdi-zvYskDS2icIItfZgxclApVLv) by Serrano.Academy
 
 ## Differential Geometry
  - <i class="fa-solid fa-book-open"></i> [Geometric tracking control of a quadrotor UAV on SE(3)](https://ieeexplore.ieee.org/document/5717652)
@@ -61,7 +63,7 @@ To share these execellent learning materials with others who are on a similar pa
 
 ## Robotics
 
- - **Simulators and Differentiable Simulation** 
+ - Simulators and Differentiable Simulation
 
     <i class="fa-brands fa-github"></i> [**MuJoCo**](https://github.com/google-deepmind/mujoco) developed by *Google DeepMind*
     - <i class="fa-brands fa-chrome"></i> [MuJoCo Bootcamp](https://pab47.github.io/mujoco.html) that programming in both <i class="fab fa-youtube"></i> [C++](https://www.youtube.com/watch?v=j1nCeqtfySQ&list=PLc7bpbeTIk758Ad3fkSywdxHWpBh9PM0G&index=6) and <i class="fab fa-youtube"></i> [Python](https://www.youtube.com/watch?v=u6tNfvLXK-I&list=PLc7bpbeTIk75dgBVd07z6_uKN1KQkwFRK) by Prof. Pranav Bhounsule.
@@ -73,7 +75,7 @@ To share these execellent learning materials with others who are on a similar pa
     <i class="fa-brands fa-github"></i> [**Nvidia warp**](https://github.com/NVIDIA/warp) and <i class="fa-brands fa-github"></i> [**mujoco_warp**](https://github.com/google-deepmind/mujoco_warp)
     - <i class="fab fa-youtube"></i> [Introduction, CoRL 2024 Workshop on Differentiable Optimization Everywhere](https://www.youtube.com/watch?v=KdZd4wCWqIw&list=PLmNNvPTKxRvZY_pM8ZCd_zaiwAe8z69XL)
 
-  - **Manipulation and Locomotion**
+  - Manipulation and Locomotion
 
     - <i class="fa-brands fa-chrome"></i> [Robotic Manipulation](https://manipulation.mit.edu/index.html) and <i class="fa-brands fa-chrome"></i> [Underactuated Robotics](https://underactuated.csail.mit.edu/index.html) by Prof. Russ Tedrake
 
@@ -84,7 +86,7 @@ To share these execellent learning materials with others who are on a similar pa
     - <i class="fab fa-youtube"></i> [Legged Robotics](https://www.youtube.com/watch?v=Am2PJmDh0GE&list=PLc7bpbeTIk74esZj1hd7LF3VYeJM3NYo5) by Prof. Pranav Bhounsule.
 
 
-  - **Algorithms**
+  - Algorithms
 
     - <i class="fab fa-youtube"></i> [106B/206B Discussion](https://www.youtube.com/watch?v=dl4FUx3xLGQ&list=PLU2v_5UVjn7dQRsw4Ld4ycMXk4AxsQP2V) at *UC Berkeley*
 
