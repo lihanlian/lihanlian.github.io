@@ -23,8 +23,8 @@ To share these execellent learning materials with others who are on a similar pa
     - <i class="fa-brands fa-chrome"></i> [ECE 4540 Digital Control Systems](http://mocha-java.uccs.edu/ECE4540/) (University of Colorado)
 
 - Hybrid System Control
+    - <i class="fa-brands fa-youtube"></i> [Feedback Control of Hybrid Dynamical Systems](https://www.youtube.com/watch?v=08JJFK9lhQk) & [Hybrid and Switched Control Systems](https://www.youtube.com/watch?v=XPQ9_NWOycM)
     - <i class="fa-brands fa-youtube"></i> [Model Predictive Control of Hybrid Dynamical Systems](https://www.youtube.com/watch?v=XihAwlYdBuM) from *Stanford Seminar*
-    - <i class="fa-brands fa-youtube"></i> [Adaptive Control and Intersections with Reinforcement Learning](https://www.youtube.com/watch?v=klLqFXmrvH0) from *Princeton (seminar)*
 
 - Reinforcement Learning
     - <i class="fab fa-youtube"></i> [Reinforcement Learning: Machine Learning Meets Control Theory](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by Prof. Steve Brunton
@@ -38,13 +38,13 @@ To share these execellent learning materials with others who are on a similar pa
 - <i class="fab fa-youtube"></i> [Natural Language Processing and Large Language Models](https://www.youtube.com/watch?v=OxCpWwDCDFQ&list=PLs8w1Cdi-zvYskDS2icIItfZgxclApVLv) by Serrano.Academy
 
 - Neural Networks Architecture
-  - <i class="fab fa-youtube"></i>[What are RNNs, how do they work?](https://www.youtube.com/watch?v=y9PLF2GsD-c) & [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
+  - <i class="fab fa-youtube"></i> [What are RNNs, how do they work?](https://www.youtube.com/watch?v=y9PLF2GsD-c) & [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
   - <i class="fab fa-youtube"></i> [Illustrated Guide to LSTM's and GRU's: A step by step explanation](https://www.youtube.com/watch?v=8HyCNIVRbSU)
   - <i class="fab fa-youtube"></i> [MIT 6.S191: Recurrent Neural Networks, Transformers, and Attention](https://www.youtube.com/watch?v=GvezxUdLrEk)
 
 - Generative Models
-  - <i class="fab fa-youtube"></i>[What are RNNs, how do they work?](https://www.youtube.com/watch?v=y9PLF2GsD-c) & [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
-
+  - <i class="fab fa-youtube"></i> [Variational Autoencoders, Generative AI Animated](https://www.youtube.com/watch?v=qJeaCHQ1k2w)
+  - <i class="fab fa-youtube"></i> [What are Diffusion Models?](https://www.youtube.com/watch?v=fbLgFrlTnGU)
 
 ## Differential Geometry
  - <i class="fa-solid fa-book-open"></i> [Geometric tracking control of a quadrotor UAV on SE(3)](https://ieeexplore.ieee.org/document/5717652)
