@@ -33,7 +33,7 @@ To share these execellent learning materials with others who are on a similar pa
 
 ## Deep Learning
 
-- <i class="fa-solid fa-blog"></i> [Towards Geometric Deep Learning](https://thegradient.pub/towards-geometric-deep-learning/)
+- <i class="fa-solid fa-book-open"></i> [Deep Learning (An MIT Press book)](https://www.deeplearningbook.org/) & <i class="fa-solid fa-blog"></i> [Towards Geometric Deep Learning](https://thegradient.pub/towards-geometric-deep-learning/)
 - <i class="fab fa-youtube"></i> [Physics Informed Machine Learning](https://www.youtube.com/watch?v=JoFW2uSd3Uo&list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa) by Prof. Steve Brunton
 - <i class="fab fa-youtube"></i> [Natural Language Processing and Large Language Models](https://www.youtube.com/watch?v=OxCpWwDCDFQ&list=PLs8w1Cdi-zvYskDS2icIItfZgxclApVLv) by Serrano.Academy
 
@@ -43,7 +43,7 @@ To share these execellent learning materials with others who are on a similar pa
   - <i class="fab fa-youtube"></i> [MIT 6.S191: Recurrent Neural Networks, Transformers, and Attention](https://www.youtube.com/watch?v=GvezxUdLrEk)
 
 - Generative Models
-  - <i class="fab fa-youtube"></i> [Variational Autoencoders, Generative AI Animated](https://www.youtube.com/watch?v=qJeaCHQ1k2w)
+  - <i class="fab fa-youtube"></i> [Variational Autoencoders - Generative AI Animated](https://www.youtube.com/watch?v=qJeaCHQ1k2w)
   - <i class="fab fa-youtube"></i> [What are Diffusion Models?](https://www.youtube.com/watch?v=fbLgFrlTnGU)
 
 ## Differential Geometry
