@@ -218,7 +218,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-
         <figure class="image">
           <img src="static/images/mpc_N30_h50_a.png" alt="Description 3">
         </figure>
-        <p class="subtitle is-6 mt-2">Additional image description (right)</p>
+        <p class="subtitle is-6 mt-2">MPC state trajectories vs time (left) and control input trajectories vs time (right)</p>
       </div>
       
       <!-- Second Image -->
@@ -242,22 +242,19 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-
 </section>
 
 
-
-<!-- Two images side by side with captions -->
 <!-- Two videos side by side with captions -->
 <section class="section" >
   <div class="container">
-    <h3 class="title is-4">Case A: Animated wheeled robot motion</h3>
+    <h3 class="title is-4">Animated wheeled robot motion (Case A)</h3>
     <div class="columns is-centered">
       <!-- First Video -->
       <div class="column is-one-half has-text-centered">
         <figure class="image">
           <video width="100%" controls>
             <source src="static/videos/mpc_N30_h50_a.mp4" type="video/mp4">
-            Your browser does not support the video tag.
           </video>
         </figure>
-        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from MPC (reflect actual computational speed)</p>
       </div>
 
       <!-- Second Video -->
@@ -265,66 +262,135 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-
         <figure class="image">
           <video width="100%" controls>
             <source src="static/videos/ncr_N30_h50_a.mp4" type="video/mp4">
-            Your browser does not support the video tag.
           </video>
         </figure>
-        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from NCR (reflect actual computational speed)</p>
       </div>
     </div>
   </div>
 </section>
 
-
-<!-- Two images side by side with captions -->
-<section class="section">
+<!-- Three images side by side with captions -->
+<section class="section" style="background-color: #f0f0f0;">
   <div class="container">
-    <h3 class="title is-4">&bull; Case B: Unseen initial conditions and zero reference</h3>
+    <h3 class="title is-4">Case B: Unseen initial conditions and zero reference</h3>
     <div class="columns is-centered">
       <!-- First Image -->
-      <div class="column is-half has-text-centered">
-        <figure class="image ">
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/mpc_N30_h50_b.png" alt="Description 3">
+        </figure>
+        <p class="subtitle is-6 mt-2">MPC state trajectories vs time (left) and control input trajectories vs time (right)</p>
+      </div>
+      
+      <!-- Second Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
           <img src="static/images/ncr_N30_h50_b.png" alt="Description 1">
         </figure>
         <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
       </div>
 
-      <!-- Second Image -->
-      <div class="column is-half has-text-centered">
+      <!-- Third Image -->
+      <div class="column is-one-third has-text-centered">
         <figure class="image">
           <img src="static/images/animation_b.gif" alt="Description 2">
         </figure>
         <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
       </div>
+
     </div>
   </div>
 </section>
 
-
-<!-- Two images side by side with captions -->
-<section class="section">
+<!-- Two videos side by side with captions -->
+<section class="section" >
   <div class="container">
-    <h3 class="title is-4">&bull; Case C: Unseen initial conditions and nonzero reference</h3>
+    <h3 class="title is-4">Animated wheeled robot motion (Case B)</h3>
+    <div class="columns is-centered">
+      <!-- First Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/mpc_N30_h50_b.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from MPC (reflect actual computational speed)</p>
+      </div>
+
+      <!-- Second Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/ncr_N30_h50_b.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from NCR (reflect actual computational speed)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Three images side by side with captions -->
+<section class="section" style="background-color: #f0f0f0;">
+  <div class="container">
+    <h3 class="title is-4">Case C: Unseen initial conditions and nonzero reference</h3>
     <div class="columns is-centered">
       <!-- First Image -->
-      <div class="column is-half has-text-centered">
-        <figure class="image ">
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/mpc_N30_h50_c.png" alt="Description 3">
+        </figure>
+        <p class="subtitle is-6 mt-2">MPC state trajectories vs time (left) and control input trajectories vs time (right)</p>
+      </div>
+      
+      <!-- Second Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
           <img src="static/images/ncr_N30_h50_c.png" alt="Description 1">
         </figure>
         <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
       </div>
 
-      <!-- Second Image -->
-      <div class="column is-half has-text-centered">
+      <!-- Third Image -->
+      <div class="column is-one-third has-text-centered">
         <figure class="image">
           <img src="static/images/animation_c.gif" alt="Description 2">
         </figure>
         <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
       </div>
+
     </div>
   </div>
 </section>
 
+<!-- Two videos side by side with captions -->
+<section class="section" >
+  <div class="container">
+    <h3 class="title is-4">Animated wheeled robot motion (Case C)</h3>
+    <div class="columns is-centered">
+      <!-- First Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/mpc_N30_h50_c.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from MPC (reflect actual computational speed)</p>
+      </div>
 
+      <!-- Second Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/ncr_N30_h50_c.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from NCR (reflect actual computational speed)</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 
