@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
 <head>
   <meta charset="utf-8">
   <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
@@ -163,29 +166,114 @@
 </section>
 <!-- End paper abstract -->
 
-<!-- Two images side by side with captions -->
-<section class="section">
+<!-- Problem Formulation -->
+<section class="section is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Example</h2>
+        <div class="content has-text-justified">
+          <p>
+            Consider the following nonlinear optimal control problem for a unicycle model in continuous time that has quadratic stage cost:
+          </p>
+          <p style="text-align: center;">
+             \( \underset{u}{min} \quad \text{J} = \int_0^{t_f} \left( z^T Q z + u^T R u \right) \, dt + \phi(z(t_f)) \)
+          </p>
+          <!-- <p style="text-align: center;">
+            subject to:
+          </p> -->
+          <p style="text-align: center;">
+            s.t. \(\quad z_1 = \dot{x} = v \cos(\theta) \)
+          </p>
+          <p style="text-align: center;">
+            \( \quad  z_2 = \dot{y} = v \sin(\theta) \)
+          </p>
+          <p style="text-align: center;">
+            \( z_3 = \dot{\theta} = \omega \)
+          </p>
+          <p style="text-align: center;">
+            \( u \in U, \quad z(0) \in \mathbb{R}^3 \)
+          </p>
+          <p>
+            Here we denote \( z_1 = x, z_2 = y, z_3 = \theta, u_1 = v, u_2 = w \).
+            The control input constraints are \( -1 \leq v \leq 1, \, -4 \leq \omega \leq 4 \), 
+            \( t_f \) is the wall-clock length of time for both the MPC and the NCR prediction horizon.
+            For the cost function, \( Q = \text{diag}(10, 10, 10), \, R = \text{diag}(1, 1) \) and \( \phi(z(t_f)) = z^T S z(t_f) \), where \( S =  50Q \) \(= \text{diag}(500, 500, 500) \).
+          </p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Problem Formulation -->
+
+<!-- Three images side by side with captions -->
+<section class="section" style="background-color: #f0f0f0;">
   <div class="container">
-    <h3 class="title is-4">&bull; Case A: Seen initial conditions and zero reference</h3>
+    <h3 class="title is-4">Case A: Seen initial conditions and zero reference</h3>
     <div class="columns is-centered">
       <!-- First Image -->
-      <div class="column is-half has-text-centered">
-        <figure class="image ">
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/mpc_N30_h50_a.png" alt="Description 3">
+        </figure>
+        <p class="subtitle is-6 mt-2">Additional image description (right)</p>
+      </div>
+      
+      <!-- Second Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
           <img src="static/images/ncr_N30_h50_a.png" alt="Description 1">
         </figure>
         <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
       </div>
 
-      <!-- Second Image -->
-      <div class="column is-half has-text-centered">
+      <!-- Third Image -->
+      <div class="column is-one-third has-text-centered">
         <figure class="image">
           <img src="static/images/animation_a.gif" alt="Description 2">
+        </figure>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Two images side by side with captions -->
+<!-- Two videos side by side with captions -->
+<section class="section" >
+  <div class="container">
+    <h3 class="title is-4">Case A: Animated wheeled robot motion</h3>
+    <div class="columns is-centered">
+      <!-- First Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/mpc_N30_h50_a.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
+      </div>
+
+      <!-- Second Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/ncr_N30_h50_a.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
         </figure>
         <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
       </div>
     </div>
   </div>
 </section>
+
 
 <!-- Two images side by side with captions -->
 <section class="section">
