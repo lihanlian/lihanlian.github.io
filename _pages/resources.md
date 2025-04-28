@@ -14,8 +14,13 @@ To share these execellent learning materials with others who are on a similar pa
 - <i class="fab fa-youtube"></i> [Pontryagin meets Bellman](https://www.youtube.com/watch?v=ue-BkPE2dY0) from *IFAC Seminar*
 
 - Adaptive Control
-    - <i class="fa-brands fa-youtube"></i> [System Identification and Adaptive Controls](https://www.youtube.com/watch?v=veMbs3ahgYk&list=PLujcneWPG6EATpZZAqt9UGzaPhOHhe0CP) by Prof Xu Chen
+    - <i class="fa-brands fa-youtube"></i> [System Identification and Adaptive Controls](https://www.youtube.com/watch?v=veMbs3ahgYk&list=PLujcneWPG6EATpZZAqt9UGzaPhOHhe0CP) by Prof. Xu Chen
     - <i class="fa-brands fa-youtube"></i> [Adaptive Control and Intersections with Reinforcement Learning](https://www.youtube.com/watch?v=klLqFXmrvH0) from *Princeton Seminar*
+
+- Data-Driven Control
+    - <i class="fab fa-youtube"></i> [Physics Informed Machine Learning](https://www.youtube.com/watch?v=JoFW2uSd3Uo&list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa) by Prof. Steve Brunton
+    - <i class="fa-brands fa-youtube"></i> [Sparsity and Compression](https://www.youtube.com/watch?v=Dt2WYkqZfbs&list=PLMrJAkhIeNNRHP5UA-gIimsXLQyHXxRty) & [Data-Driven Dynamical Systems Overview](https://www.youtube.com/watch?v=Kap3TZwAsv0&list=PLMrJAkhIeNNR6DzT17-MM1GHLkuYVjhyt) by Prof. Steve Brunton
+    - <i class="fa-brands fa-youtube"></i> [Data-Driven Modelling and Control with the Koopman Operator](https://www.youtube.com/watch?v=Lidd_M7gzvA)
 
 - Digital Control
     - <i class="fa-brands fa-youtube"></i> [Discrete Control](https://www.youtube.com/watch?v=14cMhrp5wlk&list=PLUMWjy5jgHK0MLv6Ksf-NHi7Ur8NRNU4Z) by Brian Douglas
@@ -34,7 +39,7 @@ To share these execellent learning materials with others who are on a similar pa
 ## Deep Learning
 
 - <i class="fa-solid fa-book-open"></i> [Deep Learning (An MIT Press book)](https://www.deeplearningbook.org/) & <i class="fa-solid fa-blog"></i> [Towards Geometric Deep Learning](https://thegradient.pub/towards-geometric-deep-learning/)
-- <i class="fab fa-youtube"></i> [Physics Informed Machine Learning](https://www.youtube.com/watch?v=JoFW2uSd3Uo&list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa) by Prof. Steve Brunton
+
 - <i class="fab fa-youtube"></i> [Natural Language Processing and Large Language Models](https://www.youtube.com/watch?v=OxCpWwDCDFQ&list=PLs8w1Cdi-zvYskDS2icIItfZgxclApVLv) by Serrano.Academy
 
 - Neural Networks Architecture
