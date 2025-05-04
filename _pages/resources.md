@@ -51,6 +51,12 @@ To share these execellent learning materials with others who are on a similar pa
   - <i class="fab fa-youtube"></i> [Variational Autoencoders - Generative AI Animated](https://www.youtube.com/watch?v=qJeaCHQ1k2w)
   - <i class="fab fa-youtube"></i> [What are Diffusion Models?](https://www.youtube.com/watch?v=fbLgFrlTnGU)
 
+- Foundation Models
+  - <i class="fab fa-youtube"></i> [Vision Language Models - EEML'24](https://www.youtube.com/watch?v=rUQUv4u7jFs&list=LL&index=4)
+  - <i class="fab fa-youtube"></i> [Reinforcement Learning in the Age of Foundation Models - RLC 2024](https://www.youtube.com/watch?v=Az5BoT7lCYo&t=1415s) & [U of T Robotics Institute Seminar](https://www.youtube.com/watch?v=EYLdC3a0NHw) & [CVPR24 FM4AS - Robotic Foundation Models](https://www.youtube.com/watch?v=ET2HsfLrNMs&t=33s) by Prof. Sergey Levine
+  - <i class="fa-solid fa-book-open"></i> VLA Papers: [PaLM-E](https://palm-e.github.io/), [RT-1](https://robotics-transformer1.github.io/), [RT-2](https://robotics-transformer2.github.io/), [π0](https://www.physicalintelligence.company/blog/pi0)
+  
+
 ## Differential Geometry
  - <i class="fa-solid fa-book-open"></i> [Geometric tracking control of a quadrotor UAV on SE(3)](https://ieeexplore.ieee.org/document/5717652)
 
