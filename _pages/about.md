@@ -15,6 +15,8 @@ redirect_from:
 
 I am passionate about robotics, particularly in areas such as **legged robots**, **robotic manipulation**, and **autonomous driving**. My research interests include, but are not limited to, **optimal control**, **iterative learning control**, **reinforcement learning** and **imitation learning**.
 
+I am currently seeking *Ph.D. opportunities* starting *Fall 2026* in robotics-related fields.
+
 <blockquote class="quote">
     <p>To take risks and make mistakes.</p>
     <footer>&#8211; <i class="fab fa-youtube"></i> <a href="https://www.youtube.com/watch?v=myC0TGPPYiA" target="_blank">Michigan Engineering: Pursue Bold Ideas </a> </footer>
