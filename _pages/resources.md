@@ -59,13 +59,17 @@ To share these execellent learning materials with others who are on a similar pa
   
 
 ## Differential Geometry
- - <i class="fa-solid fa-book-open"></i> [Riemannian Motion Policies](https://arxiv.org/abs/1801.02854)
  - <i class="fa-solid fa-book-open"></i> [Geometric tracking control of a quadrotor UAV on SE(3)](https://ieeexplore.ieee.org/document/5717652)
+
+- Riemannian Motion Policies & Geometric Fabrics (by Nathan Ratliff)
+  - <i class="fa-solid fa-book-open"></i> [Riemannian Motion Policies](https://arxiv.org/abs/1801.02854)
+  - <i class="fab fa-youtube"></i> [TCOptRob Seminar: On the Geometric Foundations of Continuous Control](https://www.youtube.com/watch?v=_7B181kS4Xg&t=11s)
+  - <i class="fab fa-youtube"></i> [Geometric fabrics: Transparent tools for behavior engineering](https://www.youtube.com/watch?v=aM9Ha2IawEo&t=1748s)
 
 - Geometry and Topology in Robotics
   - <i class="fab fa-youtube"></i> [RSS 2021 Workshop](https://www.youtube.com/watch?v=ZyopJ2afJas&list=PLaXyTUxPmVRxt3k6yCE25CAM3VV2GF_ga), [IROS'20 Tutorials](https://www.youtube.com/watch?v=DyMFUDY72s0&list=PL_oEZ6dld4ihXRaHqoz5qDVaBne-7WLdS), [IROS'22 Tutorials](https://www.youtube.com/watch?v=lOJlKxRF53o&list=PL_oEZ6dld4ignAdbFvcP_LAJgNbdrNBKC&index=1), [ICRA'24 Tutorials](https://www.youtube.com/watch?v=XTlslZM0ga8&list=PL_oEZ6dld4ij-AyByAe5Adum1lLedJV4_)
   - <i class="fa-solid fa-blog"></i> [Mathematics for Intelligent Systems](https://www.nathanratliff.com/pedagogy/mathematics-for-intelligent-systems#lecture6) (Lecture 6) by Nathan Ratliff
-  - <i class="fab fa-youtube"></i> [TCOptRob Seminar: On the Geometric Foundations of Continuous Control](https://www.youtube.com/watch?v=_7B181kS4Xg&t=11s) by Nathan Ratliff
+  
 
 ## Optimization
  - <i class="fab fa-youtube"></i> [Intro to Optimization](https://www.youtube.com/watch?v=BdXrkmbvGHY&list=PLHAS_3-nESXV6XgW53wSkZHazVE7ZkHAV) by Prof. Lewis Mitchell
