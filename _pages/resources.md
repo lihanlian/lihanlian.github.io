@@ -59,6 +59,7 @@ To share these execellent learning materials with others who are on a similar pa
   
 
 ## Differential Geometry
+ - <i class="fab fa-youtube"></i> [Differential Geometry](https://www.youtube.com/watch?v=jJqpkeuaLN0&list=PLJSvriS_WDrsZyyPGfHASMKmbqMD58jqE) (Introductory Lectures)
  - <i class="fa-solid fa-book-open"></i> [Geometric tracking control of a quadrotor UAV on SE(3)](https://ieeexplore.ieee.org/document/5717652)
 
 - Riemannian Motion Policies & Geometric Fabrics (by Nathan Ratliff)
