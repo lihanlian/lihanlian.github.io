@@ -46,6 +46,7 @@ To share these execellent learning materials with others who are on a similar pa
   - <i class="fab fa-youtube"></i> [What are RNNs, how do they work?](https://www.youtube.com/watch?v=y9PLF2GsD-c) & [An introduction to RNN and LSTM](https://www.youtube.com/watch?v=Mdp5pAKNNW4)
   - <i class="fab fa-youtube"></i> [Illustrated Guide to LSTM's and GRU's: A step by step explanation](https://www.youtube.com/watch?v=8HyCNIVRbSU)
   - <i class="fab fa-youtube"></i> [MIT 6.S191: Recurrent Neural Networks, Transformers, and Attention](https://www.youtube.com/watch?v=GvezxUdLrEk)
+  - <i class="fab fa-youtube"></i> [Transformer Series](https://www.youtube.com/watch?v=1IKrHh2X0F0&list=PL1p-rwlJFa6Is8gEGfcMeNIq60zSVA0K_&index=2) & [Cross Attention Explained](https://www.youtube.com/watch?v=aw3H-wPuRcw&t=1s)
 
 - Generative Models
   - <i class="fab fa-youtube"></i> [Variational Autoencoders - Generative AI Animated](https://www.youtube.com/watch?v=qJeaCHQ1k2w)

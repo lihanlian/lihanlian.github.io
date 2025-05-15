@@ -15,7 +15,7 @@ redirect_from:
 
 I am passionate about robotics, particularly in areas such as **legged robots**, **robotic manipulation**, and **autonomous driving**. My research interests include, but are not limited to, **optimal control**, **iterative learning control**, **reinforcement learning** and **imitation learning**.
 
-I am currently seeking *Ph.D. opportunities* starting *Fall 2026* in robotics-related fields.
+I am looking for *Ph.D.* opportunities starting in *Fall 2026*.
 
 <blockquote class="quote">
     <p>To take risks and make mistakes.</p>
