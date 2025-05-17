@@ -8,4 +8,4 @@ Minimal implementation of RL algorithms (DQN, DDPG and PPO) in Isaac Gym cartpol
 <i class="fa-solid fa-blog"></i> [**[Blog Post 1]**](https://lihanlian.github.io/posts/blog6) (DQN & DDPG) &nbsp;&nbsp;&nbsp;&nbsp;
 <i class="fa-solid fa-blog"></i> [**[Blog Post 2]**](https://lihanlian.github.io/posts/blog7) (PPO) <br>
 <img src='/images/blog/blog6/dqn-result.gif' style='width:420px;'>
-<img src='/images/blog/blog6/tensorboard.png' style='width:420px;'>
+<img src='/images/blog/blog7/tensorboard.png' style='width:420px;'>
