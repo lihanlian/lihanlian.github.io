@@ -116,5 +116,7 @@ To share these execellent learning materials with others who are on a similar pa
 
     - <i class="fab fa-youtube"></i> [AI and Machine Learning for Robots](https://www.youtube.com/watch?v=Kf_HGHahUPM&list=PLyXDCTF4yPcQ1GozC3vPmrJuN-icTFOW0) by Prof. Wenhua Yu
 
+    - <i class="fab fa-youtube"></i> [State Estimation (Robotics)](https://www.youtube.com/watch?v=nVU1DQ-_R5E&list=PLbqejKwCjmBGJysKt6W5sHhlfRYCw_Omu)
+
 
 
