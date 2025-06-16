@@ -13,7 +13,7 @@ redirect_from:
     and <span style="color:blue; font-style: italic">Rudolf Kalman</span>.
 </p>
 
-I am passionate about robotics, particularly in areas such as **legged robots**, **robotic manipulation**, and **autonomous driving**. My research interests include, but are not limited to, **optimal control**, **iterative learning control**, **reinforcement learning** and **imitation learning**.
+I am passionate about robotics, particularly in areas such as **legged robots**, **robotic manipulation**, and **autonomous driving**. My research interests include, but are not limited to, **optimal control**, **data-driven control**, **reinforcement learning** and **imitation learning**.
 
 I am looking for *Ph.D.* opportunities starting in *Fall 2026*.
 
