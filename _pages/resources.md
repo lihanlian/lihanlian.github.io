@@ -52,6 +52,7 @@ To share these execellent learning materials with others who are on a similar pa
   - <i class="fab fa-youtube"></i> [Variational Autoencoders - Generative AI Animated](https://www.youtube.com/watch?v=qJeaCHQ1k2w)
   - <i class="fab fa-youtube"></i> Generative Adversarial Networks (GANs) [Gentle Intro](https://www.youtube.com/watch?v=3z8VSpBL6Vg&t=313s) & [Understand the Math and Theory of GANs](https://www.youtube.com/watch?v=J1aG12dLo4I)
   - <i class="fab fa-youtube"></i> [What are Diffusion Models?](https://www.youtube.com/watch?v=fbLgFrlTnGU)
+  - <i class="fab fa-youtube"></i> [An Optimal Control Perspective on Diffusion-Based Generative Modeling](https://www.youtube.com/watch?v=wQpQg1xIlBA)
 
 - Foundation Models
   - <i class="fab fa-youtube"></i> [Vision Language Models - EEML'24](https://www.youtube.com/watch?v=rUQUv4u7jFs&list=LL&index=4)
