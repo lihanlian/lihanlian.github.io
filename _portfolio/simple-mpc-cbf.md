@@ -1,5 +1,5 @@
 ---
-title: "▪ simple-mpc-cbf"
+title: "▪ Simple-MPC-CBF"
 collection: publication
 # redirect_to: "https://github.com/lihanlian/simple-mpc-cbf"
 ---

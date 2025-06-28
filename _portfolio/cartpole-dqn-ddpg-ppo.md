@@ -1,5 +1,5 @@
 ---
-title: "▪ cartpole-dqn-ddpg-ppo"
+title: "▪ Cartpole-DQN-DDPG-PPO"
 collection: publication
 # redirect_to: "https://github.com/lihanlian/simple-mpc-cbf"
 ---

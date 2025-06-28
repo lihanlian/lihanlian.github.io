@@ -1,5 +1,5 @@
 ---
-title: "▪ trajectory-tracking-ilc"
+title: "▪ Trajectory-Tracking-ILC"
 collection: publication
 # redirect_to: "https://github.com/lihanlian/simple-mpc-cbf"
 ---

@@ -1,5 +1,5 @@
 ---
-title: "▪ cartoon-diffusion-model"
+title: "▪ Cartoon-VAE-Diffusion"
 collection: publication
 ---
 Minimal implementation of diffusion models for cartoon images generation..<br/> 

@@ -1,5 +1,5 @@
 ---
-title: "▪ tiny-mujoco-playground"
+title: "▪ MuJoCo-RMP2-PyTorch"
 collection: publications
 # permalink: /publications/2023-09-20-pub1
 # excerpt: 'This paper is about fixing template issue #693.'

@@ -1,5 +1,5 @@
 ---
-title: "▪ motion-planning-mpc"
+title: "▪ Motion-Planning-MPC"
 collection: publication
 # redirect_to: "https://github.com/lihanlian/simple-mpc-cbf"
 ---
