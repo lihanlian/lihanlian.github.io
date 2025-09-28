@@ -1,14 +1,28 @@
 ---
 layout: archive
-title: "Open Source Projects"
+title: ""                  # keep empty so the layout doesn't print a big H1
 permalink: /portfolio/
 author_profile: true
 ---
 
 {% include base_path %}
 
+<style>
+  .page__title { display: none; } /* hide any layout H1 */
+</style>
 
-{% for post in site.portfolio %}
-  {% include archive-single.html %}
+{% assign grouped = site.portfolio | group_by: "category" | sort: "name" %}
+
+{% for group in grouped %}
+  <h2
+    id="{{ group.name | slugify }}"
+    class="section-title"
+    style="background:#0d223d;color:#ffd84d;padding:.45rem .8rem;border-radius:.5rem;font-size:1.6rem;line-height:1.25;margin:2rem 0 1rem;">
+    {{ group.name }}
+  </h2>
+
+  {% assign items = group.items | sort: "weight" | sort: "title" %}
+  {% for post in items %}
+    {% include archive-single.html %}
+  {% endfor %}
 {% endfor %}
-

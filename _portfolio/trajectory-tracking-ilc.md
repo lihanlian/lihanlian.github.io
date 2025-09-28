@@ -1,6 +1,7 @@
 ---
 title: "▪ Trajectory-Tracking-ILC"
 collection: publication
+category: "Optimal Control"   # <-- add this
 # redirect_to: "https://github.com/lihanlian/simple-mpc-cbf"
 ---
 Use Iterative Learning Control (ILC) for trajectory tracking task with the existence of model mismatch. Model Predictive Control (MPC) is also used for comparison.<br/> 

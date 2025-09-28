@@ -1,6 +1,7 @@
 ---
 title: "▪ Cartoon-VAE-Diffusion"
 collection: publication
+category: "Generative Models"   # <-- add this
 ---
 Minimal implementation of VAE and diffusion models for cartoon images generation..<br/> 
 <i class="fa-brands fa-github"></i> [**[Code]**](https://github.com/lihanlian/cartoon-vae-diffusion) &nbsp;&nbsp;&nbsp;&nbsp;

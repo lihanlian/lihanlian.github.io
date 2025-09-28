@@ -1,6 +1,7 @@
 ---
 title: "▪ Cartpole-DQN-DDPG-PPO"
 collection: publication
+category: "Reinforcement Learning"   # <-- add this
 # redirect_to: "https://github.com/lihanlian/simple-mpc-cbf"
 ---
 Minimal implementation of RL algorithms (DQN, DDPG and PPO) in Isaac Gym cartpole environment.<br/> 

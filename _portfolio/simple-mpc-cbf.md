@@ -1,6 +1,7 @@
 ---
 title: "▪ Simple-MPC-CBF"
 collection: publication
+category: "Optimal Control"   # <-- add this
 # redirect_to: "https://github.com/lihanlian/simple-mpc-cbf"
 ---
 Simple scripts that are used for solving motion planning & obstacle avoidance problems via Model Predictive Control (MPC) & Control Barrier Function (CBF).<br/> 

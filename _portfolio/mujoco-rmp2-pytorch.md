@@ -1,6 +1,7 @@
 ---
 title: "▪ MuJoCo-RMP2-PyTorch"
 collection: publications
+category: "Robotic Manipulation"   # <-- add this
 # permalink: /publications/2023-09-20-pub1
 # excerpt: 'This paper is about fixing template issue #693.'
 # date: 2024-09-30
