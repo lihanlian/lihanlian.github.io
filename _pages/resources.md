@@ -35,6 +35,15 @@ To share these execellent learning materials with others who are on a similar pa
     - <i class="fab fa-youtube"></i> [Reinforcement Learning: Machine Learning Meets Control Theory](https://www.youtube.com/watch?v=0MNVhXEX9to&list=PLMrJAkhIeNNQe1JXNvaFvURxGY4gE9k74&index=1) by Prof. Steve Brunton
     - <i class="fab fa-youtube"></i> [CS 182 Lecture 15-16](https://www.youtube.com/watch?v=_AYvYUrDohw&list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A&index=45) & [CS 285](https://www.youtube.com/watch?v=SupFHGbytvA&list=PL_iWQOsE6TfVYGEGiAOMaOzzv41Jfm_Ps&index=1) by Prof. Sergey Levine
     - <i class="fab fa-youtube"></i> [Foundations of Deep RL Series](https://www.youtube.com/watch?v=2GwBez0D20A&list=PLwRJQ4m4UJjNymuBM9RdmB3Z9N5-0IlY0) by Prof. Pieter Abbeel
+    
+
+- Robust Control
+    - <i class="fab fa-youtube"></i> [Robust Control Series](https://www.youtube.com/watch?v=A7wHSr6GRnc&list=PLFPzRkhSPjbO7_b-GgVYz3dgCXgELqpGW) (MATLAB)
+    - <i class="fab fa-youtube"></i> [Incorporating robust control guarantees within (deep) reinforcement learning](https://www.youtube.com/watch?v=FWl_FjO-Ngo) by Prof. Zico Kolter
+
+- Stochastic Control
+    - <i class="fab fa-youtube"></i> [Introduction to Stochastic Control Theory](https://www.youtube.com/watch?v=WX06D1LVeCE&list=PLhvw3mw86d7d716QYXuWeYu_MrqXWwPaH&index=1)
+    - <i class="fab fa-youtube"></i> [Lecture 22: Stochastic control](https://www.youtube.com/watch?v=YB-80YD65SY) & [Lecture 22: LQ Stochastic Control, MDPs](https://www.youtube.com/watch?v=OPKoJGN3N1w) by Prof. Zico Kolter
 
 ## Deep Learning
 
