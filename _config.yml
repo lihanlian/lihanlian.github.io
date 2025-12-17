@@ -171,6 +171,7 @@ exclude:
   - package.json
   - tmp
   - vendor
+  - robotic-manipulation-handbook
 keep_files:
   - .git
   - .svn
