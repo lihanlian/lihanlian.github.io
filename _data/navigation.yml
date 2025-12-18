@@ -17,8 +17,8 @@ main:
   - title: "Resources"
     url: /resources/ 
     
-  # - title: "CV"
-  #   url: /cv/
+  - title: "Notebooks"
+    url: /notebooks/
     
   # - title: "Guide"
   #   url: /markdown/
