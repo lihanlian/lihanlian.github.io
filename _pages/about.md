@@ -33,8 +33,12 @@ Prior to that, I obtained a Bachelor's degree in Mechanical Engineering with a m
 <div class="news-section">
   <ul class="news-list">
     <li>
+      <div class="news-date">Dec 10, 2025</div>
+      <div class="news-content"> I am happy to present our accepted paper at <span style="color:blue; font-style: italic;"> Conference on Decision and Control (CDC) 2025</span> in Rio de Janeiro, Brazil.</div>
+    </li>
+    <li>
       <div class="news-date">July 16, 2025</div>
-      <div class="news-content"> Paper "Neural Co-state Regulator: A Data-Driven Paradigm for Real-time Optimal Control with Input Constraints" has been accepted for <span style="color:blue; font-style: italic;"> Conference of Decision and Control (CDC) 2025</span>! Code is also now availabe.</div>
+      <div class="news-content"> Paper "Neural Co-state Regulator: A Data-Driven Paradigm for Real-time Optimal Control with Input Constraints" has been accepted for <span style="color:blue; font-style: italic;"> Conference on Decision and Control (CDC) 2025</span>! Code is also now availabe.</div>
     </li>
     <li>
       <div class="news-date">Jan 17, 2025</div>
