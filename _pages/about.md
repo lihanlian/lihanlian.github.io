@@ -22,10 +22,9 @@ I am looking for *Ph.D.* opportunities starting in *Fall 2026*.
 ## About me
 
 <!-- I am currently a research assistant at <span style="color:blue">*Shanghai Jiao Tong University*</span>, supervised by [Prof. Wenzhao Lian](https://lianwenzhao.github.io/) ([连文昭](https://soai.sjtu.edu.cn/cn/facultydetails/zzjs/lianwenzhao)).  -->
-I earned my Master’s degree in Robotics at the <span style="color:blue">*University of Michigan, Ann Arbor*</span>, where I was advised by [Prof. Uduak Inyang-Udoh](https://me.engin.umich.edu/people/faculty/uduak-inyang-udoh/) in the [Autonomous & Intelligent Systems Lab (AI-Sys Lab)](https://aisys.engin.umich.edu/). My work primarily focuses on applying **data-driven methods** to solve **optimal control problems**. 
+I earned my Master’s degree in Robotics at the <span style="color:blue">*University of Michigan, Ann Arbor*</span>, where I was advised by [Prof. Uduak Inyang-Udoh](https://me.engin.umich.edu/people/faculty/uduak-inyang-udoh/) in the [Autonomous & Intelligent Systems Lab (AI-Sys Lab)](https://aisys.engin.umich.edu/). My work primarily focuses on applying **data-driven methods** to solve **optimal control problems**, with a particular focus on indirect method. 
 
-Prior to that, I obtained a Bachelor's degree in Mechanical Engineering with a minor in Computer Science from the <span style="color:blue">*University of Michigan, Ann Arbor*</span>. During my undergraduate studies, I was advised by [Prof. Jingwen Hu](https://me.engin.umich.edu/people/faculty/jingwen-hu/) at the [University of Michigan Transportation Research Institute (UMTRI)](https://www.umtri.umich.edu/), where I worked on **parametric human modeling**, with a particular emphasis on [thoracic spine modeling](https://saemobilus.sae.org/articles/a-parametric-thoracic-spine-model-accounting-geometric-variations-age-sex-stature-body-mass-index-09-11-02-0012).
-
+Prior to that, I obtained a Bachelor's degree in Mechanical Engineering with a minor in Computer Science from the <span style="color:blue">*University of Michigan, Ann Arbor*</span>. During my undergraduate studies, I was advised by [Prof. Jingwen Hu](https://me.engin.umich.edu/people/faculty/jingwen-hu/) at the [University of Michigan Transportation Research Institute (UMTRI)](https://www.umtri.umich.edu/), where I worked on **parametric human modeling**, with a particular emphasis on thoracic spine modeling.
 ## News
 
 <div class="news-section">
