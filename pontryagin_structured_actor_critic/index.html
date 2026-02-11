@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="DESCRIPTION META TAG">
+  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
+  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG"/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
+  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>Actor Critic</title>
+  <!-- <i class="fa-solid fa-book-open"></i> -->
+  <link rel="icon" type="image/svg+xml" href="static/images/book-open-solid.svg">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet"> -->
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-2 publication-title">Model-Free Nonlinear Optimal Control</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://lihanlian.github.io/" target="_blank">Lihan Lian</a>,</span>
+                <span class="author-block">
+                  <a href="https://me.engin.umich.edu/people/faculty/uduak-inyang-udoh/" target="_blank">Uduak Inyang-Udoh</a>
+                </span>
+                </div>
+
+                <div class="is-size-5 publication-authors">
+                  <span class="author-block">University of Michigan - Ann Arbor<br>
+                    <span style="color: blue; font-style: italic;">Conference on Decision and Control (in submission)</span>
+                  </span>
+                  <!-- <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span> -->
+                </div>
+                <div class="column has-text-centered">
+                  <div class="publication-links">
+
+                    <!-- ArXiv abstract Link -->
+                    <span class="link-block">
+                      <a href="https://arxiv.org/abs/2507.12259" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                      </a>
+                    </span>
+                    <!-- Github link -->
+                    <span class="link-block">
+                      <a href="https://github.com/lihanlian/neural-costate-regulator" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                      </a>
+                    </span>
+                    <!-- Conference Paper link -->
+                    <span class="link-block">
+                      <a href="https://ieeexplore.ieee.org/document/11312025" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                      </a>
+                    </span>
+
+                  <!-- Supplementary PDF link -->
+                  <!-- <span class="link-block">
+                    <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Supplementary</span>
+                    </a>
+                  </span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We propose a novel unsupervised learning framework for solving nonlinear optimal control problems (OCPs)
+            with input constraints in real-time. In this framework, a neural
+            network (NN) learns to predict the optimal co-state trajectory
+            that minimizes the control Hamiltonian for a given system,
+            at any system's state, based on the Pontryagin's Minimum
+            Principle (PMP). Specifically, the NN is trained to find the
+            norm-optimal co-state solution that simultaneously satisfies the
+            nonlinear system dynamics and minimizes a quadratic regula-
+            tion cost. The control input is then extracted from the predicted
+            optimal co-state trajectory by solving a quadratic program
+            (QP) to satisfy input constraints and optimality conditions. We
+            coin the term neural co-state regulator (NCR) to describe the
+            combination of the co-state NN and control input QP solver.
+            To demonstrate the effectiveness of the NCR, we compare its
+            feedback control performance with that of an expert nonlinear
+            model predictive control (MPC) solver on a unicycle model.
+            Because the NCR's training does not rely on expert nonlinear
+            control solvers which are often suboptimal, the NCR is able to
+            produce solutions that outperform the nonlinear MPC solver
+            in terms of convergence error and input trajectory smoothness
+            even for system conditions that are outside its original training
+            domain. At the same time, the NCR offers two orders of
+            magnitude less computational time than the nonlinear MPC.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- Problem Formulation -->
+<section class="section is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Example</h2>
+        <div class="content has-text-justified">
+          <p>
+            Consider the following nonlinear optimal control problem for a unicycle model in continuous time that has quadratic stage cost:
+          </p>
+          <p style="text-align: center;">
+             \( \underset{u}{min} \quad \text{J} = \int_0^{t_f} \left( z^T Q z + u^T R u \right) \, dt + \phi(z(t_f)) \)
+          </p>
+          <!-- <p style="text-align: center;">
+            subject to:
+          </p> -->
+          <p style="text-align: center;">
+            s.t. \(\quad z_1 = \dot{x} = v \cos(\theta) \)
+          </p>
+          <p style="text-align: center;">
+            \( \quad  z_2 = \dot{y} = v \sin(\theta) \)
+          </p>
+          <p style="text-align: center;">
+            \( z_3 = \dot{\theta} = \omega \)
+          </p>
+          <p style="text-align: center;">
+            \( u \in U, \quad z(0) \in \mathbb{R}^3 \)
+          </p>
+          <p>
+            Here we denote \( z_1 = x, z_2 = y, z_3 = \theta, u_1 = v, u_2 = w \).
+            The control input constraints are \( -1 \leq v \leq 1, \, -4 \leq \omega \leq 4 \), 
+            \( t_f \) is the wall-clock length of time for both the MPC and the NCR prediction horizon.
+            For the cost function, \( Q = \text{diag}(10, 10, 10), \, R = \text{diag}(1, 1) \) and \( \phi(z(t_f)) = z^T S z(t_f) \), where \( S =  50Q \) \(= \text{diag}(500, 500, 500) \).
+          </p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Problem Formulation -->
+
+<!-- Three images side by side with captions -->
+<section class="section" style="background-color: #f0f0f0;">
+  <div class="container">
+    <h3 class="title is-4">Case A: Seen initial conditions and zero reference</h3>
+    <div class="columns is-centered">
+      <!-- First Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/mpc_N30_h50_a.png" alt="Description 3">
+        </figure>
+        <p class="subtitle is-6 mt-2">MPC state trajectories vs time (left) and control input trajectories vs time (right)</p>
+      </div>
+      
+      <!-- Second Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/ncr_N30_h50_a.png" alt="Description 1">
+        </figure>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
+      </div>
+
+      <!-- Third Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/animation_a.gif" alt="Description 2">
+        </figure>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Two videos side by side with captions -->
+<section class="section" >
+  <div class="container">
+    <h3 class="title is-4">Animated wheeled robot motion (Case A)</h3>
+    <div class="columns is-centered">
+      <!-- First Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/mpc_N30_h50_a.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from MPC (reflect actual computational speed)</p>
+      </div>
+
+      <!-- Second Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/ncr_N30_h50_a.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from NCR (reflect actual computational speed)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Three images side by side with captions -->
+<section class="section" style="background-color: #f0f0f0;">
+  <div class="container">
+    <h3 class="title is-4">Case B: Unseen initial conditions and zero reference</h3>
+    <div class="columns is-centered">
+      <!-- First Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/mpc_N30_h50_b.png" alt="Description 3">
+        </figure>
+        <p class="subtitle is-6 mt-2">MPC state trajectories vs time (left) and control input trajectories vs time (right)</p>
+      </div>
+      
+      <!-- Second Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/ncr_N30_h50_b.png" alt="Description 1">
+        </figure>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
+      </div>
+
+      <!-- Third Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/animation_b.gif" alt="Description 2">
+        </figure>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Two videos side by side with captions -->
+<section class="section" >
+  <div class="container">
+    <h3 class="title is-4">Animated wheeled robot motion (Case B)</h3>
+    <div class="columns is-centered">
+      <!-- First Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/mpc_N30_h50_b.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from MPC (reflect actual computational speed)</p>
+      </div>
+
+      <!-- Second Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/ncr_N30_h50_b.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from NCR (reflect actual computational speed)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Three images side by side with captions -->
+<section class="section" style="background-color: #f0f0f0;">
+  <div class="container">
+    <h3 class="title is-4">Case C: Unseen initial conditions and nonzero reference</h3>
+    <div class="columns is-centered">
+      <!-- First Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/mpc_N30_h50_c.png" alt="Description 3">
+        </figure>
+        <p class="subtitle is-6 mt-2">MPC state trajectories vs time (left) and control input trajectories vs time (right)</p>
+      </div>
+      
+      <!-- Second Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/ncr_N30_h50_c.png" alt="Description 1">
+        </figure>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and control input trajectories vs time (right)</p>
+      </div>
+
+      <!-- Third Image -->
+      <div class="column is-one-third has-text-centered">
+        <figure class="image">
+          <img src="static/images/animation_c.gif" alt="Description 2">
+        </figure>
+        <p class="subtitle is-6 mt-2">NCR state trajectories vs time (left) and predicted co-state trajectories vs time (right)</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Two videos side by side with captions -->
+<section class="section" >
+  <div class="container">
+    <h3 class="title is-4">Animated wheeled robot motion (Case C)</h3>
+    <div class="columns is-centered">
+      <!-- First Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/mpc_N30_h50_c.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from MPC (reflect actual computational speed)</p>
+      </div>
+
+      <!-- Second Video -->
+      <div class="column is-one-half has-text-centered">
+        <figure class="image">
+          <video width="100%" controls>
+            <source src="static/videos/ncr_N30_h50_c.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <p class="subtitle is-6 mt-2">Resulting simulation in x-y plane from NCR (reflect actual computational speed)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Youtube video -->
+<!-- <section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      
+      <h2 class="title is-3">Video Presentation</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <div class="publication-video">
+            
+            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- End youtube video -->
+
+
+<!-- Video carousel -->
+<!-- <section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Another Carousel</h2>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-video1">
+          <video poster="" id="video1" autoplay controls muted loop height="100%">
+            
+            <source src="static/videos/carousel1.mp4"
+            type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-video2">
+          <video poster="" id="video2" autoplay controls muted loop height="100%">
+            
+            <source src="static/videos/carousel2.mp4"
+            type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-video3">
+          <video poster="" id="video3" autoplay controls muted loop height="100%">\
+            
+            <source src="static/videos/carousel3.mp4"
+            type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- End video carousel -->
+
+
+
+
+
+
+<!-- Paper poster -->
+<!-- <section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title">Poster</h2>
+
+      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
+          </iframe>
+        
+      </div>
+    </div>
+  </section> -->
+<!--End paper poster -->
+
+
+<!--BibTex citation -->
+  <!-- <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>BibTex Code Here</code></pre>
+    </div>
+</section> -->
+<!--End BibTex citation -->
+
+
+  <!-- <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer> -->
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
