@@ -1,7 +1,7 @@
 ---
 title: "▪ Cartoon-VAE-Diffusion"
 collection: publication
-category: "Deep Learning"   # <-- add this
+category: "Generative Model"   # <-- add this
 ---
 Minimal implementation of VAE and diffusion models for cartoon images generation..<br/> 
 <i class="fa-solid fa-blog"></i> [**[Blog Post]**](https://lihanlian.github.io/posts/blog8)&nbsp;&nbsp;&nbsp;&nbsp;
