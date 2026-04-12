@@ -8,7 +8,10 @@ main:
   - title: "Blog Posts"
     url: /blog-post/
 
-  - title: "Project"
+  - title: "Notebooks"
+    url: /notebooks/
+    
+  - title: "Projects"
     url: /portfolio/
     
   - title: "Publications"
@@ -17,8 +20,7 @@ main:
   - title: "Resources"
     url: /resources/ 
     
-  - title: "Notebooks"
-    url: /notebooks/
+
     
   # - title: "Guide"
   #   url: /markdown/
