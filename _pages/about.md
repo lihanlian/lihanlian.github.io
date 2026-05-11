@@ -10,7 +10,7 @@ redirect_from:
 I am a robotics enthusiast with a deep admiration for the pioneers of modern control theory, including <span style="color:blue; font-style: italic">Lev Pontryagin</span>, 
 <span style="color:blue; font-style: italic">Richard Bellman</span>, and <span style="color:blue; font-style: italic">Rudolf Kalman</span>.
 
-I am passionate about robotics, particularly in areas such as **robotic manipulation**, **legged locomotion**, and **autonomous driving**. My research interests include, but are not limited to, **optimal control**, **reinforcement learning**， **visual servoing** and **imitation learning**.
+I am passionate about robotics, particularly in areas such as **robotic manipulation**, **legged locomotion**, and **autonomous driving**. My research interests include, but are not limited to, **optimal control**, **reinforcement learning**, **visual servoing** and **imitation learning**.
 
 I am looking for *Ph.D.* opportunities starting in *Fall 2026*.
 
