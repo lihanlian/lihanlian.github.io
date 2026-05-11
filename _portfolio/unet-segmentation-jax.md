@@ -1,5 +1,5 @@
 ---
-title: "▪ Unet-Segmentation-Jax"
+title: "▪ U-Net-Segmentation-Jax"
 collection: publications
 category: "Computer Vision"   # <-- add this
 # permalink: /publications/2023-09-20-pub1
@@ -8,9 +8,9 @@ category: "Computer Vision"   # <-- add this
 # venue: 'SAE International Journal of Transportation Safety'
 # redirect_to: 'https://sae.org/publications/technical-papers/content/09-11-02-0012/'
 ---
-Simplified implementation of basic neural style transfer and fast neural style transfer in PyTorch.
+Jax-based implementation of U-net for image segemetation task using the Oxford-IIIT Pet Dataset.
 <br/> 
 <i class="fa-solid fa-blog"></i> [**[Blog Post]**](https://lihanlian.github.io/posts/blog11)&nbsp;&nbsp;&nbsp;&nbsp;
 <i class="fa-brands fa-github"></i> [**[Code]**](https://github.com/lihanlian/basic-and-fast-neural-style-transfer)
 <br/>
-<img src='/images/project-basic-and-fast-nst.jpg'>
+<img src='/images/blog/blog11/example.png'>
