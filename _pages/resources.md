@@ -72,6 +72,7 @@ To share these execellent learning materials with others who are on a similar pa
 ## Differential Geometry
  - <i class="fab fa-youtube"></i> [Differential Geometry](https://www.youtube.com/watch?v=jJqpkeuaLN0&list=PLJSvriS_WDrsZyyPGfHASMKmbqMD58jqE) (Introductory Lectures)
  - <i class="fa-solid fa-book-open"></i> [Geometric tracking control of a quadrotor UAV on SE(3)](https://ieeexplore.ieee.org/document/5717652)
+ - <i class="fa-brands fa-github"></i> [pypose](https://github.com/pypose/pypose)
 
 - Riemannian Motion Policies & Geometric Fabrics (by Nathan Ratliff)
   - <i class="fa-solid fa-book-open"></i> [Riemannian Motion Policies](https://arxiv.org/abs/1801.02854)
@@ -113,7 +114,7 @@ To share these execellent learning materials with others who are on a similar pa
 
     - <i class="fa-brands fa-chrome"></i> [Robotic Manipulation](https://manipulation.mit.edu/index.html) and <i class="fa-brands fa-chrome"></i> [Underactuated Robotics](https://underactuated.csail.mit.edu/index.html) by Prof. Russ Tedrake
 
-    - <i class="fa-brands fa-github"></i> [pinocchio](https://github.com/stack-of-tasks/pinocchio), <i class="fa-brands fa-github"></i> [pyroboplan](https://github.com/sea-bass/pyroboplan) (<i class="fa-brands fa-chrome"></i> [documentation](https://pyroboplan.readthedocs.io/en/latest/motion_planning.html#))
+    - <i class="fa-brands fa-github"></i> [pinocchio](https://github.com/stack-of-tasks/pinocchio), <i class="fa-brands fa-github"></i> [pyroboplan](https://github.com/sea-bass/pyroboplan) (<i class="fa-brands fa-chrome"></i> [documentation](https://pyroboplan.readthedocs.io/en/latest/motion_planning.html#)), <i class="fa-brands fa-github"></i> [mujoco-learning](https://github.com/LitchiCheng/mujoco-learning)
     
     - <i class="fab fa-youtube"></i> [Robot Manipulator Control ](https://www.youtube.com/watch?v=jtei695t4VY&list=PLWH0s-b_VS9Hf67pR5x1wVkyJEdTHvB6D) and <i class="fab fa-youtube"></i> [Contact-Aware Control](https://www.youtube.com/watch?v=ntvMtCwxYpw&list=PLlxR_sEKjSpRZwJ1Bv56iRfgOs-cALCwT)
 
