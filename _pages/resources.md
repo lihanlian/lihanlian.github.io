@@ -9,6 +9,14 @@ In my journey of exploring and learning topics like robotics, optimization, cont
 
 To share these execellent learning materials with others who are on a similar path, I have curated a list of these resources organized by topic as shown below.
 
+## Agent
+- <i class="fa-brands fa-github"></i> [Langchain](https://github.com/langchain-ai/langchain), <i class="fa-brands fa-github"></i> [Langgraph](https://github.com/langchain-ai/langgraph), <i class="fa-brands fa-github"></i> [LangChain-OpenTutorial](https://github.com/LangChain-OpenTutorial/LangChain-OpenTutorial) 
+- <i class="fa-solid fa-book-open"></i> [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
+
+- AI Agent Concepts
+    - <i class="fa-brands fa-youtube"></i> [What are AI Agents?](https://www.youtube.com/watch?v=F8NKVhkZZWI&list=PLOspHqNVtKAB6AzNie7BrFhbg4dv4Gfz8) by IBM Technology
+
+
 ## Control
 - <i class="fab fa-youtube"></i> [Optimal Control (CMU 16-745)](https://www.youtube.com/watch?v=6rUdAOCNXAU&list=PLZnJoM76RM6KugDT9sw5zhAmqKnGeoLRa) by Prof. Zac Manchester.
 - <i class="fab fa-youtube"></i> [Pontryagin meets Bellman](https://www.youtube.com/watch?v=ue-BkPE2dY0) from *IFAC Seminar*
