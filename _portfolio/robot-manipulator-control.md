@@ -9,6 +9,6 @@ category: "Robotic Manipulation"   # <-- add this
 # redirect_to: 'https://sae.org/publications/technical-papers/content/09-11-02-0012/'
 ---
 Compact implementation of various manipulator control approaches in MuJoCo simulator. (Ongoing project)
-<br/> <i class="fa-brands fa-github"></i> [**[Code]**](https://github.com/lihanlian/tiny-mujoco-playground) &nbsp;&nbsp;&nbsp;&nbsp;
-<i class="fa-solid fa-blog"></i> [**[Blog Post]**](https://lihanlian.github.io/posts/blog9)&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<br/> <i class="fa-brands fa-github"></i> [**[Code]**](https://github.com/lihanlian/robot-manipulator-control) &nbsp;&nbsp;&nbsp;&nbsp;
+<i class="fa-solid fa-book"></i> [**[Notebook]**](https://lihanlian.github.io/robotic-manipulation-notebook/docs/Kinematics/inverse_kinematics.html)&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <img src='/images/02_kuka_osc.gif' style='width:400px;'>
