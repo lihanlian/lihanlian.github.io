@@ -20,14 +20,38 @@ See more info at https://academicpages.github.io/
 
 ## Running Locally
 
-When you are initially working your website, it is very useful to be able to preview the changes locally before pushing them to GitHub. To work locally you will need to:
+Use Ruby 3.3 and Bundler to preview the site before pushing changes to GitHub.
+From the root directory of this repository, run:
 
-1. Clone the repository and made updates as detailed above.
-1. Make sure you have ruby-dev, bundler, and nodejs installed: `sudo apt install ruby-dev ruby-bundler nodejs`
-1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
-1. Run `jekyll serve -l -H localhost` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change.
+```sh
+bundle config set --local path vendor/bundle
+bundle install
+bundle exec jekyll serve --livereload
+```
 
-If you are running on Linux it may be necessary to install some additional dependencies prior to being able to run locally: `sudo apt install build-essential gcc make`
+Open <http://127.0.0.2:4001/>. Changes rebuild the site and reload the browser;
+restart the server after changing `_config.yml`. Press `Ctrl+C` to stop it.
+The preview uses the loopback address `127.0.0.2` and port `4001` from `_config.yml`.
+LiveReload uses `127.0.0.2:35729`, so this site can run alongside
+`robotic-manipulation-notebook` on `127.0.0.1`. Jekyll 3.10 requires a command-line
+`--livereload-port` option to change that port; it ignores the YAML setting.
+
+On the configured local machine, `bundle` is available through `~/.local/bin/bundle`,
+which uses the Ruby environment shared with `robotic-manipulation-notebook`.
+Each project's gems are installed separately in its own `vendor/bundle` directory.
+To use Ruby or RubyGems directly, run `conda activate robotic-manipulation-notebook`.
+
+On another Linux machine with Conda, create the Ruby environment first:
+
+```sh
+conda create -n jekyll --override-channels -c conda-forge \
+  ruby=3.3.6 gcc_linux-64=13 gxx_linux-64=13 make pkg-config
+conda activate jekyll
+```
+
+The generated site (`_site`), local gems (`vendor/bundle`), Bundler settings
+(`.bundle`), and resolved dependency versions (`Gemfile.lock`) are ignored by Git.
+Keep the local lockfile to reuse the same dependency versions on subsequent installs.
 
 # Maintenance 
 
