@@ -1,5 +1,5 @@
 ---
-title: "Implementation Details of Cartoon-VAE-Diffusion"
+title: "Implementation Details of Cartoon-VAE-DDPM"
 date: 2025-06-30
 permalink: /posts/blog8
 tags:
@@ -7,7 +7,7 @@ tags:
   - Diffusion Models
   - Computer Vision
 ---
-**Variational Autoencoder (VAE)** learns to compress data into a latent Gaussian space and reconstruct it in a single shot. [**Denoising Diffusion Probabilistic Model (DDPM)**](https://arxiv.org/pdf/2006.11239) tackles the same evidence-lower-bound objective from another direction: it begins with pure noise and iteratively denoise through hundreds of steps, exchanging speed for high-fidelity, stable synthesis. Both frameworks connect random noise to data, yet VAE rely on an explicit **encoder–decoder pair**, whereas DDPM use a learned Markov chain that inverts a forward noising process. This blog traces the progression from VAE to DDPM, clarifying their shared principles, with code examples available at this <i class="fa-brands fa-github"></i> [repository](https://github.com/lihanlian/cartoon-diffusion-model).
+**Variational Autoencoder (VAE)** learns to compress data into a latent Gaussian space and reconstruct it in a single shot. [**Denoising Diffusion Probabilistic Model (DDPM)**](https://arxiv.org/pdf/2006.11239) tackles the same evidence-lower-bound objective from another direction: it begins with pure noise and iteratively denoise through hundreds of steps, exchanging speed for high-fidelity, stable synthesis. Both frameworks connect random noise to data, yet VAE rely on an explicit **encoder–decoder pair**, whereas DDPM use a learned Markov chain that inverts a forward noising process. This blog traces the progression from VAE to DDPM, clarifying their shared principles, with code examples available at this <i class="fa-brands fa-github"></i> [repository](https://github.com/lihanlian/cartoon-vae-ddpm).
 
 ## Problem Formulation for Image Generation Model
 
@@ -70,10 +70,10 @@ tags:
 
 ## References
  1. <i class="fab fa-youtube"></i> [Variational Autoencoder - Model, ELBO, loss function and maths explained easily!](https://www.youtube.com/watch?v=iwEzwTTalbg) 
- 2. <i class="fab fa-youtube"></i> [Understanding Variational Autoencoders (VAEs)](https://www.youtube.com/watch?v=HBYQvKlaE0A) 
+ 2. <i class="fab fa-youtube"></i> [Understanding Variational Autoencoders (VAEs)](https://www.youtube.com/watch?v=HBYQvKlaE0A), [Variational Autoencoders \| Generative AI Animated](https://www.youtube.com/watch?v=qJeaCHQ1k2w&t=225s)
  3. <i class="fab fa-youtube"></i> [The Breakthrough Behind Modern AI Image Generators - Diffusion Models Part 1](https://www.youtube.com/watch?v=1pgiu--4W3I&t=1s) 
- 4. <i class="fa-solid fa-book-open"></i> [Denoising Diffusion Probabilistic Models](https://arxiv.org/pdf/2006.11239) (DDPM Paper) 
- 5. <i class="fa-solid fa-book-open"></i> [Denoising Diffusion Implicit Models](https://arxiv.org/abs/2010.02502) (DDIM Paper) 
+ 4. <i class="fa-solid fa-book-open"></i> [Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114) (VAE Paper)
+ 5. <i class="fa-solid fa-book-open"></i> [Denoising Diffusion Probabilistic Models](https://arxiv.org/pdf/2006.11239) (DDPM Paper), [Denoising Diffusion Implicit Models](https://arxiv.org/abs/2010.02502) (DDIM Paper) 
  6. <i class="fab fa-youtube"></i> [Diffusion Model Paper Explanation](https://www.youtube.com/watch?v=HoKDTa5jHvg), [PyTorch Implementation Walk Through](https://www.youtube.com/watch?v=TBCRlnwJtZU&t=874s) and corresponding <i class="fa-brands fa-github"></i> [github repo](https://github.com/dome272/Diffusion-Models-pytorch)
  7. <i class="fa-brands fa-github"></i> [diffusion-DDPM-pytorch](https://github.com/Alokia/diffusion-DDPM-pytorch) & [diffusion-DDIM-pytorch](https://github.com/Alokia/diffusion-DDIM-pytorch)
  8. <i class="fab fa-youtube"></i> [An Optimal Control Perspective on Diffusion-Based Generative Modeling](https://www.youtube.com/watch?v=wQpQg1xIlBA&list=LL&index=3&t=2299s) & [SDE/ODE Interpretation of Diffusion Model](https://www.youtube.com/watch?v=Ro4v4z8YAsk&list=LL&index=3)

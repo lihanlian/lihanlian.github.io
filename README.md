@@ -20,8 +20,23 @@ See more info at https://academicpages.github.io/
 
 ## Running Locally
 
-Use Ruby 3.3 and Bundler to preview the site before pushing changes to GitHub.
-From the root directory of this repository, run:
+Use Ruby 3.2 or 3.3 and Bundler 2.5.22 to preview the site before pushing changes
+to GitHub. On Ubuntu 24.04, install Ruby and the tools needed to build native
+gems, then install Bundler for your user:
+
+```sh
+sudo apt update
+sudo apt install ruby-full build-essential zlib1g-dev libffi-dev libssl-dev pkg-config
+mkdir -p "$HOME/.local/bin"
+gem install bundler -v 2.5.22 --user-install --bindir "$HOME/.local/bin" --no-document
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+Keep `~/.local/bin` on your `PATH` in new terminals. The configured local machine
+already adds it through `~/.profile`.
+
+From the root directory of this repository, install the dependencies and start
+the preview server:
 
 ```sh
 bundle config set --local path vendor/bundle
@@ -36,18 +51,9 @@ LiveReload uses `127.0.0.2:35729`, so this site can run alongside
 `robotic-manipulation-notebook` on `127.0.0.1`. Jekyll 3.10 requires a command-line
 `--livereload-port` option to change that port; it ignores the YAML setting.
 
-On the configured local machine, `bundle` is available through `~/.local/bin/bundle`,
-which uses the Ruby environment shared with `robotic-manipulation-notebook`.
-Each project's gems are installed separately in its own `vendor/bundle` directory.
-To use Ruby or RubyGems directly, run `conda activate robotic-manipulation-notebook`.
-
-On another Linux machine with Conda, create the Ruby environment first:
-
-```sh
-conda create -n jekyll --override-channels -c conda-forge \
-  ruby=3.3.6 gcc_linux-64=13 gxx_linux-64=13 make pkg-config
-conda activate jekyll
-```
+On the configured local machine, `~/.local/bin/bundle` runs with system Ruby.
+Each project's gems are installed separately in its own `vendor/bundle` directory;
+run `bundle install` again after changing Ruby versions to rebuild native gems.
 
 The generated site (`_site`), local gems (`vendor/bundle`), Bundler settings
 (`.bundle`), and resolved dependency versions (`Gemfile.lock`) are ignored by Git.
