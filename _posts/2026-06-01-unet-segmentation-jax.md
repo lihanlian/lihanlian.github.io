@@ -1,13 +1,13 @@
 ---
 title: 'Implementation Details of U-Net-Segmentation-Jax'
 date: 2026-6-01
-permalink: /posts/blog11
+permalink: /posts/u-net-segmentation-jax
 tags:
   - Computer Vision
   - Image Segmentation
   - Deep Learning
 ---
-Image segmentation is a fundamental computer vision task that assigns a class label to each pixel, enabling models to separate objects from their backgrounds with pixel-level precision. This blog provides the explanation of a **JAX-based U-Net** implementation for pet image segmentation task using the [**_Oxford-IIIT Pet dataset_**](https://www.robots.ox.ac.uk/~vgg/data/pets/). The project starts by building a **U-Net** from scratch, also covering evaluation metrics such as **Dice score** and **Intersection over Union (IoU)**. It also implements **ResNet**-based transfer learning as an **U-Net** encoder alternative to compare with a fully trained-from-scratch **U-Net** segmentation model. Corresponding repository can be found here <i class="fa-brands fa-github"></i> [repository](https://github.com/lihanlian/solve_lqr_3ways).
+Image segmentation is a fundamental computer vision task that assigns a class label to each pixel, enabling models to separate objects from their backgrounds with pixel-level precision. This blog provides the explanation of a **JAX-based U-Net** implementation for pet image segmentation task using the [**_Oxford-IIIT Pet dataset_**](https://www.robots.ox.ac.uk/~vgg/data/pets/). The project starts by building a **U-Net** from scratch, also covering evaluation metrics such as **Dice score** and **Intersection over Union (IoU)**. It also implements **ResNet**-based transfer learning as an **U-Net** encoder alternative to compare with a fully trained-from-scratch **U-Net** segmentation model. Corresponding repository can be found here <i class="fa-brands fa-github"></i> [repository](https://github.com/lihanlian/u-net-segmentation-jax).
 
 ## 1. Image Segmentation
 

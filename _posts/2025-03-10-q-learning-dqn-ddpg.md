@@ -1,7 +1,7 @@
 ---
 title: "From Q-Learning to Deep Q-Learning and Deep Deterministic Policy Gradient (DDPG)"
 date: 2025-03-10
-permalink: /posts/blog6
+permalink: /posts/q-learning-dqn-ddpg
 tags:
   - Reinforcement Learning
   - (Deep) Q-learning

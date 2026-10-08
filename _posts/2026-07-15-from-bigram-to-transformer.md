@@ -1,7 +1,7 @@
 ---
 title: 'From Bigram to Transformer'
 date: 2026-7-15
-permalink: /posts/blog12
+permalink: /posts/from-bigram-to-transformer
 tags:
   - Gnerative Model
   - Natural Language Processing

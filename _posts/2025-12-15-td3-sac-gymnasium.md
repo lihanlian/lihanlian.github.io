@@ -1,7 +1,7 @@
 ---
 title: "Implementation Details of TD3-SAC-Gymnasium"
 date: 2025-12-15
-permalink: /posts/blog9
+permalink: /posts/td3-sac-gymnasium
 tags:
   - Reinforcement Learning
   - Soft Acotr-Critic

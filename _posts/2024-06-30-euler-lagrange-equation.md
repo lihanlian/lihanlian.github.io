@@ -1,7 +1,7 @@
 ---
 title: 'On Derivation of Euluer-Lagrange Equation and Its Application'
 date: 2024-06-30
-permalink: /posts/blog1
+permalink: /posts/euler-lagrange-equation
 tags:
   - Euler-Largrange Equation
   - Functional Analysis

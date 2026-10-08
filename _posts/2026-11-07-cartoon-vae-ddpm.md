@@ -1,7 +1,7 @@
 ---
 title: "Implementation Details of Cartoon-VAE-DDPM"
-date: 2025-06-30
-permalink: /posts/blog8
+date: 2026-11-07
+permalink: /posts/cartoon-vae-ddpm
 tags:
   - Generative Models
   - Diffusion Models

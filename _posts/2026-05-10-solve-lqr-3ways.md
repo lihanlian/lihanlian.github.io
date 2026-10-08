@@ -1,7 +1,7 @@
 ---
 title: "Interpreting LQR through Optimal Control and Reinforcement Learning"
 date: 2026-05-10
-permalink: /posts/blog10
+permalink: /posts/solve-lqr-3ways
 tags:
   - Optimal Control
   - Reinforcement Learning
