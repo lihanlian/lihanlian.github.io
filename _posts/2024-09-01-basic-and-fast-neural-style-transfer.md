@@ -1,7 +1,7 @@
 ---
 title: 'Implementation Details of Basic-and-Fast-Neural-Style-Transfer'
 date: 2024-09-01
-permalink: /posts/blog4
+permalink: /posts/basic-and-fast-neural-style-transfer
 tags:
   - Computer Vision
   - Neural Style Transfer
