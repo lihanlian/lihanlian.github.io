@@ -10,7 +10,11 @@ tags:
 ---
 **Variational Autoencoder (VAE)** learns to compress data into a latent Gaussian space and reconstruct it in a single shot. [**Denoising Diffusion Probabilistic Model (DDPM)**](https://arxiv.org/pdf/2006.11239) tackles the same evidence-lower-bound objective from another direction: it begins with pure noise and iteratively denoise through hundreds of steps, exchanging speed for high-fidelity, stable synthesis. Both frameworks connect random noise to data, yet VAE rely on an explicit **encoder–decoder pair**, whereas DDPM use a learned Markov chain that inverts a forward noising process. This blog traces the progression from VAE to DDPM, clarifying their shared principles, with code examples available at this <i class="fa-brands fa-github"></i> [repository](https://github.com/lihanlian/cartoon-vae-ddpm).
 
-## 1. Image Generation as a Maximum-Likelihood Problem
+## Part I: Variational Autoencoders (VAE)
+
+We begin with the VAE’s latent-variable model, derive its variational training objective, and connect the reconstruction and KL terms to the implementation.
+
+### 1. Image Generation as a Maximum-Likelihood Problem
 
 Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distribution over images from which new images can be generated. A variational autoencoder (VAE) approaches this through a **latent-variable generative model**.
 
@@ -92,10 +96,7 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
 
   Evaluating the decoder likelihood at a specified latent code is generally straightforward. <span style="color:red"> The difficulty is integrating over all codes:</span> nonlinear neural decoders generally lack an analytical marginal likelihood, while accurate numerical integration can be expensive. ([Kingma and Welling, 2013][aevb])
 
-## - Variational Autoencoders (VAE)
-Let's first dive into the technical details of VAE:
-
-## 2. Variational Inference: Approximating the Latent Posterior
+### 2. Variational Inference: Approximating the Latent Posterior
 
 - ### 2.1 Bayesian inference
 
@@ -150,7 +151,7 @@ Let's first dive into the technical details of VAE:
 
   The target KL still involves the intractable posterior. We therefore need an equivalent encoder-training objective that avoids evaluating its normalization.
 
-## 3. The Evidence Lower Bound and VAE Loss
+### 3. The Evidence Lower Bound and VAE Loss
 
 - ### 3.1 Deriving the ELBO
 
@@ -479,18 +480,25 @@ Let's first dive into the technical details of VAE:
   [vi]: https://arxiv.org/abs/1601.00670 "Variational Inference: A Review for Statisticians"
   [rezende]: https://proceedings.mlr.press/v32/rezende14.html "Stochastic Backpropagation and Approximate Inference in Deep Generative Models"
 
- - ### VAE Results
-
+### VAE Results
   <figure style="display: block; margin: 0 auto; width: 80%;">
     <img src='/images/blog/blog8/vae_result.png' style="width: 100%;">
     <figcaption style="text-align: center;">VAE sampling result. Trained with z_dim = 512, epochs = 100.</figcaption>
   </figure>
 
-## Diffusion Models
+## Part II: Denoising Diffusion Probabilistic Models (DDPM)
+A VAE generates an image through a single decoder pass. DDPM instead constructs an image through a sequence of denoising steps. We next examine the forward noising process, the learned reverse process, and their training objective.
 
-## DDPM
+### 4. Forward Diffusion: Adding Noise
 
-- ### Results
+
+### 5. Reverse Diffusion: Learning to Denoise
+
+
+### 6. Training Objective and Sampling
+
+
+### DDPM Results
 
 ## References
  1. <i class="fab fa-youtube"></i> [Variational Autoencoder - Model, ELBO, loss function and maths explained easily!](https://www.youtube.com/watch?v=iwEzwTTalbg) 
