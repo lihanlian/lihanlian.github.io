@@ -348,7 +348,7 @@ $$
 Here, $$x_t$$ represents the current character input, $$h_{t-1}$$ stores information from previous characters, and $$h_t$$ becomes the updated memory after reading the current character. The function $$g$$ is usually a nonlinear activation function such as $$\tanh$$.
 
 <figure style="display: block; margin: 0 auto; width: 70%;">
-  <img src='/images/blog/blog12/rnn1.png' style="width: 100%;">
+  <img src='/images/blog/from-bigram-to-transformer/rnn1.png' style="width: 100%;">
   <figcaption style="text-align: center;">RNN architecture. </figcaption>
 </figure>
 
@@ -377,7 +377,7 @@ $$
 where $$V$$ is the vocabulary size. This probability distribution tells us which character is likely to appear next after the current prefix.
 
 <figure style="display: block; margin: 0 auto; width: 70%;">
-  <img src='/images/blog/blog12/rnn2.png' style="width: 100%;">
+  <img src='/images/blog/from-bigram-to-transformer/rnn2.png' style="width: 100%;">
   <figcaption style="text-align: center;">RNN schema. </figcaption>
 </figure>
 
@@ -458,14 +458,14 @@ A simple RNN updates its hidden state at every step using one direct transformat
 
 
 <figure style="display: block; margin: 0 auto; width: 70%;">
-  <img src='/images/blog/blog12/gru1.png' style="width: 100%;">
+  <img src='/images/blog/from-bigram-to-transformer/gru1.png' style="width: 100%;">
   <figcaption style="text-align: center;">GRU architecture. </figcaption>
 </figure>
 
 GRU improves the vanilla RNN by adding gates to control the hidden state update. The attached figure shows that a GRU cell is not just a direct update from $$h_{t-1}$$ to $$h_t$$. Instead, it computes several intermediate quantities that decide how much past information to keep and how much new information to write into memory.
 
 <figure style="display: block; margin: 0 auto; width: 70%;">
-  <img src='/images/blog/blog12/gru2.png' style="width: 100%;">
+  <img src='/images/blog/from-bigram-to-transformer/gru2.png' style="width: 100%;">
   <figcaption style="text-align: center;">GRU equations.</figcaption>
 </figure>
 
@@ -509,14 +509,14 @@ The main difference is that the GRU has better control over memory. <span style=
 LSTM, is another recurrent architecture designed to improve the memory limitations of vanilla RNNs. Like GRU, it uses gates to control information flow, but <span style="color:red">it introduces a more explicit memory variable called the cell state, denoted as $$c_t$$.</span> Instead of storing all sequence information only in the hidden state $$h_t$$, the LSTM maintains a separate memory path that can carry information across many time steps.
 
 <figure style="display: block; margin: 0 auto; width: 70%;">
-  <img src='/images/blog/blog12/lstm1.png' style="width: 100%;">
+  <img src='/images/blog/from-bigram-to-transformer/lstm1.png' style="width: 100%;">
   <figcaption style="text-align: center;">LSTM architecture. </figcaption>
 </figure>
 
 The attached figure shows two types of states inside the LSTM cell. The hidden state $$h_t$$ is used for prediction and passed to the next step, while the cell state $$c_t$$ acts as a longer-term memory. The horizontal path from $$c_{t-1}$$ to $$c_t$$ represents this memory flow. The gates decide what information should be forgotten, what new information should be written, and what part of the memory should be exposed as the hidden state.
 
 <figure style="display: block; margin: 0 auto; width: 70%;">
-  <img src='/images/blog/blog12/lstm2.png' style="width: 100%;">
+  <img src='/images/blog/from-bigram-to-transformer/lstm2.png' style="width: 100%;">
   <figcaption style="text-align: center;">LSTM equations.</figcaption>
 </figure>
 
@@ -586,7 +586,7 @@ This sequential structure is one reason recurrent models are harder to scale. Ev
 The Transformer takes a different approach. Instead of updating a hidden state from left to right, it uses attention to let each token directly look at other tokens in the context. In name generation, this means that when predicting the next character, the model can compare the current position with previous characters in the prefix and decide which positions are most relevant.
 
 <figure style="display: block; margin: 0 auto; width: 60%;">
-  <img src='/images/blog/blog12/transformer_model_architecture.png' style="width: 100%;">
+  <img src='/images/blog/from-bigram-to-transformer/transformer_model_architecture.png' style="width: 100%;">
   <figcaption style="text-align: center;">Transformer model architecture.</figcaption>
 </figure>
 
@@ -601,7 +601,7 @@ $$
 and predicts the next character distribution based only on the characters that have already appeared. It should not be allowed to look at future characters during training. This is why the model uses causal self-attention.
 
 <figure style="display: block; margin: 0 auto; width: 70%;">
-  <img src='/images/blog/blog12/transformer_attention.png' style="width: 100%;">
+  <img src='/images/blog/from-bigram-to-transformer/transformer_attention.png' style="width: 100%;">
   <figcaption style="text-align: center;">Transformer attention schema.</figcaption>
 </figure>
 

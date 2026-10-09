@@ -161,7 +161,7 @@ Image segmentation is a fundamental computer vision task that assigns a class la
     For each primitive (*, sum, /, etc.), vmap defines a batched rule: “if inputs carry a batch axis, run the op so all batch elements are handled together.” Picture that describe the shape change of input argument is shown below (`pred_mask` in `_per_example_iou`):
 
     <figure style="display: block; margin: 0 auto; width: 80%;">
-    <img src='/images/blog/blog11/jax_vmap.png' style="width: 100%;">
+    <img src='/images/blog/unet-segmentation-jax/jax_vmap.png' style="width: 100%;">
     <figcaption style="text-align: center;">jax.vmap batch operation explanation.</figcaption>
     </figure>
 
@@ -169,7 +169,7 @@ Image segmentation is a fundamental computer vision task that assigns a class la
 **U-Net** is a widely used encoder-decoder architecture for image segmentation. The encoder gradually downsamples the input image and extracts high-level visual features, while the decoder upsamples these features back to the original image resolution to produce a pixel-wise segmentation mask. 
 
 <figure style="display: block; margin: 0 auto; width: 80%;">
-  <img src='/images/blog/blog11/u-net architecture.png' style="width: 100%;">
+  <img src='/images/blog/unet-segmentation-jax/u-net architecture.png' style="width: 100%;">
   <figcaption style="text-align: center;">U-Net Architecture. </figcaption>
 </figure>
 
@@ -222,7 +222,7 @@ class TrainState(train_state.TrainState):
 The code also uses a small extension of Flax’s built-in `TrainState` (`flax.training.train_state`), which extends it with `batch_stats` so BatchNorm’s running statistics are carried, updated, and checkpointed alongside the learnable parameters. In short, JAX provides arrays, transforms, and autodiff; Flax adds the neural-network layer on top, and `TrainState` is Flax’s standard container for everything you need during training. More details about `batch_stats` is shown below.
 
 <figure style="display: block; margin: 0 auto; width: 100%;">
-  <img src='/images/blog/blog11/batch_stats.png' style="width: 100%;">
+  <img src='/images/blog/unet-segmentation-jax/batch_stats.png' style="width: 100%;">
   <figcaption style="text-align: center;">Explanation of batch_stats. </figcaption>
 </figure>
 
@@ -551,14 +551,14 @@ This section explains how transfer learning is incorporated into the U-Net archi
 
     - ### Plain U-Net
         <figure style="display: block; margin: 0 auto; width: 80%;">
-            <img src='/images/blog/blog11/unet_grid.png' style="width: 100%;">
+            <img src='/images/blog/unet-segmentation-jax/unet_grid.png' style="width: 100%;">
             <figcaption style="text-align: center;">U-Net segmentation results. </figcaption>
         </figure>
 
     - ### ResNet-based U-Net Encoder
 
         <figure style="display: block; margin: 0 auto; width: 80%;">
-            <img src='/images/blog/blog11/unet_resnet_grid.png' style="width: 100%;">
+            <img src='/images/blog/unet-segmentation-jax/unet_resnet_grid.png' style="width: 100%;">
             <figcaption style="text-align: center;">ResNet-based U-Net segmentation results. </figcaption>
         </figure>
 

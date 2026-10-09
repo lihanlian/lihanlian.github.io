@@ -22,7 +22,7 @@ In contrast to typical optimal control problems, which use differential equation
 - **$$γ$$**: Discount factor to prioritize short-term vs. long-term rewards.
 
 <figure style="display: block; margin: 0 auto; width: 60%;">
-  <img src='/images/blog/blog6/rl-framework.png' style="width: 100%;">
+  <img src='/images/blog/q-learning-dqn-ddpg/rl-framework.png' style="width: 100%;">
   <figcaption style="text-align: center;">source: "What Is Reinforcement Learning?" (Mathwork)</figcaption>
 </figure>
 
@@ -175,7 +175,7 @@ This update is performed **immediately after each transition**, rather than wait
   Model Predictive Control (MPC) is an optimization-based control technique that iteratively solves a **finite-horizon optimal control problem**, making it conceptually similar to reinforcement learning.
 
 <figure style="display: block; margin: 0 auto; width: 80%;">
-  <img src='/images/blog/blog6/rl-control.png' style="width: 100%;">
+  <img src='/images/blog/q-learning-dqn-ddpg/rl-control.png' style="width: 100%;">
   <figcaption style="text-align: center;">source: "Reinforcement Learning for Control Systems Applications" (Mathwork)</figcaption>
 </figure>
 
@@ -202,7 +202,7 @@ Q-learning **converges to the optimal policy** given sufficient exploration but 
 
 
 <figure style="display: block; margin: 0 auto; width: 60%;">
-  <img src='/images/blog/blog6/q-learning.png' style="width: 100%;">
+  <img src='/images/blog/q-learning-dqn-ddpg/q-learning.png' style="width: 100%;">
   <figcaption style="text-align: center;">source: "Deep Q-Learning" (GeeksforGeeks)</figcaption>
 </figure>
 
@@ -212,14 +212,14 @@ Q-learning **converges to the optimal policy** given sufficient exploration but 
 Deep Q-Learning (DQN) improves upon traditional Q-Learning by using a deep neural network to approximate the Q-value function, making it scalable to high-dimensional state spaces where tabular Q-learning is infeasible. DQN introduces the experience **replay buffer** to improve learning stability. The replay buffer stores past experiences (state, action, reward, next state) and allows the agent to sample **mini-batches** for training, instead of learning from consecutive transitions. This breaks temporal correlations, improves sample efficiency, and reduces overfitting to recent experiences. **Target network** is also used to stabilize training by maintaining a lagged version of the Q-network to reduce oscillations. 
 
 <figure style="display: block; margin: 0 auto; width: 60%;">
-  <img src='/images/blog/blog6/deep-q-learning.png' style="width: 100%;">
+  <img src='/images/blog/q-learning-dqn-ddpg/deep-q-learning.png' style="width: 100%;">
   <figcaption style="text-align: center;">source: "Deep Q-Learning" (GeeksforGeeks)</figcaption>
 </figure>
 
 While DQN enables learning complex policies in **discrete action spaces**, it struggles with continuous action spaces, requiring adaptations like **DDPG**. Additionally, DQN is sample inefficient, requiring large amounts of data to generalize well, and suffers from overestimation bias in Q-values. Despite these limitations, DQN has been successfully applied to **discrete control tasks**, and the later section of this blog post details the use of DQN for solving cartpole balancing task in Isaac Gym simulator, with discrete action space [-1, 0, 1] (*self.max_push_effort).
 
 <figure style="display: block; margin: 0 auto; width: 60%;">
-  <img src='/images/blog/blog6/dqn-result.gif' style="width: 100%;">
+  <img src='/images/blog/q-learning-dqn-ddpg/dqn-result.gif' style="width: 100%;">
   <figcaption style="text-align: center;">DQN in Isaac Gym</figcaption>
 </figure>
 
@@ -302,7 +302,7 @@ Deep Deterministic Policy Gradient (DDPG) is an **off-policy** reinforcement lea
 The actor-critic method is a hybrid approach that combines value-based and policy-based learning. The critic estimates the value function (e.g., Q-values), while the actor updates the policy based on the critic’s feedback. This reduces variance compared to pure policy-based methods and speeds up learning. In DDPG, the critic learns using the Bellman equation, similar to DQN, while the actor optimizes policy gradients to directly adjust actions. This dual-network structure allows DDPG to handle continuous control problems efficiently, balancing stability (via the critic) and exploration (via the actor).
 
 <figure style="display: block; margin: 0 auto; width: 60%;">
-  <img src='/images/blog/blog6/dqn-vs-ddpg.png' style="width: 100%;">
+  <img src='/images/blog/q-learning-dqn-ddpg/dqn-vs-ddpg.png' style="width: 100%;">
   <figcaption style="text-align: center;">DQN vs DDPG [6]</figcaption>
 </figure>
 
@@ -326,7 +326,7 @@ where \(\mathcal{N}\) is a noise function, commonly **Ornstein-Uhlenbeck (OU) no
 Similar to DQN, DDPG also uses the target, for both actor and critic networks. Thus, total of four neural networks need to be initialized at the beginning. Critic Network is updated by doing **gradient descent** to **minimize the TD Loss**, and Actor Netowrk is updated by doing **gradient ascent** to **maximize the reward (Q-value)**. Picture below illustrate the procedures for DDPG algorithm.
 
 <figure style="display: block; margin: 0 auto; width: 80%;">
-  <img src='/images/blog/blog6/ddpg-openai.png' style="width: 100%;">
+  <img src='/images/blog/q-learning-dqn-ddpg/ddpg-openai.png' style="width: 100%;">
   <figcaption style="text-align: center;">DDPG Pseudocode (source: Openai Spinning Up)</figcaption>
 </figure>
 

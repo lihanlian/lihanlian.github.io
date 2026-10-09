@@ -16,7 +16,7 @@ tags:
  The basic neural style transfer method uses a **pre-trained VGG19 network** to extract features from input images (content and style images). The training process involves minimizing a loss function that combines content and style losses. Content loss measures differences in feature representations, while style loss measures differences in correlations between features (Gram matrices). The **input content image** is iteratively updated using backpropagation to minimize these losses.
 
 <figure style="display: block; margin: 0 auto; width: 80%;">
-  <img src='/images/blog/blog4/basic_nst_diagram.jpg' style="width: 100%;">
+  <img src='/images/blog/basic-and-fast-neural-style-transfer/basic_nst_diagram.jpg' style="width: 100%;">
   <figcaption style="text-align: center;">Basic NST Training Procedures</figcaption>
 </figure>
 
@@ -25,7 +25,7 @@ tags:
   VGG (Visual Geometry Group) Network is a deep convolutional neural network architecture developed by the Visual Geometry Group at the University of Oxford. **VGG-19** is used in this implementation and it is one of the variants, characterized by its depth and simplicity in terms of the use of **small (3x3) convolution filters**. The number "19" indicates the network has 19 layers with learnable parameters, including 16 convolutional layers, 3 fully connected layers, and 5 max-pooling layers. Below is the structure information of **VGG-19** printed out from pytorch:
 
   <figure style="display: block; margin: 0 auto; width: 80%;">
-    <img src='/images/blog/blog4/vgg19.png' style="width: 100%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/vgg19.png' style="width: 100%;">
     <figcaption style="text-align: center;">Information of each layers in VGG-19</figcaption>
   </figure>
 
@@ -102,26 +102,26 @@ tags:
   * Style images:
 
   <figure style="display: block; margin-left: auto; margin-right: auto; width: 100%;">
-    <img src='/images/blog/blog4/monet.jpg' style="width: 30%;">
-    <img src='/images/blog/blog4/van_gogh.jpg' style="width: 32%;">
-    <img src='/images/blog/blog4/picasso.jpg' style="width: 31%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/monet.jpg' style="width: 30%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/van_gogh.jpg' style="width: 32%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/picasso.jpg' style="width: 31%;">
     <figcaption style="text-align: center;">Used style images from portrait of different artists: Claude Monet, Vincent van Gogh, Pablo Picasso (from let to right)</figcaption>
   </figure>
 
   * Content images:
 
   <figure style="display: block; margin-left: auto; margin-right: auto; width: 80%;">
-    <img src='/images/blog/blog4/minion1.jpg' style="width: 45%;">
-    <img src='/images/blog/blog4/minion2.jpg' style="width: 45%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/minion1.jpg' style="width: 45%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/minion2.jpg' style="width: 45%;">
     <figcaption style="text-align: center;">Two input content images: minion1 (left) and minion2 (right), minion2 is only used for testing fast NST.</figcaption>
   </figure>
 
   * Ouput of minion1:
 
 <figure style="display: block; margin-left: auto; margin-right: auto; width: 100%;">
-  <img src='/images/blog/blog4/bnst_output_monet.jpg' style="width: 32%;">
-  <img src='/images/blog/blog4/bnst_output_van_gogh.jpg' style="width: 32%;">
-  <img src='/images/blog/blog4/bnst_output_picasso.jpg' style="width: 32%;">
+  <img src='/images/blog/basic-and-fast-neural-style-transfer/bnst_output_monet.jpg' style="width: 32%;">
+  <img src='/images/blog/basic-and-fast-neural-style-transfer/bnst_output_van_gogh.jpg' style="width: 32%;">
+  <img src='/images/blog/basic-and-fast-neural-style-transfer/bnst_output_picasso.jpg' style="width: 32%;">
   <figcaption style="text-align: center;">All images have a = 1, b = 0.1, 100, 100000 from left to right</figcaption>
 </figure>
 
@@ -132,7 +132,7 @@ tags:
     Fast neural style transfer trains a **feedforward network (TransformerNet)** to apply a specific style to any content image in a single pass. The network is trained using a **perceptual loss function**, which combines content and style losses obtained from a pre-trained **VGG-19** network. The trained model then performs real-time style transfer.
 
 <figure style="display: block; margin: 0 auto; width: 80%;">
-  <img src='/images/blog/blog4//fast_nst_diagram.jpg' style="width: 100%;">
+  <img src='/images/blog/basic-and-fast-neural-style-transfer/fast_nst_diagram.jpg' style="width: 100%;">
   <figcaption style="text-align: center;">Fast NST Training Procedures</figcaption>
 </figure>
 
@@ -158,18 +158,18 @@ tags:
   * Ouput of minion1:
 
   <figure style="display: block; margin-left: auto; margin-right: auto; width: 100%;">
-    <img src='/images/blog/blog4/fnst_output1_monet.jpg' style="width: 32%;">
-    <img src='/images/blog/blog4/fnst_output1_van_gogh.jpg' style="width: 32%;">
-    <img src='/images/blog/blog4/fnst_output1_picasso.jpg' style="width: 32%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/fnst_output1_monet.jpg' style="width: 32%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/fnst_output1_van_gogh.jpg' style="width: 32%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/fnst_output1_picasso.jpg' style="width: 32%;">
     <figcaption style="text-align: center;">a = 1, b = 50000 for all models</figcaption>
   </figure>
 
   * Ouput of minion2: 
 
   <figure style="display: block; margin-left: auto; margin-right: auto; width: 100%;">
-    <img src='/images/blog/blog4/fnst_output2_monet.jpg' style="width: 32%;">
-    <img src='/images/blog/blog4/fnst_output2_van_gogh.jpg' style="width: 32%;">
-    <img src='/images/blog/blog4/fnst_output2_picasso.jpg' style="width: 32%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/fnst_output2_monet.jpg' style="width: 32%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/fnst_output2_van_gogh.jpg' style="width: 32%;">
+    <img src='/images/blog/basic-and-fast-neural-style-transfer/fnst_output2_picasso.jpg' style="width: 32%;">
     <figcaption style="text-align: center;">a = 1, b = 50000 for all models</figcaption>
   </figure>
 

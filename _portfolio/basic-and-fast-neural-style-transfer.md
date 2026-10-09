@@ -10,7 +10,7 @@ category: "Computer Vision"   # <-- add this
 ---
 Simplified implementation of basic neural style transfer and fast neural style transfer in PyTorch.
 <br/> 
-<i class="fa-solid fa-blog"></i> [**[Blog Post]**](https://lihanlian.github.io/posts/blog4)&nbsp;&nbsp;&nbsp;&nbsp;
+<i class="fa-solid fa-blog"></i> [**[Blog Post]**](https://lihanlian.github.io/posts/basic-and-fast-neural-style-transfer)&nbsp;&nbsp;&nbsp;&nbsp;
 <i class="fa-brands fa-github"></i> [**[Code]**](https://github.com/lihanlian/basic-and-fast-neural-style-transfer)
 <br/>
 <img src='/images/project-basic-and-fast-nst.jpg'>

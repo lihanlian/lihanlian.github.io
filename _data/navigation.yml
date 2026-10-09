@@ -12,7 +12,7 @@ main:
     url: /notebooks/
     
   - title: "Projects"
-    url: /portfolio/
+    url: /projects/
     
   - title: "Publications"
     url: /publications/

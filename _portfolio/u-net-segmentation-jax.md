@@ -10,7 +10,7 @@ category: "Computer Vision"   # <-- add this
 ---
 Jax-based implementation of U-net for image segemetation task using the Oxford-IIIT Pet Dataset.
 <br/> 
-<i class="fa-solid fa-blog"></i> [**[Blog Post]**](https://lihanlian.github.io/posts/blog11)&nbsp;&nbsp;&nbsp;&nbsp;
+<i class="fa-solid fa-blog"></i> [**[Blog Post]**](https://lihanlian.github.io/posts/u-net-segmentation-jax)&nbsp;&nbsp;&nbsp;&nbsp;
 <i class="fa-brands fa-github"></i> [**[Code]**](https://github.com/lihanlian/u-net-segmentation-jax)
 <br/>
-<img src='/images/blog/blog11/example.png'>
+<img src='/images/blog/unet-segmentation-jax/example.png'>

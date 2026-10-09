@@ -7,7 +7,7 @@ tags:
   - Reinforcement Learning
   - Policy Itervation and Value Iteration
 ---
-**Linear Quadratic Regulator (LQR)** is one the simplest yet most classical probelms in optimal control. While previous blog posts discussed the **LQR** optimal control law through ***[Pontryagin's Minimum Principle](https://lihanlian.github.io/posts/blog2)*** and [**_Hamilton-Jacobi-Bellman Equation_**](https://lihanlian.github.io/posts/blog3), This post approaches **LQR** from the perspective of **Dynamic Programming** and **Reinforcement Learning (RL)**. In particular, it shows how **LQR** can be solved in a <span style="color:red"> *model-based* </span> setting using both **policy iteration** and **value iteration**, and how related ideas extend to <span style="color:red"> *model-free* </span> methods through ***[temporal difference learning](https://en.wikipedia.org/wiki/Temporal_difference_learning)***. Code accompanying the post is available in this <i class="fa-brands fa-github"></i> [repository](https://github.com/lihanlian/solve_lqr_3ways).
+**Linear Quadratic Regulator (LQR)** is one the simplest yet most classical probelms in optimal control. While previous blog posts discussed the **LQR** optimal control law through ***[Pontryagin's Minimum Principle](https://lihanlian.github.io/posts/pmp)*** and [**_Hamilton-Jacobi-Bellman Equation_**](https://lihanlian.github.io/posts/hjb), This post approaches **LQR** from the perspective of **Dynamic Programming** and **Reinforcement Learning (RL)**. In particular, it shows how **LQR** can be solved in a <span style="color:red"> *model-based* </span> setting using both **policy iteration** and **value iteration**, and how related ideas extend to <span style="color:red"> *model-free* </span> methods through ***[temporal difference learning](https://en.wikipedia.org/wiki/Temporal_difference_learning)***. Code accompanying the post is available in this <i class="fa-brands fa-github"></i> [repository](https://github.com/lihanlian/solve_lqr_3ways).
 
 This post is based primarily on the paper *"Reinforcement Learning and Feedback Control"* \[1\]. For a broader discussion and more technical detail, I recommend consulting the original paper.
 
@@ -714,7 +714,7 @@ where $$j$$ is the policy-iteration index, not the time index. The goal is to ge
     and the result are as follows:
 
      <figure style="display: block; margin: 0 auto; width: 80%;">
-     <img src='/images/blog/blog10/undiscounted_pi.png' style="width: 100%;">
+     <img src='/images/blog/solve-lqr-3ways/undiscounted_pi.png' style="width: 100%;">
      <figcaption style="text-align: center;">Policy Iteration Result.</figcaption>
      </figure>
 
@@ -900,7 +900,7 @@ A useful way to understand the difference from policy iteration is the following
      and the result are as follows:
 
      <figure style="display: block; margin: 0 auto; width: 80%;">
-          <img src='/images/blog/blog10/undiscounted_vi.png' style="width: 100%;">
+          <img src='/images/blog/solve-lqr-3ways/undiscounted_vi.png' style="width: 100%;">
           <figcaption style="text-align: center;">Value Iteration Result.</figcaption>
      </figure>
 
@@ -1221,7 +1221,7 @@ The reason the Q function is useful is that it evaluates a state-action pair dir
      In this way, the algorithm alternates implicitly between critic fitting and greedy control improvement. The critic learns the quadratic Q structure from data, while the policy is recovered analytically from the current Q kernel, and the result are as follows:
 
      <figure style="display: block; margin: 0 auto; width: 80%;">
-          <img src='/images/blog/blog10/undiscounted_q.png' style="width: 100%;">
+          <img src='/images/blog/solve-lqr-3ways/undiscounted_q.png' style="width: 100%;">
           <figcaption style="text-align: center;">Model-free Q Learning Result.</figcaption>
      </figure>
 
@@ -1678,17 +1678,17 @@ These equations will form the basis for the policy-iteration and value-iteration
      For model-free Q learning, the procedures are pretty much the same as illustrated in section 5.3, except with an addition discount factor $$\gamma$$. The results for all three methods are shown as follows:
 
      <figure style="display: block; margin: 0 auto; width: 80%;">
-          <img src='/images/blog/blog10/discounted_vi.png' style="width: 100%;">
+          <img src='/images/blog/solve-lqr-3ways/discounted_vi.png' style="width: 100%;">
           <figcaption style="text-align: center;">Policy Iteration Result (discounted).</figcaption>
      </figure>
 
      <figure style="display: block; margin: 0 auto; width: 80%;">
-          <img src='/images/blog/blog10/discounted_vi.png' style="width: 100%;">
+          <img src='/images/blog/solve-lqr-3ways/discounted_vi.png' style="width: 100%;">
           <figcaption style="text-align: center;">Value Iteration Result (discounted).</figcaption>
      </figure>
 
      <figure style="display: block; margin: 0 auto; width: 80%;">
-          <img src='/images/blog/blog10/discounted_vi.png' style="width: 100%;">
+          <img src='/images/blog/solve-lqr-3ways/discounted_vi.png' style="width: 100%;">
           <figcaption style="text-align: center;">Model-free Q Learning Result (discounted).</figcaption>
      </figure>
 

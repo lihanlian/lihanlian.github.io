@@ -90,7 +90,7 @@ Twin Delayed Deep Deterministic Policy Gradient (TD3) is a widely used algorithm
 In practice, however, DDPG is notoriously brittle: small hyperparameter changes often cause the critic’s Q-values to explode and the learned policy to collapse. TD3 preserves the overall structure, but adds several targeted modifications—most notably **clipped** double Q-learning, **delayed** policy updates, and **target policy smoothing**—to systematically reduce value overestimation and stabilize critic learning across a wide range of tasks.
 
 <figure style="display: block; margin: 0 auto; width: 80%;">
-  <img src='/images/blog/blog9/td3-openai.png' style="width: 100%;">
+  <img src='/images/blog/td3-sac-gymnasium/td3-openai.png' style="width: 100%;">
   <figcaption style="text-align: center;">TD3 Pseudocode (OpenAI Spinning Up).</figcaption>
 </figure>
 
@@ -208,10 +208,10 @@ def update(self, replay_buffer, logger, step):
 
 - ### TD3 Results
 <figure style="display: block; margin-left: auto; margin-right: auto; width: 100%;">
-  <img src='/images/blog/blog9/td3-ant.gif' style="width: 24%;">
-  <img src='/images/blog/blog9/td3-half-cheetah.gif' style="width: 24%;">
-  <img src='/images/blog/blog9/td3-hopper.gif' style="width: 24%;">
-  <img src='/images/blog/blog9/td3-walker.gif' style="width: 24%;">
+  <img src='/images/blog/td3-sac-gymnasium/td3-ant.gif' style="width: 24%;">
+  <img src='/images/blog/td3-sac-gymnasium/td3-half-cheetah.gif' style="width: 24%;">
+  <img src='/images/blog/td3-sac-gymnasium/td3-hopper.gif' style="width: 24%;">
+  <img src='/images/blog/td3-sac-gymnasium/td3-walker.gif' style="width: 24%;">
   <figcaption style="text-align: center;">TD3 results on gymnasium (MuJoCo) tasks.</figcaption>
 </figure>
 
@@ -258,7 +258,7 @@ In stochastic policies, the agent samples actions from a state-conditioned distr
   So $$a = g_\theta(\varepsilon, s)$$. We use the pathwise gradient for both the $$Q(s,a)$$ term and the entropy term $$\alpha \log \pi(a\mid s)$$ (the latter is well-defined thanks to the change-of-variables + Jacobian). Picture below shows the explanation from PyTorch.
 
 <figure style="display: block; margin: 0 auto; width: 80%;">
-  <img src='/images/blog/blog9/torch_distribution.png' style="width: 100%;">
+  <img src='/images/blog/td3-sac-gymnasium/torch_distribution.png' style="width: 100%;">
   <figcaption style="text-align: center;"> __init__.py from torch.distributions.</figcaption>
 </figure>
 
@@ -418,7 +418,7 @@ print(f"H(Y) Monte Carlo via samples      = {HY_mc:.6f}")
 After the introduction of several key concepts mentioned previously, let's break SAC down into pieces for more detailed explanation.
 
 <figure style="display: block; margin: 0 auto; width: 80%;">
-  <img src='/images/blog/blog9/sac-openai.png' style="width: 100%;">
+  <img src='/images/blog/td3-sac-gymnasium/sac-openai.png' style="width: 100%;">
   <figcaption style="text-align: center;">SAC Pseudocode (OpenAI Spinning Up).</figcaption>
 </figure>
 
@@ -668,10 +668,10 @@ def update_critic(self, obs, action, reward, next_obs,
 - **SAC Results**  
 
 <figure style="display: block; margin-left: auto; margin-right: auto; width: 100%;">
-  <img src='/images/blog/blog9/sac-ant.gif' style="width: 24%;">
-  <img src='/images/blog/blog9/sac-half-cheetah.gif' style="width: 24%;">
-  <img src='/images/blog/blog9/sac-hopper.gif' style="width: 24%;">
-  <img src='/images/blog/blog9/sac-walker.gif' style="width: 24%;">
+  <img src='/images/blog/td3-sac-gymnasium/sac-ant.gif' style="width: 24%;">
+  <img src='/images/blog/td3-sac-gymnasium/sac-half-cheetah.gif' style="width: 24%;">
+  <img src='/images/blog/td3-sac-gymnasium/sac-hopper.gif' style="width: 24%;">
+  <img src='/images/blog/td3-sac-gymnasium/sac-walker.gif' style="width: 24%;">
   <figcaption style="text-align: center;">SAC results on gymnasium (MuJoCo) tasks.</figcaption>
 </figure>
 

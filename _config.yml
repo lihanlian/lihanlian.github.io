@@ -25,7 +25,7 @@ port                     : 4001
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "/blog/blog4/fnst_output1_picasso.jpg"
+  avatar           : "/blog/basic-and-fast-neural-style-transfer/fnst_output1_picasso.jpg"
   name             : "Lihan Lian"
   pronouns         : # example: "she/her"  
   bio              : "Robotics enthusiast."

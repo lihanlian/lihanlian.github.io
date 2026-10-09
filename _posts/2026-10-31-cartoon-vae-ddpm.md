@@ -482,7 +482,7 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
 
 ### VAE Results
   <figure style="display: block; margin: 0 auto; width: 80%;">
-    <img src='/images/blog/blog8/vae_result.png' style="width: 100%;">
+    <img src='/images/blog/cartoon-vae-ddpm/vae_result.png' style="width: 100%;">
     <figcaption style="text-align: center;">VAE sampling result. Trained with z_dim = 512, epochs = 100.</figcaption>
   </figure>
 
