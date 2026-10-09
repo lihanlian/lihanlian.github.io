@@ -34,7 +34,7 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   | $$p(z)$$ | Prior over latent variables | Usually fixed as $$\mathcal{N}(0,I)$$. |
   | $$p_\theta(x\mid z)$$ | Conditional image likelihood | Probabilistic decoder. |
   | $$p_\theta(x,z)$$ | Joint distribution | Complete generative model. |
-  | $$p_\theta(x)$$ | Marginal likelihood, or evidence | Quantity targeted by maximum likelihood. |
+  | $$p_\theta(x)$$ | <span style="color:red">Marginal likelihood, or evidence </span> | <span style="color:red"> Quantity targeted by maximum likelihood. </span> |
   | $$p_\theta(z\mid x)$$ | Exact posterior under the current model | Implied by the prior and decoder. |
   | $$q_\phi(z\mid x)$$ | Approximate posterior | Probabilistic encoder. |
 
@@ -50,7 +50,7 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   x\sim p_\theta(x\mid z).
   $$
 
-  The decoder takes a latent vector and predicts distribution parameters **in pixel space**. For example, a Gaussian decoder predicts an image-shaped mean. We can sample pixels from its distribution or display the mean directly. The decoder distribution need not be Gaussian. ([Doersch, 2016][doersch])
+  The decoder takes a latent vector and predicts distribution parameters **in pixel space**. <span style="color:red"> For example, a Gaussian decoder predicts an image-shaped mean. We can sample pixels from its distribution or display the mean directly. </span> The decoder distribution need not be Gaussian. ([Doersch, 2016][doersch])
 
   The probability chain rule gives
 
@@ -90,13 +90,16 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   \end{aligned}
   $$
 
-  Evaluating the decoder likelihood at a specified latent code is generally straightforward. The difficulty is integrating over all codes: nonlinear neural decoders generally lack an analytical marginal likelihood, while accurate numerical integration can be expensive. ([Kingma and Welling, 2013][aevb])
+  Evaluating the decoder likelihood at a specified latent code is generally straightforward. <span style="color:red"> The difficulty is integrating over all codes:</span> nonlinear neural decoders generally lack an analytical marginal likelihood, while accurate numerical integration can be expensive. ([Kingma and Welling, 2013][aevb])
+
+## - Variational Autoencoders (VAE)
+Let's first dive into the technical details of VAE:
 
 ## 2. Variational Inference: Approximating the Latent Posterior
 
 - ### 2.1 Bayesian inference
 
-  Fix the current decoder parameters $$\theta$$ and observe an image $$x$$. Bayes' rule defines the distribution of latent codes that could explain it:
+  <span style="color:red"> Fix the current decoder parameters $$\theta$$ and observe an image $$x$$. </span> Bayes' rule defines the distribution of latent codes that could explain it:
 
   $$
   \boxed{
@@ -109,7 +112,7 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
 
   Conceptually, each candidate latent code goes **forward through the decoder**. We evaluate how well its predicted distribution explains the observed image, weight this by the code's prior density, and normalize across all candidates.
 
-  **This does not mean feeding the image into the decoder or reversing the network.** The posterior depends on the same $$\theta$$ because Bayes' rule uses the decoder likelihood. "Exact" means exact under the current model, even if that model poorly represents real images.
+  This does not mean feeding the image into the decoder or reversing the network. **The posterior depends on the same $$\theta$$ because Bayes' rule uses the decoder likelihood.** "Exact" means exact under the current model, even if that model poorly represents real images.
 
   The normalization requires the same difficult marginal likelihood, so ordinary VAE training does not explicitly calculate this posterior. ([Kingma and Welling, 2019][introduction])
 
@@ -151,7 +154,7 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
 
 - ### 3.1 Deriving the ELBO
 
-  For a fixed image, expectations are taken over latent codes:
+  For a fixed image $$x$$, expectations are taken over latent codes sampled from the encoder distribution:
 
   $$
   \mathbb{E}_{q_\phi(z\mid x)}[f(z)]
@@ -159,7 +162,65 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   \int q_\phi(z\mid x)f(z)\,dz.
   $$
 
-  Expanding the posterior KL using Bayes' rule,
+  By definition, the **KL divergence between the approximate and exact posteriors** is
+
+  $$
+  \begin{aligned}
+  &D_{\mathrm{KL}}\!\left(
+  q_\phi(z\mid x)\,\Vert\,p_\theta(z\mid x)
+  \right)
+  \\[4pt]
+  &=
+  \int q_\phi(z\mid x)
+  \log\frac{q_\phi(z\mid x)}{p_\theta(z\mid x)}
+  \,dz
+  \\[4pt]
+  &=
+  \int q_\phi(z\mid x)
+  \left[
+  \log q_\phi(z\mid x)
+  -
+  \log p_\theta(z\mid x)
+  \right]dz
+  \\[4pt]
+  &=
+  \mathbb{E}_{q_\phi(z\mid x)}\!\left[
+  \log q_\phi(z\mid x)
+  -
+  \log p_\theta(z\mid x)
+  \right].
+  \end{aligned}
+  $$
+
+  The second equality uses the logarithm-of-a-ratio identity. The last equality uses the expectation–integral identity with
+
+  $$
+  f(z)
+  =
+  \log q_\phi(z\mid x)
+  -
+  \log p_\theta(z\mid x).
+  $$
+
+  Next, Bayes' rule gives
+
+  $$
+  p_\theta(z\mid x)
+  =
+  \frac{p_\theta(x,z)}{p_\theta(x)},
+  $$
+
+  so
+
+  $$
+  \log p_\theta(z\mid x)
+  =
+  \log p_\theta(x,z)
+  -
+  \log p_\theta(x).
+  $$
+
+  Substituting this into the KL expression and using linearity of expectation,
 
   $$
   \begin{aligned}
@@ -171,7 +232,9 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   \mathbb{E}_{q_\phi(z\mid x)}\!\left[
   \log q_\phi(z\mid x)
   -
-  \log p_\theta(z\mid x)
+  \log p_\theta(x,z)
+  +
+  \log p_\theta(x)
   \right]
   \\[4pt]
   &=
@@ -181,11 +244,49 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   \log p_\theta(x,z)
   \right]
   +
+  \mathbb{E}_{q_\phi(z\mid x)}[\log p_\theta(x)].
+  \end{aligned}
+  $$
+
+  **The evidence term leaves the expectation because it does not depend on the integration variable $$z$$.** With $$x$$ and $$\theta$$ fixed, the expectation–integral identity gives
+
+  $$
+  \begin{aligned}
+  \mathbb{E}_{q_\phi(z\mid x)}[\log p_\theta(x)]
+  &=
+  \int q_\phi(z\mid x)\log p_\theta(x)\,dz
+  \\[4pt]
+  &=
+  \log p_\theta(x)
+  \underbrace{
+  \int q_\phi(z\mid x)\,dz
+  }_{1}
+  \\[4pt]
+  &=
   \log p_\theta(x).
   \end{aligned}
   $$
 
-  The evidence term leaves the expectation because it does not depend on $$z$$. Define the **evidence lower bound (ELBO)**:
+  The integral equals one because the encoder distribution is normalized. Therefore,
+
+  $$
+  \begin{aligned}
+  &D_{\mathrm{KL}}\!\left(
+  q_\phi(z\mid x)\,\Vert\,p_\theta(z\mid x)
+  \right)
+  \\[4pt]
+  &=
+  \log p_\theta(x)
+  -
+  \mathbb{E}_{q_\phi(z\mid x)}\!\left[
+  \log p_\theta(x,z)
+  -
+  \log q_\phi(z\mid x)
+  \right].
+  \end{aligned}
+  $$
+
+  Define the **evidence lower bound (ELBO)**:
 
   $$
   \boxed{
@@ -318,7 +419,7 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   C.
   $$
 
-  Squared error therefore follows from a fixed-variance Gaussian likelihood. A Bernoulli likelihood for binary pixels instead produces binary cross-entropy. ([Doersch, 2016][doersch])
+  <span style="color:red">Squared error therefore follows from a fixed-variance Gaussian likelihood.</span> A Bernoulli likelihood for binary pixels instead produces binary cross-entropy. ([Doersch, 2016][doersch])
 
   For the diagonal-Gaussian encoder, abbreviate its outputs as $$\mu_j=\mu_{\phi,j}(x)$$ and $$\sigma_j=\sigma_{\phi,j}(x)$$. Using
 
@@ -366,7 +467,7 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   \right).
   $$
 
-  The same image is both the **encoder input and reconstruction target**. We evaluate its likelihood without needing to sample another noisy image. With a fixed prior and separate weights, the decoder receives reconstruction gradients; the encoder receives both reconstruction and KL gradients. ([Kingma and Welling, 2013][aevb]; [Rezende et al., 2014][rezende])
+  <span style="color:red">The same image is both the **encoder input and reconstruction target**.</span> We evaluate its likelihood without needing to sample another noisy image. With a fixed prior and separate weights, the decoder receives reconstruction gradients; the encoder receives both reconstruction and KL gradients. ([Kingma and Welling, 2013][aevb]; [Rezende et al., 2014][rezende])
 
   After training, unconditional generation samples $$z\sim p(z)$$ and uses the decoder, without the encoder.
 
@@ -378,13 +479,7 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   [vi]: https://arxiv.org/abs/1601.00670 "Variational Inference: A Review for Statisticians"
   [rezende]: https://proceedings.mlr.press/v32/rezende14.html "Stochastic Backpropagation and Approximate Inference in Deep Generative Models"
 
-## Variational Autoencoders (VAE)
-
-- ### Evidence Lower Bound (ELBO)
-
-- ### Final Objective Function
-
-- ### Code Example
+ - ### VAE Results
 
   <figure style="display: block; margin: 0 auto; width: 80%;">
     <img src='/images/blog/blog8/vae_result.png' style="width: 100%;">
