@@ -2,6 +2,7 @@
 layout: archive
 title: "Resources"
 permalink: /resources/
+published: false
 author_profile: true
 ---
 

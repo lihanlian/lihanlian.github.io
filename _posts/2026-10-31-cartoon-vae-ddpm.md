@@ -677,150 +677,150 @@ The distinction between **modeling choices** and **derived distributions** is im
 
 - ### 4.2 The forward model and the original DDPM noise schedule
 
-Choose a sequence of forward variances $$\beta_1,\ldots,\beta_T$$, and define
+  Choose a sequence of forward variances $$\beta_1,\ldots,\beta_T$$, and define
 
-$$
-\alpha_t=1-\beta_t,
-\qquad
-\bar\alpha_t=\prod_{s=1}^{t}\alpha_s,
-\qquad
-\bar\alpha_0=1.
-$$
+  $$
+  \alpha_t=1-\beta_t,
+  \qquad
+  \bar\alpha_t=\prod_{s=1}^{t}\alpha_s,
+  \qquad
+  \bar\alpha_0=1.
+  $$
 
-The original DDPM experiments use $$T=1000$$, with variances increasing linearly from $$10^{-4}$$ to $$0.02$$. Images are scaled to $$[-1,1]$$. ([Ho et al., 2020, Section 4][ddpm-experiments])
+  The original DDPM experiments use $$T=1000$$, with variances increasing linearly from $$10^{-4}$$ to $$0.02$$. Images are scaled to $$[-1,1]$$. ([Ho et al., 2020, Section 4][ddpm-experiments])
 
-Explicitly, the schedule is
+  Explicitly, the schedule is
 
-$$
-\boxed{
-\begin{aligned}
-\beta_t
-&=
-\beta_1+\frac{t-1}{T-1}(\beta_T-\beta_1)\\[4pt]
-&=
-10^{-4}+\frac{t-1}{999}(0.02-10^{-4}),
-\qquad t=1,\ldots,1000.
-\end{aligned}
-}
-$$
+  $$
+  \boxed{
+  \begin{aligned}
+  \beta_t
+  &=
+  \beta_1+\frac{t-1}{T-1}(\beta_T-\beta_1)\\[4pt]
+  &=
+  10^{-4}+\frac{t-1}{999}(0.02-10^{-4}),
+  \qquad t=1,\ldots,1000.
+  \end{aligned}
+  }
+  $$
 
-The linear progression is across **diffusion timesteps**, not training iterations. These values remain fixed throughout training.
+  The linear progression is across **diffusion timesteps**, not training iterations. These values remain fixed throughout training.
 
-The forward process <span style="color: red;"> is chosen to be </span> a Markov chain:
+  The forward process <span style="color: red;"> is chosen to be </span> a Markov chain:
 
-$$
-\boxed{
-q(x_{1:T}\mid x_0)
-=
-\prod_{t=1}^{T}q(x_t\mid x_{t-1}),
-}
-$$
+  $$
+  \boxed{
+  q(x_{1:T}\mid x_0)
+  =
+  \prod_{t=1}^{T}q(x_t\mid x_{t-1}),
+  }
+  $$
 
-with Gaussian transitions
+  with Gaussian transitions
 
-$$
-\boxed{
-q(x_t\mid x_{t-1})
-=
-\mathcal{N}\!\left(
-x_t;\sqrt{\alpha_t}x_{t-1},\beta_t I
-\right).
-}
-$$
+  $$
+  \boxed{
+  q(x_t\mid x_{t-1})
+  =
+  \mathcal{N}\!\left(
+  x_t;\sqrt{\alpha_t}x_{t-1},\beta_t I
+  \right).
+  }
+  $$
 
-Equivalently, one step is sampled as
+  Equivalently, one step is sampled as
 
-$$
-x_t
-=
-\sqrt{\alpha_t}x_{t-1}
-+
-\sqrt{\beta_t}\eta_t,
-\qquad
-\eta_t\sim\mathcal{N}(0,I),
-$$
+  $$
+  x_t
+  =
+  \sqrt{\alpha_t}x_{t-1}
+  +
+  \sqrt{\beta_t}\eta_t,
+  \qquad
+  \eta_t\sim\mathcal{N}(0,I),
+  $$
 
-where the forward noises are independent across steps and independent of the clean image.
+  where the forward noises are independent across steps and independent of the clean image.
 
-Thus, $$\beta_t$$ is the **variance** of the newly added noise, while $$\sqrt{\beta_t}$$ is its standard deviation. Each step attenuates the previous state and adds Gaussian noise.
+  Thus, $$\beta_t$$ is the **variance** of the newly added noise, while $$\sqrt{\beta_t}$$ is its standard deviation. Each step attenuates the previous state and adds Gaussian noise.
 
 - ### 4.3 The reverse model and its variance convention
 
-Generation starts from the prescribed top-level prior
+  Generation starts from the prescribed top-level prior
 
-$$
-\boxed{
-p(x_T)=\mathcal{N}(x_T;0,I)
-}
-$$
+  $$
+  \boxed{
+  p(x_T)=\mathcal{N}(x_T;0,I)
+  }
+  $$
 
-and proceeds through the reverse chain
+  and proceeds through the reverse chain
 
-$$
-x_T\rightarrow x_{T-1}\rightarrow\cdots\rightarrow x_0.
-$$
+  $$
+  x_T\rightarrow x_{T-1}\rightarrow\cdots\rightarrow x_0.
+  $$
 
-The joint model is
+  The joint model is
 
-$$
-\boxed{
-p_\theta(x_{0:T})
-=
-p(x_T)\prod_{t=1}^{T}p_\theta(x_{t-1}\mid x_t).
-}
-$$
+  $$
+  \boxed{
+  p_\theta(x_{0:T})
+  =
+  p(x_T)\prod_{t=1}^{T}p_\theta(x_{t-1}\mid x_t).
+  }
+  $$
 
-For intermediate steps, we choose
+  For intermediate steps, we choose
 
-$$
-\boxed{
-p_\theta(x_{t-1}\mid x_t)
-=
-\mathcal{N}\!\left(
-x_{t-1};\mu_\theta(x_t,t),\sigma_t^2 I
-\right),
-\qquad t\geq2.
-}
-$$
+  $$
+  \boxed{
+  p_\theta(x_{t-1}\mid x_t)
+  =
+  \mathcal{N}\!\left(
+  x_{t-1};\mu_\theta(x_t,t),\sigma_t^2 I
+  \right),
+  \qquad t\geq2.
+  }
+  $$
 
-<span style="color: red">**The Gaussian form of this learned reverse conditional is a modeling choice.**</span> It does not assert that the true reverse conditional $$q(x_{t-1}\mid x_t)$$ is exactly Gaussian. The model is a Markov chain with Gaussian conditional distributions; its full joint distribution need not be Gaussian.
+  <span style="color: red">**The Gaussian form of this learned reverse conditional is a modeling choice.**</span> It does not assert that the true reverse conditional $$q(x_{t-1}\mid x_t)$$ is exactly Gaussian. The model is a Markov chain with Gaussian conditional distributions; its full joint distribution need not be Gaussian.
 
-The original DDPM considers two prescribed reverse-variance schedules:
+  The original DDPM considers two prescribed reverse-variance schedules:
 
-$$
-\sigma_t^2=\beta_t
-\qquad\text{or}\qquad
-\sigma_t^2=\tilde\beta_t.
-$$
+  $$
+  \sigma_t^2=\beta_t
+  \qquad\text{or}\qquad
+  \sigma_t^2=\tilde\beta_t.
+  $$
 
-The derivation in this post adopts
+  The derivation in this post adopts
 
-$$
-\boxed{
-\sigma_t^2=\tilde\beta_t,
-\qquad t\geq2,
-}
-$$
+  $$
+  \boxed{
+  \sigma_t^2=\tilde\beta_t,
+  \qquad t\geq2,
+  }
+  $$
 
-where $$\tilde\beta_t$$ is derived in Section 5.3. This is one of the fixed-variance choices investigated in the paper, rather than a unique mandatory DDPM setting. ([Ho et al., 2020, Section 3.2][ddpm-reverse])
+  where $$\tilde\beta_t$$ is derived in Section 5.3. This is one of the fixed-variance choices investigated in the paper, rather than a unique mandatory DDPM setting. ([Ho et al., 2020, Section 3.2][ddpm-reverse])
 
-"Fixed variance" means that the variance is prescribed rather than learned. It may differ between timesteps, but for a given timestep it does not depend on the image or the network parameters. Unlike the forward $$\beta_t$$ schedule, the resulting $$\tilde\beta_t$$ schedule is not generally linear.
+  "Fixed variance" means that the variance is prescribed rather than learned. It may differ between timesteps, but for a given timestep it does not depend on the image or the network parameters. Unlike the forward $$\beta_t$$ schedule, the resulting $$\tilde\beta_t$$ schedule is not generally linear.
 
-The final observation likelihood $$p_\theta(x_0\mid x_1)$$ is handled separately. For discrete image pixels, the original DDPM uses a discretized Gaussian decoder. Its positive underlying variance must be specified separately rather than set equal to $$\tilde\beta_1=0$$. The reconstruction-loss section will explain this distinction. ([Ho et al., 2020, Section 3.3][ddpm-decoder])
+  The final observation likelihood $$p_\theta(x_0\mid x_1)$$ is handled separately. For discrete image pixels, the original DDPM uses a discretized Gaussian decoder. Its positive underlying variance must be specified separately rather than set equal to $$\tilde\beta_1=0$$. The reconstruction-loss section will explain this distinction. ([Ho et al., 2020, Section 3.3][ddpm-decoder])
 
-Finally, distinguish the top-level prior from the prior over the complete latent path:
+  Finally, distinguish the top-level prior from the prior over the complete latent path:
 
-$$
-\boxed{
-p_\theta(z)
-=
-p_\theta(x_{1:T})
-=
-p(x_T)\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t).
-}
-$$
+  $$
+  \boxed{
+  p_\theta(z)
+  =
+  p_\theta(x_{1:T})
+  =
+  p(x_T)\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t).
+  }
+  $$
 
-Only $$p(x_T)$$ is prescribed to be standard Gaussian. The other latent distributions are determined by the learned reverse transitions.
+  Only $$p(x_T)$$ is prescribed to be standard Gaussian. The other latent distributions are determined by the learned reverse transitions.
 
 ### 5. Forward Diffusion and the Analytic Denoising Target
 
@@ -830,280 +830,280 @@ The first requires $$q(x_t\mid x_0)$$. <span style="color: red">The second requi
 
 - ### 5.1 Construct a noisy image at an arbitrary timestep
 
-Fix the clean image $$x_0$$. Let $$m_t$$ be the conditional mean, and let $$v_t$$ denote the scalar coefficient of the conditional covariance:
+  Fix the clean image $$x_0$$. Let $$m_t$$ be the conditional mean, and let $$v_t$$ denote the scalar coefficient of the conditional covariance:
 
-$$
-m_t:=\mathbb{E}_q[x_t\mid x_0],
-\qquad
-\operatorname{Cov}_q(x_t\mid x_0)=v_t I.
-$$
+  $$
+  m_t:=\mathbb{E}_q[x_t\mid x_0],
+  \qquad
+  \operatorname{Cov}_q(x_t\mid x_0)=v_t I.
+  $$
 
-Thus, $$v_t$$ describes the **accumulated conditional variance at timestep $$t$$**, not just the variance of the noise introduced in that one step. The latter is $$\beta_t$$.
+  Thus, $$v_t$$ describes the **accumulated conditional variance at timestep $$t$$**, not just the variance of the noise introduced in that one step. The latter is $$\beta_t$$.
 
-Starting from
+  Starting from
 
-$$
-x_t=\sqrt{\alpha_t}x_{t-1}+\sqrt{\beta_t}\eta_t,
-$$
+  $$
+  x_t=\sqrt{\alpha_t}x_{t-1}+\sqrt{\beta_t}\eta_t,
+  $$
 
-the zero mean of $$\eta_t$$ gives
+  the zero mean of $$\eta_t$$ gives
 
-$$
-m_t=\sqrt{\alpha_t}m_{t-1},
-\qquad m_0=x_0.
-$$
+  $$
+  m_t=\sqrt{\alpha_t}m_{t-1},
+  \qquad m_0=x_0.
+  $$
 
-Repeated substitution therefore yields
+  Repeated substitution therefore yields
 
-$$
-m_t=\sqrt{\bar\alpha_t}x_0.
-$$
+  $$
+  m_t=\sqrt{\bar\alpha_t}x_0.
+  $$
 
-<span style="color:red">For the covariance, scaling a random vector by a scalar multiplies its covariance by the square of that scalar. Also, the fresh noise $$\eta_t$$ is independent of $$x_{t-1}$$ conditional on the fixed $$x_0$$, so the cross-covariance terms vanish.</span> ([can be add together for total variance](https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables)) Therefore,
+  <span style="color:red">For the covariance, scaling a random vector by a scalar multiplies its covariance by the square of that scalar. Also, the fresh noise $$\eta_t$$ is independent of $$x_{t-1}$$ conditional on the fixed $$x_0$$, so the cross-covariance terms vanish.</span> ([can be added together for total variance](https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables)) Therefore,
 
-$$
-\begin{aligned}
-\operatorname{Cov}_q(x_t\mid x_0)
-&=
-\alpha_t\operatorname{Cov}_q(x_{t-1}\mid x_0)
-+
-\beta_t\operatorname{Cov}(\eta_t)\\[4pt]
-&=
-\alpha_t v_{t-1}I+\beta_t I.
-\end{aligned}
-$$
+  $$
+  \begin{aligned}
+  \operatorname{Cov}_q(x_t\mid x_0)
+  &=
+  \alpha_t\operatorname{Cov}_q(x_{t-1}\mid x_0)
+  +
+  \beta_t\operatorname{Cov}(\eta_t)\\[4pt]
+  &=
+  \alpha_t v_{t-1}I+\beta_t I.
+  \end{aligned}
+  $$
 
-Matching the scalar coefficients of $$I$$ gives the recursion
+  Matching the scalar coefficients of $$I$$ gives the recursion
 
-$$
-\boxed{
-v_t=\alpha_t v_{t-1}+\beta_t,
-\qquad v_0=0.
-}
-$$
+  $$
+  \boxed{
+  v_t=\alpha_t v_{t-1}+\beta_t,
+  \qquad v_0=0.
+  }
+  $$
 
-The initial variance is zero because $$x_0$$ is held fixed in this conditional calculation. The term $$\alpha_t v_{t-1}$$ is the retained variance from earlier steps; $$\beta_t$$ is the newly added variance.
+  The initial variance is zero because $$x_0$$ is held fixed in this conditional calculation. The term $$\alpha_t v_{t-1}$$ is the retained variance from earlier steps; $$\beta_t$$ is the newly added variance.
 
-The solution is
+  The solution is
 
-$$
-\boxed{v_t=1-\bar\alpha_t.}
-$$
+  $$
+  \boxed{v_t=1-\bar\alpha_t.}
+  $$
 
-To verify it, the initial condition satisfies $$v_0=0=1-\bar\alpha_0$$. If $$v_{t-1}=1-\bar\alpha_{t-1}$$, then
+  To verify it, the initial condition satisfies $$v_0=0=1-\bar\alpha_0$$. If $$v_{t-1}=1-\bar\alpha_{t-1}$$, then
 
-$$
-\begin{aligned}
-v_t
-&=\alpha_t(1-\bar\alpha_{t-1})+\beta_t\\[4pt]
-&=(\alpha_t+\beta_t)-\alpha_t\bar\alpha_{t-1}\\[4pt]
-&=1-\bar\alpha_t.
-\end{aligned}
-$$
+  $$
+  \begin{aligned}
+  v_t
+  &=\alpha_t(1-\bar\alpha_{t-1})+\beta_t\\[4pt]
+  &=(\alpha_t+\beta_t)-\alpha_t\bar\alpha_{t-1}\\[4pt]
+  &=1-\bar\alpha_t.
+  \end{aligned}
+  $$
 
-**The bar is essential:** $$v_{t-1}=1-\bar\alpha_{t-1}$$, whereas $$1-\alpha_{t-1}=\beta_{t-1}$$ describes only one step's added variance. For example,
+  **The bar is essential:** $$v_{t-1}=1-\bar\alpha_{t-1}$$, whereas $$1-\alpha_{t-1}=\beta_{t-1}$$ describes only one step's added variance. For example,
 
-$$
-v_1=\beta_1,
-\qquad
-v_2=\alpha_2\beta_1+\beta_2
-=1-\alpha_1\alpha_2.
-$$
+  $$
+  v_1=\beta_1,
+  \qquad
+  v_2=\alpha_2\beta_1+\beta_2
+  =1-\alpha_1\alpha_2.
+  $$
 
-Conditioned on $$x_0$$, the state is an affine combination of independent Gaussian noises, so it is Gaussian. Its mean and covariance above therefore give
+  Conditioned on $$x_0$$, the state is an affine combination of independent Gaussian noises, so it is Gaussian. Its mean and covariance above therefore give
 
-$$
-\boxed{
-q(x_t\mid x_0)
-=
-\mathcal{N}\!\left(
-x_t;\sqrt{\bar\alpha_t}x_0,
-(1-\bar\alpha_t)I
-\right).
-}
-$$
+  $$
+  \boxed{
+  q(x_t\mid x_0)
+  =
+  \mathcal{N}\!\left(
+  x_t;\sqrt{\bar\alpha_t}x_0,
+  (1-\bar\alpha_t)I
+  \right).
+  }
+  $$
 
-Consequently, a sample at timestep $$t$$ can be generated directly:
+  Consequently, a sample at timestep $$t$$ can be generated directly:
 
-$$
-\boxed{
-x_t
-=
-\sqrt{\bar\alpha_t}x_0
-+
-\sqrt{1-\bar\alpha_t}\epsilon,
-\qquad
-\epsilon\sim\mathcal{N}(0,I).
-}
-\tag{1}
-$$
+  $$
+  \boxed{
+  x_t
+  =
+  \sqrt{\bar\alpha_t}x_0
+  +
+  \sqrt{1-\bar\alpha_t}\epsilon,
+  \qquad
+  \epsilon\sim\mathcal{N}(0,I).
+  }
+  \tag{1}
+  $$
 
-This direct noising formula is part of the standard DDPM construction. ([Ho et al., 2020, Equation (4)][ddpm-paper])
+  This direct noising formula is part of the standard DDPM construction. ([Ho et al., 2020, Equation (4)][ddpm-paper])
 
-The first term is the retained clean signal; the second is the accumulated noise. Here, $$\epsilon$$ denotes the normalized aggregate noise in this direct formula, not necessarily the noise from the last individual forward step.
+  The first term is the retained clean signal; the second is the accumulated noise. Here, $$\epsilon$$ denotes the normalized aggregate noise in this direct formula, not necessarily the noise from the last individual forward step.
 
-Equation (1) allows training to select any timestep without simulating all earlier states. It samples the required marginal distribution; independently using the formula at several timesteps is not the same as sampling an entire Markov trajectory.
+  Equation (1) allows training to select any timestep without simulating all earlier states. It samples the required marginal distribution; independently using the formula at several timesteps is not the same as sampling an entire Markov trajectory.
 
 - ### 5.2 Why the terminal state approaches standard Gaussian noise
 
-At the final timestep,
+  At the final timestep,
 
-$$
-x_T
-=
-\sqrt{\bar\alpha_T}x_0
-+
-\sqrt{1-\bar\alpha_T}\epsilon.
-$$
+  $$
+  x_T
+  =
+  \sqrt{\bar\alpha_T}x_0
+  +
+  \sqrt{1-\bar\alpha_T}\epsilon.
+  $$
 
-When $$\bar\alpha_T$$ is small, the clean-signal contribution becomes small and the noise coefficient approaches one.
+  When $$\bar\alpha_T$$ is small, the clean-signal contribution becomes small and the noise coefficient approaches one.
 
-For the original 1000-step linear schedule, evaluating the product gives
+  For the original 1000-step linear schedule, evaluating the product gives
 
-$$
-\bar\alpha_{1000}
-=
-\prod_{t=1}^{1000}(1-\beta_t)
-\approx4.0358\times10^{-5}.
-$$
+  $$
+  \bar\alpha_{1000}
+  =
+  \prod_{t=1}^{1000}(1-\beta_t)
+  \approx4.0358\times10^{-5}.
+  $$
 
-Therefore,
+  Therefore,
 
-$$
-x_{1000}
-\approx
-0.006353\,x_0+0.999980\,\epsilon.
-$$
+  $$
+  x_{1000}
+  \approx
+  0.006353\,x_0+0.999980\,\epsilon.
+  $$
 
-This explains why the endpoint is close to standard Gaussian noise, while also showing that the clean contribution has not vanished exactly.
+  This explains why the endpoint is close to standard Gaussian noise, while also showing that the clean contribution has not vanished exactly.
 
-For every fixed $$x_0$$, the conditional distribution $$q(x_t\mid x_0)$$ is already Gaussian. The terminal approximation is more specific:
+  For every fixed $$x_0$$, the conditional distribution $$q(x_t\mid x_0)$$ is already Gaussian. The terminal approximation is more specific:
 
-$$
-q(x_T\mid x_0)\approx\mathcal{N}(0,I),
-$$
+  $$
+  q(x_T\mid x_0)\approx\mathcal{N}(0,I),
+  $$
 
-with a mean close to zero and covariance close to $$I$$, nearly independent of the original image.
+  with a mean close to zero and covariance close to $$I$$, nearly independent of the original image.
 
-This does not imply that the marginal $$q(x_t)$$, obtained by averaging over different clean images, is Gaussian at every timestep. Such an average generally combines Gaussians with different means.
+  This does not imply that the marginal $$q(x_t)$$, obtained by averaging over different clean images, is Gaussian at every timestep. Such an average generally combines Gaussians with different means.
 
 - ### 5.3 Derive a tractable reverse target by conditioning on the clean image
 
-During training, $$x_0$$ is known. We can therefore ask:
+  During training, $$x_0$$ is known. We can therefore ask:
 
-> Given this clean image and its noisy version at timestep $$t$$, what previous noisy states are plausible?
+  > Given this clean image and its noisy version at timestep $$t$$, what previous noisy states are plausible?
 
-The answer is the local posterior
+  The answer is the local posterior
 
-$$
-q(x_{t-1}\mid x_t,x_0).
-$$
+  $$
+  q(x_{t-1}\mid x_t,x_0).
+  $$
 
-Conditional Bayes' rule and Gaussian square completion give
+  Conditional Bayes' rule and Gaussian square completion give
 
-$$
-\boxed{
-q(x_{t-1}\mid x_t,x_0)
-=
-\mathcal{N}\!\left(
-x_{t-1};\tilde\mu_t(x_t,x_0),\tilde\beta_t I
-\right),
-\qquad t\geq2,
-}
-\tag{2}
-$$
+  $$
+  \boxed{
+  q(x_{t-1}\mid x_t,x_0)
+  =
+  \mathcal{N}\!\left(
+  x_{t-1};\tilde\mu_t(x_t,x_0),\tilde\beta_t I
+  \right),
+  \qquad t\geq2,
+  }
+  \tag{2}
+  $$
 
-where
+  where
 
-$$
-\boxed{
-\tilde\mu_t(x_t,x_0)
-=
-\frac{\sqrt{\alpha_t}(1-\bar\alpha_{t-1})}
-{1-\bar\alpha_t}x_t
-+
-\frac{\sqrt{\bar\alpha_{t-1}}\beta_t}
-{1-\bar\alpha_t}x_0
-}
-\tag{3}
-$$
+  $$
+  \boxed{
+  \tilde\mu_t(x_t,x_0)
+  =
+  \frac{\sqrt{\alpha_t}(1-\bar\alpha_{t-1})}
+  {1-\bar\alpha_t}x_t
+  +
+  \frac{\sqrt{\bar\alpha_{t-1}}\beta_t}
+  {1-\bar\alpha_t}x_0
+  }
+  \tag{3}
+  $$
 
-and
+  and
 
-$$
-\boxed{
-\tilde\beta_t
-=
-\frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t.
-}
-\tag{4}
-$$
+  $$
+  \boxed{
+  \tilde\beta_t
+  =
+  \frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t.
+  }
+  \tag{4}
+  $$
 
-These are the analytic posterior parameters from DDPM. The full derivation of Equations (2)-(4) is given in [Appendix A](#ddpm-appendix-a). ([Ho et al., 2020, Equations (6)-(7)][ddpm-paper])
+  These are the analytic posterior parameters from DDPM. The full derivation of Equations (2)-(4) is given in [Appendix A](#ddpm-appendix-a). ([Ho et al., 2020, Equations (6)-(7)][ddpm-paper])
 
-<p style="color: red;">
-The Gaussian form here is a <strong>derived consequence</strong> of the linear-Gaussian forward process. This is different from choosing a Gaussian family for the learned reverse model.
-</p>
+  <p style="color: red;">
+  The Gaussian form here is a <strong>derived consequence</strong> of the linear-Gaussian forward process. This is different from choosing a Gaussian family for the learned reverse model.
+  </p>
 
-The parameters have a direct statistical meaning:
+  The parameters have a direct statistical meaning:
 
-$$
-\tilde\mu_t(x_t,x_0)
-=
-\mathbb{E}_q[x_{t-1}\mid x_t,x_0],
-$$
+  $$
+  \tilde\mu_t(x_t,x_0)
+  =
+  \mathbb{E}_q[x_{t-1}\mid x_t,x_0],
+  $$
 
-$$
-\tilde\beta_t I
-=
-\operatorname{Cov}_q(x_{t-1}\mid x_t,x_0).
-$$
+  $$
+  \tilde\beta_t I
+  =
+  \operatorname{Cov}_q(x_{t-1}\mid x_t,x_0).
+  $$
 
-Thus, Equation (3) describes the **mean of possible previous states**, not a deterministic identity for $$x_{t-1}$$. It combines information about the current noisy state with information about its clean origin.
+  Thus, Equation (3) describes the **mean of possible previous states**, not a deterministic identity for $$x_{t-1}$$. It combines information about the current noisy state with information about its clean origin.
 
-The variance in Equation (4) depends only on the forward schedule, not on $$x_t$$ or $$x_0$$. This is why it can also be used as a fixed reverse-model variance during generation, when the clean image is unavailable.
+  The variance in Equation (4) depends only on the forward schedule, not on $$x_t$$ or $$x_0$$. This is why it can also be used as a fixed reverse-model variance during generation, when the clean image is unavailable.
 
-Under the convention adopted in Section 4.3,
+  Under the convention adopted in Section 4.3,
 
-$$
-\boxed{
-\sigma_t^2=\tilde\beta_t,
-\qquad
-\sigma_t
-=
-\sqrt{
-\frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t
-},
-\quad t\geq2.
-}
-$$
+  $$
+  \boxed{
+  \sigma_t^2=\tilde\beta_t,
+  \qquad
+  \sigma_t
+  =
+  \sqrt{
+  \frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t
+  },
+  \quad t\geq2.
+  }
+  $$
 
-The square root is the standard deviation multiplying fresh noise in reverse sampling. The authors' implementation precomputes such variance schedules and retrieves their values using the timestep. ([DDPM implementation][ddpm-code])
+  The square root is the standard deviation multiplying fresh noise in reverse sampling. The authors' implementation precomputes such variance schedules and retrieves their values using the timestep. ([DDPM implementation][ddpm-code])
 
 - ### 5.4 Why this posterior is useful for training
 
-The target distribution and learned distribution play different roles:
+  The target distribution and learned distribution play different roles:
 
-| | Analytic target | Learned reverse model |
-|---|---|---|
-| Distribution | $$q(x_{t-1}\mid x_t,x_0)$$ | $$p_\theta(x_{t-1}\mid x_t)$$ |
-| Mean | $$\tilde\mu_t(x_t,x_0)$$ | $$\mu_\theta(x_t,t)$$ |
-| Variance | Derived $$\tilde\beta_t I$$ | Prescribed $$\sigma_t^2 I$$ |
-| Uses the true clean image? | Yes, to construct the training target. | No. |
+  | | Analytic target | Learned reverse model |
+  |---|---|---|
+  | Distribution | $$q(x_{t-1}\mid x_t,x_0)$$ | $$p_\theta(x_{t-1}\mid x_t)$$ |
+  | Mean | $$\tilde\mu_t(x_t,x_0)$$ | $$\mu_\theta(x_t,t)$$ |
+  | Variance | Derived $$\tilde\beta_t I$$ | Prescribed $$\sigma_t^2 I$$ |
+  | Uses the true clean image? | Yes, to construct the training target. | No. |
 
-The likelihood-bound derivation will produce local comparisons of the form
+  The likelihood-bound derivation will produce local comparisons of the form
 
-$$
-D_{\mathrm{KL}}\!\left(
-q(x_{t-1}\mid x_t,x_0)
-\,\Vert\,
-p_\theta(x_{t-1}\mid x_t)
-\right).
-$$
+  $$
+  D_{\mathrm{KL}}\!\left(
+  q(x_{t-1}\mid x_t,x_0)
+  \,\Vert\,
+  p_\theta(x_{t-1}\mid x_t)
+  \right).
+  $$
 
-Equations (3) and (4) make the first distribution explicitly available. Because both distributions are Gaussian, this comparison can be evaluated analytically and converted into a prediction loss.
+  Equations (3) and (4) make the first distribution explicitly available. Because both distributions are Gaussian, this comparison can be evaluated analytically and converted into a prediction loss.
 
-Conditioning the target on $$x_0$$ does not add $$x_0$$ to the network input. The clean image provides supervision during training; the learned reverse transition must operate using only the current noisy image and timestep.
+  Conditioning the target on $$x_0$$ does not add $$x_0$$ to the network input. The clean image provides supervision during training; the learned reverse transition must operate using only the current noisy image and timestep.
 
 <!-- Place Appendix A after the remaining main DDPM sections in the full post. -->
 
