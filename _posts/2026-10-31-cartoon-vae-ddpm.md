@@ -993,7 +993,7 @@ The first requires $$q(x_t\mid x_0)$$. <span style="color: red">The second requi
 
   > Given this clean image and its noisy version at timestep $$t$$, what previous noisy states are plausible?
 
-  The answer is the local posterior
+  The answer is the **local <span style="color:red"> posterior</span>**
 
   $$
   q(x_{t-1}\mid x_t,x_0).
@@ -1061,7 +1061,7 @@ The first requires $$q(x_t\mid x_0)$$. <span style="color: red">The second requi
 
   Thus, Equation (3) describes the **mean of possible previous states**, not a deterministic identity for $$x_{t-1}$$. It combines information about the current noisy state with information about its clean origin.
 
-  The variance in Equation (4) depends only on the forward schedule, not on $$x_t$$ or $$x_0$$. This is why it can also be used as a fixed reverse-model variance during generation, when the clean image is unavailable.
+  <span style="color:red">The variance in Equation (4) depends only on the forward schedule, not on $$x_t$$ or $$x_0$$.</span> This is why it can also be used as a fixed reverse-model variance during generation, when the clean image is unavailable.
 
   Under the convention adopted in Section 4.3,
 
@@ -1086,7 +1086,7 @@ The first requires $$q(x_t\mid x_0)$$. <span style="color: red">The second requi
 
   | | Analytic target | Learned reverse model |
   |---|---|---|
-  | Distribution | $$q(x_{t-1}\mid x_t,x_0)$$ | $$p_\theta(x_{t-1}\mid x_t)$$ |
+  | Distribution | $$q(x_{t-1}\mid x_t,x_0)$$ | <span style="color:red">$$p_\theta(x_{t-1}\mid x_t)$$</span> |
   | Mean | $$\tilde\mu_t(x_t,x_0)$$ | $$\mu_\theta(x_t,t)$$ |
   | Variance | Derived $$\tilde\beta_t I$$ | Prescribed $$\sigma_t^2 I$$ |
   | Uses the true clean image? | Yes, to construct the training target. | No. |
