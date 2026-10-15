@@ -1105,6 +1105,460 @@ The first requires $$q(x_t\mid x_0)$$. <span style="color: red">The second requi
 
   Conditioning the target on $$x_0$$ does not add $$x_0$$ to the network input. The clean image provides supervision during training; the learned reverse transition must operate using only the current noisy image and timestep.
 
+### 6. From Maximum Likelihood to the DDPM Objective
+
+Section 4 defined DDPM as a latent-variable generative model, while Section 5 derived the tractable posterior $$q(x_{t-1}\mid x_t,x_0)$$. We now connect these two results: **why should matching this local posterior help train a model that generates complete images?** The connection comes from a variational lower bound on the image likelihood.
+
+The derivation has two stages. First, we replace the difficult marginal-likelihood objective with a variational bound, following the same principle as VAE. Second, we rewrite that bound into terms associated with individual reverse transitions. The algebraic details of the second stage are provided in [Appendix B](#ddpm-appendix-b).
+
+- ### 6.1 Deriving the evidence lower bound
+
+  Recall the maximum likelihood problem introduced in Section 4.1:
+
+  $$
+  \max_\theta
+  \frac1N\sum_{n=1}^{N}
+  \log p_\theta\!\left(x_0^{(n)}\right).
+  $$
+
+  For one fixed clean image $$x_0$$, its marginal likelihood is
+
+  $$
+  p_\theta(x_0)
+  =
+  \int p_\theta(x_0,z)\,dz,
+  \qquad
+  z=x_{1:T}.
+  $$
+
+  The integral averages over the complete latent trajectory. Although the joint density can be evaluated for a specified trajectory, directly evaluating this marginal is generally difficult. As in VAE, we introduce a tractable variational distribution: in this case, the fixed forward process $$q(z\mid x_0)$$. ([Kingma and Welling, 2013][vae-paper])
+
+  Multiplying and dividing the integrand by this density gives
+
+  $$
+  \begin{aligned}
+  \log p_\theta(x_0)
+  &=
+  \log\int
+  q(z\mid x_0)
+  \frac{p_\theta(x_0,z)}{q(z\mid x_0)}
+  \,dz\\[4pt]
+  &=
+  \log
+  \mathbb{E}_{q(z\mid x_0)}
+  \left[
+  \frac{p_\theta(x_0,z)}{q(z\mid x_0)}
+  \right]\\[4pt]
+  &\geq
+  \mathbb{E}_{q(z\mid x_0)}
+  \left[
+  \log\frac{p_\theta(x_0,z)}{q(z\mid x_0)}
+  \right].
+  \end{aligned}
+  $$
+
+  The second equality uses the definition of expectation. The inequality uses Jensen's inequality: because $$\log$$ is concave,
+
+  $$
+  \log\mathbb{E}[U]\geq\mathbb{E}[\log U]
+  $$
+
+  for a positive random variable $$U$$ with the required expectations defined.
+
+  Define the right-hand side as the evidence lower bound:
+
+  $$
+  \boxed{
+  \mathrm{ELBO}_\theta(x_0)
+  =
+  \mathbb{E}_{q(z\mid x_0)}
+  \left[
+  \log p_\theta(x_0,z)-\log q(z\mid x_0)
+  \right].
+  }
+  $$
+
+  The posterior-KL identity derived for VAE in Section 3.1 applies here as well:
+
+  $$
+  \boxed{
+  \begin{aligned}
+  \log p_\theta(x_0)
+  ={}&
+  \mathrm{ELBO}_\theta(x_0)\\[4pt]
+  &+
+  D_{\mathrm{KL}}\!\left(
+  q(z\mid x_0)\,\Vert\,p_\theta(z\mid x_0)
+  \right).
+  \end{aligned}
+  }
+  $$
+
+  The nonnegative KL measures the gap between the bound and the exact log-likelihood. Consequently, maximizing the ELBO is a **variational surrogate for maximum likelihood**, not generally the same optimization problem. Equality holds when the variational distribution equals the exact model posterior. ([Kingma and Welling, 2013][vae-paper])
+
+  For minimization, define the negative ELBO:
+
+  $$
+  \boxed{
+  \begin{aligned}
+  \mathcal{L}_{\mathrm{bound}}(x_0)
+  &:=-\mathrm{ELBO}_\theta(x_0)\\[4pt]
+  &=
+  \mathbb{E}_{q(z\mid x_0)}
+  \left[
+  \log\frac{q(z\mid x_0)}{p_\theta(x_0,z)}
+  \right]\\[4pt]
+  &=
+  \mathbb{E}_{q(x_{1:T}\mid x_0)}
+  \left[
+  \log
+  \frac{q(x_{1:T}\mid x_0)}
+  {p_\theta(x_{0:T})}
+  \right].
+  \end{aligned}
+  }
+  \tag{5}
+  $$
+
+  The ratio reverses because
+
+  $$
+  -\log\frac{p}{q}
+  =
+  \log\frac{q}{p}.
+  $$
+
+  The expectation remains under the same forward distribution. The final line of Equation (5) also expands the latent-variable notation:
+
+  $$
+  \begin{aligned}
+  z=x_{1:T}&=(x_1,\ldots,x_T),\\[4pt]
+  x_{0:T}&=(x_0,x_1,\ldots,x_T)=(x_0,z).
+  \end{aligned}
+  $$
+
+  Therefore,
+
+  $$
+  \boxed{p_\theta(x_{0:T})=p_\theta(x_0,z).}
+  $$
+
+  The denominator has **not** been replaced by the latent-path prior $$p_\theta(z)=p_\theta(x_{1:T})$$. The notation $$x_{0:T}$$ includes the observed image as well as the latent states. No variable has been removed or integrated out in this change of notation.
+
+  Negating the bound also reverses the inequality:
+
+  $$
+  \boxed{
+  -\log p_\theta(x_0)
+  \leq
+  \mathcal{L}_{\mathrm{bound}}(x_0).
+  }
+  $$
+
+  Thus, we maximize a lower bound on log-likelihood, or equivalently minimize an upper bound on negative log-likelihood.
+
+- ### 6.2 Rewriting the bound using reverse-oriented conditionals
+
+  Equation (5) involves the whole latent trajectory. To expose local training terms, we rewrite the forward-path density in reverse order:
+
+  $$
+  \boxed{
+  q(x_{1:T}\mid x_0)
+  =
+  q(x_T\mid x_0)
+  \prod_{t=2}^{T}q(x_{t-1}\mid x_t,x_0).
+  }
+  \tag{6}
+  $$
+
+  This identity follows from conditional Bayes' rule and cancellation of intermediate density factors, as shown in Appendix B.1.
+
+  **Equation (6) is the same forward-path distribution written differently. It is not the learned reverse model.** In particular, the factors on the right remain conditioned on the known clean image.
+
+  The generative model has the corresponding factorization
+
+  $$
+  p_\theta(x_{0:T})
+  =
+  p(x_T)
+  \left[
+  \prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
+  \right]
+  p_\theta(x_0\mid x_1).
+  $$
+
+  Substituting both factorizations into the log ratio in Equation (5),
+
+  $$
+  \boxed{
+  \begin{aligned}
+  \log
+  \frac{q(x_{1:T}\mid x_0)}
+  {p_\theta(x_{0:T})}
+  ={}&
+  \log\frac{q(x_T\mid x_0)}{p(x_T)}
+  \\[4pt]
+  &+
+  \sum_{t=2}^{T}
+  \log
+  \frac{q(x_{t-1}\mid x_t,x_0)}
+  {p_\theta(x_{t-1}\mid x_t)}
+  \\[4pt]
+  &-
+  \log p_\theta(x_0\mid x_1).
+  \end{aligned}
+  }
+  \tag{7}
+  $$
+
+  The intermediate ratios now compare two distributions over the **same previous-state variable** $$x_{t-1}$$. That alignment is what allows their expectations to become local KL divergences.
+
+  For one fixed timestep, write $$y=x_{t-1}$$. The corresponding log ratio depends only on $$y,x_t$$, and the fixed $$x_0$$. Integrating out the other latent states leaves the two-state marginal, which factors as
+
+  $$
+  q(y,x_t\mid x_0)
+  =
+  q(x_t\mid x_0)q(y\mid x_t,x_0).
+  $$
+
+  Therefore,
+
+  $$
+  \begin{aligned}
+  &\mathbb{E}_{q(x_{1:T}\mid x_0)}
+  \left[
+  \log\frac{q(y\mid x_t,x_0)}{p_\theta(y\mid x_t)}
+  \right]\\[4pt]
+  &=
+  \int q(x_t\mid x_0)
+  \left[
+  \int q(y\mid x_t,x_0)
+  \log\frac{q(y\mid x_t,x_0)}{p_\theta(y\mid x_t)}
+  \,dy
+  \right]dx_t\\[4pt]
+  &=
+  \mathbb{E}_{q(x_t\mid x_0)}
+  \left[
+  D_{\mathrm{KL}}\!\left(
+  q(x_{t-1}\mid x_t,x_0)
+  \,\Vert\,
+  p_\theta(x_{t-1}\mid x_t)
+  \right)
+  \right].
+  \end{aligned}
+  $$
+
+  The inner integral evaluates a KL over the possible previous states, holding $$x_t,x_0$$ fixed. Its value still depends on $$x_t$$, so the outer integral averages it over different noisy images produced from the same clean image.
+
+  These are different averages, not two ways of integrating over the same variable. The timestep itself is fixed during this calculation; the sum over timesteps comes afterward.
+
+- ### 6.3 The complete objective and the role of each term
+
+  Applying the same marginalization to the terminal and reconstruction terms gives
+
+  $$
+  \boxed{
+  \begin{aligned}
+  \mathcal{L}_{\mathrm{bound}}(x_0)
+  ={}&
+  D_{\mathrm{KL}}\!\left(
+  q(x_T\mid x_0)\,\Vert\,p(x_T)
+  \right)
+  \\[4pt]
+  &+
+  \sum_{t=2}^{T}
+  \mathbb{E}_{q(x_t\mid x_0)}
+  \left[
+  D_{\mathrm{KL}}\!\left(
+  q(x_{t-1}\mid x_t,x_0)
+  \,\Vert\,
+  p_\theta(x_{t-1}\mid x_t)
+  \right)
+  \right]
+  \\[4pt]
+  &-
+  \mathbb{E}_{q(x_1\mid x_0)}
+  \left[
+  \log p_\theta(x_0\mid x_1)
+  \right].
+  \end{aligned}
+  }
+  \tag{8}
+  $$
+
+  This is the DDPM variational-loss decomposition. It expresses one global likelihood bound as a terminal-prior term, intermediate denoising terms, and a final reconstruction term. ([Ho et al., 2020, Equation (5)][ddpm-paper])
+
+  **Terminal-prior matching.** Define
+
+  $$
+  C_{\mathrm{prior}}(x_0)
+  =
+  D_{\mathrm{KL}}\!\left(
+  q(x_T\mid x_0)\,\Vert\,p(x_T)
+  \right).
+  $$
+
+  This measures the mismatch between the endpoint of forward noising and the Gaussian prior used to start generation. With the fixed schedule and prior adopted in Section 4, it contains no trainable parameters:
+
+  $$
+  \nabla_\theta C_{\mathrm{prior}}(x_0)=0.
+  $$
+
+  It can therefore be omitted when computing training gradients, although it remains part of the numerical value of the bound. Being independent of $$\theta$$ does not mean that it is exactly zero. ([Ho et al., 2020][ddpm-paper])
+
+  **Intermediate denoising.** For $$t\geq2$$, define
+
+  $$
+  J_t(x_0)
+  =
+  \mathbb{E}_{q(x_t\mid x_0)}
+  \left[
+  D_{\mathrm{KL}}\!\left(
+  q(x_{t-1}\mid x_t,x_0)
+  \,\Vert\,
+  p_\theta(x_{t-1}\mid x_t)
+  \right)
+  \right].
+  $$
+
+  The analytic posterior is the training target; the learned reverse transition is the prediction.
+
+  Both distributions describe possible values of $$x_{t-1}$$. The KL does **not** compare the marginal distribution of an image at timestep $$t-1$$ with the marginal distribution at timestep $$t$$.
+
+  The target uses the clean training image to determine what previous states are plausible. The learned transition must approximate the target using only $$x_t$$ and $$t$$. Conditioning the target on $$x_0$$ does not add $$x_0$$ to the network input.
+
+  **Final reconstruction.** Define
+
+  $$
+  J_1(x_0)
+  =
+  -\mathbb{E}_{q(x_1\mid x_0)}
+  \left[
+  \log p_\theta(x_0\mid x_1)
+  \right].
+  $$
+
+  This term evaluates how much likelihood the final decoder assigns to the known clean image after observing its slightly corrupted version $$x_1$$.
+
+  The original path expectation reduces to
+
+  $$
+  \begin{aligned}
+  &-\mathbb{E}_{q(x_{1:T}\mid x_0)}
+  [\log p_\theta(x_0\mid x_1)]\\[4pt]
+  &=
+  -\int q(x_1\mid x_0)
+  \log p_\theta(x_0\mid x_1)\,dx_1,
+  \end{aligned}
+  $$
+
+  because the other latent variables do not appear in the log-likelihood.
+
+  There is no integration over $$x_0$$: it is the fixed observation being evaluated. The intermediate KL sum starts at $$t=2$$, because $$q(x_0\mid x_1,x_0)$$ is a point mass rather than another nondegenerate Gaussian posterior. The final step is kept as an observation negative log-likelihood.
+
+  For the discrete-pixel model specified in Section 4.3, this uses the discretized Gaussian decoder. No approximation of that likelihood has been made in Equation (8). ([Ho et al., 2020, Section 3.3][ddpm-decoder])
+
+  Using these labels,
+
+  $$
+  \boxed{
+  \mathcal{L}_{\mathrm{bound}}(x_0)
+  =
+  C_{\mathrm{prior}}(x_0)
+  +
+  \sum_{t=2}^{T}J_t(x_0)
+  +
+  J_1(x_0).
+  }
+  $$
+
+  The dataset-level variational objective is
+
+  $$
+  \boxed{
+  \min_\theta
+  \frac1N\sum_{n=1}^{N}
+  \mathcal{L}_{\mathrm{bound}}\!\left(x_0^{(n)}\right).
+  }
+  $$
+
+  The factorization, marginalization, and identification of KL terms have only rewritten the bound. They have not introduced a new approximation or changed its value.
+
+- ### 6.4 The VAE correspondence and the next step
+
+  The connection to the VAE loss becomes explicit by grouping all latent transitions into the prior $$p_\theta(z)$$:
+
+  $$
+  p_\theta(x_0,z)
+  =
+  p_\theta(z)p_\theta(x_0\mid x_1).
+  $$
+
+  Substituting this factorization into Equation (5),
+
+  $$
+  \boxed{
+  \begin{aligned}
+  \mathcal{L}_{\mathrm{bound}}(x_0)
+  ={}&
+  D_{\mathrm{KL}}\!\left(
+  q(z\mid x_0)\,\Vert\,p_\theta(z)
+  \right)
+  \\[4pt]
+  &-
+  \mathbb{E}_{q(z\mid x_0)}
+  [\log p_\theta(x_0\mid x_1)].
+  \end{aligned}
+  }
+  $$
+
+  This has the same **prior-matching plus reconstruction** structure as the VAE loss in Section 3.2. In DDPM, the structured latent-prior KL decomposes into several terms:
+
+  $$
+  \boxed{
+  D_{\mathrm{KL}}\!\left(
+  q(z\mid x_0)\,\Vert\,p_\theta(z)
+  \right)
+  =
+  C_{\mathrm{prior}}(x_0)
+  +
+  \sum_{t=2}^{T}J_t(x_0).
+  }
+  $$
+
+  Do not confuse this prior-matching KL with the posterior KL in the ELBO-gap identity:
+
+  $$
+  \begin{aligned}
+  D_{\mathrm{KL}}\!\left(
+  q(z\mid x_0)\,\Vert\,p_\theta(z)
+  \right)
+  &:\ \text{a component of the loss},\\[6pt]
+  D_{\mathrm{KL}}\!\left(
+  q(z\mid x_0)\,\Vert\,p_\theta(z\mid x_0)
+  \right)
+  &:\ \text{the gap from the exact log-likelihood}.
+  \end{aligned}
+  $$
+
+  The same distinction appears in the VAE derivation. ([Kingma and Welling, 2013][vae-paper])
+
+  We can now see the purpose of the calculations in Section 5 and Appendix A. The objective contains
+
+  $$
+  D_{\mathrm{KL}}\!\left(
+  \underbrace{q(x_{t-1}\mid x_t,x_0)}_{\text{known target}}
+  \,\Vert\,
+  \underbrace{p_\theta(x_{t-1}\mid x_t)}_{\text{learned model}}
+  \right).
+  $$
+
+  Appendix A supplies the target's mean $$\tilde\mu_t(x_t,x_0)$$ and covariance $$\tilde\beta_t I$$. Section 4 supplies the learned Gaussian family and its prescribed covariance. **The abstract distribution-matching objective is therefore computable.** Gaussian KL evaluation is the next step toward the practical prediction loss. ([Ho et al., 2020][ddpm-paper])
+
+  Section 7 will carry out that evaluation, convert mean matching into noise prediction, and distinguish the exact variational objective from DDPM's simplified training loss.
+
+### DDPM Results
+
 <!-- Place Appendix A after the remaining main DDPM sections in the full post. -->
 
 <a id="ddpm-appendix-a"></a>
@@ -1553,11 +2007,421 @@ The restriction $$t\geq2$$ avoids the degenerate case $$1-\bar\alpha_0=0$$. At $
 [vae-paper]: https://arxiv.org/abs/1312.6114
 [ddpm-code]: https://github.com/hojonathanho/diffusion/blob/master/diffusion_tf/diffusion_utils_2.py
 
-### DDPM Results
+<!-- Place Appendix B after Appendix A, following the remaining main DDPM sections. -->
 
-## Appendix
+<a id="ddpm-appendix-b"></a>
 
-### 4. 
+## Appendix B. Reverse-Order Factorization and the ELBO Decomposition
+
+Appendix A derives the Gaussian posterior parameters. This appendix explains a different part of the argument: how the full-path expectation in Equation (5) becomes the local terms in Equation (8).
+
+The calculations below use conditional factorization, marginalization, and the definition of KL divergence. They do not require expanding any Gaussian density.
+
+### B.1 Rewriting the forward path in reverse order
+
+Conditional Bayes' rule from Appendix A gives
+
+$$
+q(x_{t-1}\mid x_t,x_0)
+=
+q(x_t\mid x_{t-1})
+\frac{q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$$
+
+Multiply this identity over $$t=2,\ldots,T$$:
+
+$$
+\begin{aligned}
+\prod_{t=2}^{T}q(x_{t-1}\mid x_t,x_0)
+={}&
+\left[
+\prod_{t=2}^{T}q(x_t\mid x_{t-1})
+\right]\\[4pt]
+&\times
+\left[
+\prod_{t=2}^{T}
+\frac{q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}
+\right].
+\end{aligned}
+$$
+
+The second product expands to
+
+$$
+\frac{q(x_1\mid x_0)}{q(x_2\mid x_0)}
+\frac{q(x_2\mid x_0)}{q(x_3\mid x_0)}
+\cdots
+\frac{q(x_{T-1}\mid x_0)}{q(x_T\mid x_0)}.
+$$
+
+Every intermediate factor appears once in the numerator and once in the denominator. Therefore,
+
+$$
+\prod_{t=2}^{T}
+\frac{q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}
+=
+\frac{q(x_1\mid x_0)}{q(x_T\mid x_0)}.
+$$
+
+This telescoping cancellation is ordinary algebra. It cancels identical density factors, not latent variables.
+
+Consequently,
+
+$$
+\begin{aligned}
+\prod_{t=2}^{T}q(x_{t-1}\mid x_t,x_0)
+&=
+\frac{
+q(x_1\mid x_0)
+\prod_{t=2}^{T}q(x_t\mid x_{t-1})
+}{
+q(x_T\mid x_0)
+}\\[4pt]
+&=
+\frac{q(x_{1:T}\mid x_0)}{q(x_T\mid x_0)}.
+\end{aligned}
+$$
+
+Multiplying by $$q(x_T\mid x_0)$$ gives
+
+$$
+\boxed{
+q(x_{1:T}\mid x_0)
+=
+q(x_T\mid x_0)
+\prod_{t=2}^{T}q(x_{t-1}\mid x_t,x_0),
+}
+$$
+
+which is Equation (6).
+
+### B.2 Expand the negative ELBO for three steps
+
+Let $$T=3$$, so the forward chain has three transitions:
+
+$$
+x_0\rightarrow x_1\rightarrow x_2\rightarrow x_3.
+$$
+
+Keep $$x_0$$ fixed, and abbreviate the forward-path density as
+
+$$
+Q(x_1,x_2,x_3)
+:=
+q(x_1,x_2,x_3\mid x_0).
+$$
+
+The capital $$Q$$ is only shorthand for this density with $$x_0$$ fixed; it does not denote a new probability model. It has two equivalent factorizations:
+
+$$
+\begin{aligned}
+Q(x_1,x_2,x_3)
+&=
+q(x_1\mid x_0)q(x_2\mid x_1)q(x_3\mid x_2)\\[4pt]
+&=
+q(x_3\mid x_0)q(x_2\mid x_3,x_0)q(x_1\mid x_2,x_0).
+\end{aligned}
+$$
+
+The generative joint density is
+
+$$
+p_\theta(x_0,x_1,x_2,x_3)
+=
+p(x_3)
+p_\theta(x_2\mid x_3)
+p_\theta(x_1\mid x_2)
+p_\theta(x_0\mid x_1).
+$$
+
+Substituting these expressions into the negative ELBO and splitting the logarithm gives
+
+$$
+\begin{aligned}
+\mathcal{L}_{\mathrm{bound}}(x_0)
+={}&
+\mathbb{E}_Q
+\left[
+\log\frac{q(x_3\mid x_0)}{p(x_3)}
+\right]
+\\[4pt]
+&+
+\mathbb{E}_Q
+\left[
+\log\frac{q(x_2\mid x_3,x_0)}
+{p_\theta(x_2\mid x_3)}
+\right]
+\\[4pt]
+&+
+\mathbb{E}_Q
+\left[
+\log\frac{q(x_1\mid x_2,x_0)}
+{p_\theta(x_1\mid x_2)}
+\right]
+\\[4pt]
+&-
+\mathbb{E}_Q
+[\log p_\theta(x_0\mid x_1)].
+\end{aligned}
+\tag{B.1}
+$$
+
+Each expectation initially integrates over all three latent states:
+
+$$
+\mathbb{E}_Q[f]
+=
+\iiint Q(x_1,x_2,x_3)f(x_1,x_2,x_3)
+\,dx_1\,dx_2\,dx_3.
+$$
+
+The next step is to remove integration variables that do not appear in the particular function being averaged.
+
+### B.3 Evaluate the four expectations
+
+#### The terminal-prior term
+
+The first log ratio depends only on $$x_3$$. Marginalizing the other states gives
+
+$$
+\iint Q(x_1,x_2,x_3)\,dx_1\,dx_2
+=
+q(x_3\mid x_0).
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+&\mathbb{E}_Q
+\left[
+\log\frac{q(x_3\mid x_0)}{p(x_3)}
+\right]\\[4pt]
+&=
+\int q(x_3\mid x_0)
+\log\frac{q(x_3\mid x_0)}{p(x_3)}
+\,dx_3\\[4pt]
+&=
+D_{\mathrm{KL}}\!\left(
+q(x_3\mid x_0)\,\Vert\,p(x_3)
+\right).
+\end{aligned}
+$$
+
+The KL already integrates over $$x_3$$, so no additional expectation over $$x_3$$ remains.
+
+#### The reverse transition $$x_3\rightarrow x_2$$
+
+The second log ratio depends on $$x_2,x_3$$, but not on $$x_1$$. Using the reverse-order factorization,
+
+$$
+\begin{aligned}
+\int Q(x_1,x_2,x_3)\,dx_1
+={}&
+q(x_3\mid x_0)q(x_2\mid x_3,x_0)\\[4pt]
+&\times
+\underbrace{
+\int q(x_1\mid x_2,x_0)\,dx_1
+}_{1}.
+\end{aligned}
+$$
+
+The remaining expectation is
+
+$$
+\begin{aligned}
+&\mathbb{E}_Q
+\left[
+\log\frac{q(x_2\mid x_3,x_0)}
+{p_\theta(x_2\mid x_3)}
+\right]\\[4pt]
+&=
+\int q(x_3\mid x_0)
+\left[
+\int q(x_2\mid x_3,x_0)
+\log
+\frac{q(x_2\mid x_3,x_0)}
+{p_\theta(x_2\mid x_3)}
+\,dx_2
+\right]dx_3\\[4pt]
+&=
+\mathbb{E}_{q(x_3\mid x_0)}
+\left[
+D_{\mathrm{KL}}\!\left(
+q(x_2\mid x_3,x_0)
+\,\Vert\,
+p_\theta(x_2\mid x_3)
+\right)
+\right].
+\end{aligned}
+$$
+
+The inner KL integrates over $$x_2$$, holding $$x_3$$ fixed. The outer expectation then averages that conditional comparison over possible $$x_3$$.
+
+#### The reverse transition $$x_2\rightarrow x_1$$
+
+The third log ratio depends on $$x_1,x_2$$, but not on $$x_3$$. This time, the forward factorization makes marginalization convenient:
+
+$$
+\begin{aligned}
+\int Q(x_1,x_2,x_3)\,dx_3
+&=
+q(x_1\mid x_0)q(x_2\mid x_1)
+\underbrace{
+\int q(x_3\mid x_2)\,dx_3
+}_{1}\\[4pt]
+&=
+q(x_1,x_2\mid x_0).
+\end{aligned}
+$$
+
+Factor the two-state marginal in the other direction:
+
+$$
+q(x_1,x_2\mid x_0)
+=
+q(x_2\mid x_0)q(x_1\mid x_2,x_0).
+$$
+
+Hence,
+
+$$
+\begin{aligned}
+&\mathbb{E}_Q
+\left[
+\log\frac{q(x_1\mid x_2,x_0)}
+{p_\theta(x_1\mid x_2)}
+\right]\\[4pt]
+&=
+\int q(x_2\mid x_0)
+\left[
+\int q(x_1\mid x_2,x_0)
+\log
+\frac{q(x_1\mid x_2,x_0)}
+{p_\theta(x_1\mid x_2)}
+\,dx_1
+\right]dx_2\\[4pt]
+&=
+\mathbb{E}_{q(x_2\mid x_0)}
+\left[
+D_{\mathrm{KL}}\!\left(
+q(x_1\mid x_2,x_0)
+\,\Vert\,
+p_\theta(x_1\mid x_2)
+\right)
+\right].
+\end{aligned}
+$$
+
+This calculation illustrates the distinction between the two operations:
+
+**Marginalization** removes $$x_3$$ by integration. **Conditional factorization** rewrites the remaining joint density without removing any additional variable.
+
+In general,
+
+$$
+\int q(a\mid b)\,da=1,
+$$
+
+because the integration is over the variable whose conditional distribution is specified. Integrating over the conditioning variable $$b$$ would not generally produce one.
+
+#### The final reconstruction term
+
+For fixed $$x_0$$, the final log-likelihood depends only on $$x_1$$. The forward factorization gives
+
+$$
+\begin{aligned}
+&\iint Q(x_1,x_2,x_3)\,dx_3\,dx_2\\[4pt]
+&=
+q(x_1\mid x_0)
+\int q(x_2\mid x_1)
+\underbrace{
+\left[
+\int q(x_3\mid x_2)\,dx_3
+\right]
+}_{1}
+dx_2\\[4pt]
+&=
+q(x_1\mid x_0).
+\end{aligned}
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+-\mathbb{E}_Q[\log p_\theta(x_0\mid x_1)]
+&=
+-\int q(x_1\mid x_0)
+\log p_\theta(x_0\mid x_1)\,dx_1\\[4pt]
+&=
+-\mathbb{E}_{q(x_1\mid x_0)}
+[\log p_\theta(x_0\mid x_1)].
+\end{aligned}
+$$
+
+This evaluates the likelihood of the observed clean image and averages over its possible first-step corruptions. The observation itself remains fixed.
+
+### B.4 Reassemble the global objective
+
+Substituting the four results into Equation (B.1),
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal{L}_{\mathrm{bound}}(x_0)
+={}&
+D_{\mathrm{KL}}\!\left(
+q(x_3\mid x_0)\,\Vert\,p(x_3)
+\right)
+\\[4pt]
+&+
+\mathbb{E}_{q(x_3\mid x_0)}
+\left[
+D_{\mathrm{KL}}\!\left(
+q(x_2\mid x_3,x_0)
+\,\Vert\,
+p_\theta(x_2\mid x_3)
+\right)
+\right]
+\\[4pt]
+&+
+\mathbb{E}_{q(x_2\mid x_0)}
+\left[
+D_{\mathrm{KL}}\!\left(
+q(x_1\mid x_2,x_0)
+\,\Vert\,
+p_\theta(x_1\mid x_2)
+\right)
+\right]
+\\[4pt]
+&-
+\mathbb{E}_{q(x_1\mid x_0)}
+[\log p_\theta(x_0\mid x_1)].
+\end{aligned}
+}
+$$
+
+This is Equation (8) with $$T=3$$.
+
+For an arbitrary intermediate timestep, the same procedure integrates out
+
+$$
+x_1,\ldots,x_{t-2},
+\qquad
+x_{t+1},\ldots,x_T,
+$$
+
+leaving the pair $$x_{t-1},x_t$$. The inner KL integrates over $$x_{t-1}$$, and the outer expectation integrates over $$x_t$$.
+
+Throughout this derivation, $$x_0$$ is fixed. Averaging over different training images is the separate dataset-level operation applied to $$\mathcal{L}_{\mathrm{bound}}(x_0)$$.
+
+**The bound is global in what it measures, the image likelihood, but local in how it decomposes.** The decomposition exposes tractable training terms without changing the original variational objective.
+
+[ddpm-paper]: https://arxiv.org/html/2006.11239v2
+[ddpm-decoder]: https://arxiv.org/html/2006.11239v2#S3.SS3
+[vae-paper]: https://arxiv.org/abs/1312.6114
+
 
 ## References
  1. <i class="fab fa-youtube"></i> [Variational Autoencoder - Model, ELBO, loss function and maths explained easily!](https://www.youtube.com/watch?v=iwEzwTTalbg) 
