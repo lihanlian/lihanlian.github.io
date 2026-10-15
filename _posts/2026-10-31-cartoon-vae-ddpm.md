@@ -487,13 +487,13 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   </figure>
 
 ## Part II: Denoising Diffusion Probabilistic Models (DDPM)
-A VAE generates an image through a single decoder pass. DDPM instead constructs an image through a sequence of denoising steps. We next examine the forward noising process, the learned reverse process, and their training objective.
+A variational autoencoder connects a latent variable to an observed image through a decoder. DDPM instead introduces a sequence of latent states and generates an image through repeated denoising.
 
 ### 4. DDPM as a Hierarchical Latent-Variable Model
 
-A variational autoencoder connects a latent variable to an observed image through a decoder. DDPM instead introduces a sequence of latent states and generates an image through repeated denoising. Its construction involves two probability models: a prescribed forward-noising process $$q$$, and a learned reverse-generation process $$p_\theta$$.
+DDPM construction involves two probability models: a <span style="color:red"> prescribed </span> forward-noising process $$q$$, and a learned reverse-generation process $$p_\theta$$.
 
-The distinction between **modeling choices** and **derived distributions** is important. We choose Gaussian transition families for the forward and learned reverse processes. Other Gaussian distributions, including the clean-conditioned reverse posterior, follow mathematically from these choices. ([Ho et al., 2020][ddpm-paper])
+The distinction between **modeling choices** and **derived distributions** is important. <span style="color:red">We choose Gaussian transition families for the forward and learned reverse processes.</span> Other Gaussian distributions, including the clean-conditioned reverse posterior, follow mathematically from these choices. ([Ho et al., 2020][ddpm-paper])
 
 - ###  4.1 Variables, distributions, and the connection to VAE
 
@@ -540,6 +540,153 @@ $$
 
 Although the forward distribution $$q(z\mid x_0)$$ is exactly specified, it generally differs from this model posterior. "Exactly specified" describes our knowledge of $$q$$; "approximate posterior" describes the role that $$q$$ plays relative to $$p_\theta(z\mid x_0)$$.
 
+
+---
+**The prior over the complete latent trajectory.** Since $$z=x_{1:T}$$, the notation $$p_\theta(z)$$ refers to the joint distribution of all latent states before conditioning on an observed image. To identify this distribution, separate the final observation-generating step from the reverse-process factorization:
+
+$$
+\begin{aligned}
+p_\theta(x_0,z)
+&=
+p(x_T)
+\left[
+\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
+\right]
+p_\theta(x_0\mid x_1).
+\end{aligned}
+$$
+
+The factors inside the first part generate only the latent states: first $$x_T$$, then $$x_{T-1}$$, and eventually $$x_1$$. The final factor generates the observed image $$x_0$$. This gives the grouping
+
+$$
+\boxed{
+p_\theta(x_0,z)
+=
+\underbrace{
+p(x_T)\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
+}_{p_\theta(z)}
+p_\theta(x_0\mid x_1).
+}
+$$
+
+This factorization is the DDPM counterpart of the VAE factorization $$p_\theta(x,z)=p(z)p_\theta(x\mid z)$$. ([Ho et al., 2020][ddpm-paper])
+
+More formally, the latent-path prior is obtained by marginalizing out the observation. For discrete images, sum over all possible image values $$u$$:
+
+$$
+\begin{aligned}
+p_\theta(z)
+&=
+\sum_u p_\theta(u,z)\\[4pt]
+&=
+p(x_T)
+\left[
+\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
+\right]
+\underbrace{
+\sum_u p_\theta(u\mid x_1)
+}_{1}\\[4pt]
+&=
+p(x_T)\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t).
+\end{aligned}
+$$
+
+For a continuous observation likelihood, the sum over $$u$$ is replaced by an integral, which also equals one. Thus, marginalizing the observation removes the normalized final decoder factor and leaves the joint distribution of the latent trajectory.
+
+<span style="color:red">The word *prior* means that this distribution is not conditioned on the observed image.</span> It does **not** require the distribution to be fixed, independent of $$\theta$$, or standard Gaussian. **In DDPM, only the starting prior $$p(x_T)=\mathcal{N}(0,I)$$ is prescribed to be standard Gaussian. The complete latent-path prior $$p_\theta(z)$$ also contains the learned transitions and therefore depends on $$\theta$$.**
+
+<span style="color:red">**Why the observation likelihood conditions only on the last latent state?**</span> The complete observation likelihood is $$p_\theta(x_0\mid z)$$. Using the factorization above,
+
+$$
+\begin{aligned}
+p_\theta(x_0\mid z)
+&=
+\frac{p_\theta(x_0,z)}{p_\theta(z)}\\[4pt]
+&=
+\frac{
+p_\theta(z)p_\theta(x_0\mid x_1)
+}{
+p_\theta(z)
+}\\[4pt]
+&=
+p_\theta(x_0\mid x_1).
+\end{aligned}
+$$
+
+Therefore,
+
+$$
+\boxed{
+p_\theta(x_0\mid x_1,\ldots,x_T)
+=
+p_\theta(x_0\mid x_1).
+}
+$$
+
+<span style="color:red">This simplification follows from the reverse model's Markov structure, not from the Gaussian assumption.</span> Once $$x_1$$ is known, the earlier generative states provide no additional information for the final transition. Those states have not disappeared from the model: they still determine the distribution of $$x_1$$.
+
+- **The marginal likelihood and maximum likelihood estimation:** 
+
+  Like a VAE, DDPM defines the probability of an observed image by integrating out its latent variables:
+
+  $$
+  \boxed{
+  \begin{aligned}
+  p_\theta(x_0)
+  &=
+  \int p_\theta(x_0,z)\,dz\\[4pt]
+  &=
+  \int p_\theta(x_0\mid z)p_\theta(z)\,dz\\[4pt]
+  &=
+  \int
+  p_\theta(x_0\mid x_1)
+  p(x_T)
+  \left[
+  \prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
+  \right]
+  \,dx_{1:T},
+  \end{aligned}
+  }
+  $$
+
+  where $$dx_{1:T}=dx_1\cdots dx_T$$.
+
+  Although the final conditional likelihood depends only on $$x_1$$, the marginal likelihood averages over the entire latent trajectory that can lead to it. Accordingly, $$p_\theta(x_0\mid x_1)$$ and $$p_\theta(x_0)$$ are different quantities: the former is the observation likelihood given a latent state, while the latter is the model's likelihood of the observed image alone.
+
+  For a dataset of $$N$$ independent clean images, the maximum likelihood estimation problem is
+
+  $$
+  \boxed{
+  \hat\theta_{\mathrm{MLE}}
+  \in
+  \operatorname*{arg\,max}_{\theta}
+  \frac1N\sum_{n=1}^{N}
+  \log p_\theta\!\left(x_0^{(n)}\right).
+  }
+  $$
+
+  This is the same marginal-likelihood principle used for VAE models, with a hierarchical latent trajectory replacing the single latent layer. The expression above states the exact likelihood-based objective; the practical DDPM training loss will be derived separately. ([Kingma and Welling, 2013][vae-paper])
+
+  Finally, the exact model posterior is
+
+  $$
+  \boxed{
+  p_\theta(z\mid x_0)
+  =
+  \frac{p_\theta(x_0,z)}{p_\theta(x_0)}
+  =
+  \frac{
+  p_\theta(x_0\mid x_1)p_\theta(z)
+  }{
+  p_\theta(x_0)
+  }.
+  }
+  $$
+
+  This posterior is implied by the learned generator. It is distinct from the prescribed forward-noising distribution $$q(z\mid x_0)$$. The latter is exactly specified as a corruption process, but serves as an approximate inference distribution for the former.
+
+---
+
 - ### 4.2 The forward model and the original DDPM noise schedule
 
 Choose a sequence of forward variances $$\beta_1,\ldots,\beta_T$$, and define
@@ -571,7 +718,7 @@ $$
 
 The linear progression is across **diffusion timesteps**, not training iterations. These values remain fixed throughout training.
 
-The forward process is chosen to be a Markov chain:
+The forward process <span style="color: red;"> is chosen to be </span> a Markov chain:
 
 $$
 \boxed{
@@ -648,7 +795,7 @@ x_{t-1};\mu_\theta(x_t,t),\sigma_t^2 I
 }
 $$
 
-**The Gaussian form of this learned reverse conditional is a modeling choice.** It does not assert that the true reverse conditional $$q(x_{t-1}\mid x_t)$$ is exactly Gaussian. The model is a Markov chain with Gaussian conditional distributions; its full joint distribution need not be Gaussian.
+<span style="color: red">**The Gaussian form of this learned reverse conditional is a modeling choice.**</span> It does not assert that the true reverse conditional $$q(x_{t-1}\mid x_t)$$ is exactly Gaussian. The model is a Markov chain with Gaussian conditional distributions; its full joint distribution need not be Gaussian.
 
 The original DDPM considers two prescribed reverse-variance schedules:
 
@@ -689,9 +836,9 @@ Only $$p(x_T)$$ is prescribed to be standard Gaussian. The other latent distribu
 
 ### 5. Forward Diffusion and the Analytic Denoising Target
 
-The forward process serves two purposes. It constructs noisy training inputs, and it provides an analytically computable distribution that can supervise each learned reverse transition.
+The forward process serves two purposes. It constructs noisy training inputs, and <span style="color: red">it provides an analytically computable distribution that can supervise each learned reverse transition.</span>
 
-The first requires $$q(x_t\mid x_0)$$. The second requires $$q(x_{t-1}\mid x_t,x_0)$$. These distributions answer different questions.
+The first requires $$q(x_t\mid x_0)$$. <span style="color: red">The second requires $$q(x_{t-1}\mid x_t,x_0)$$.</span> These distributions answer different questions.
 
 - ### 5.1 Construct a noisy image at an arbitrary timestep
 
@@ -724,7 +871,7 @@ $$
 m_t=\sqrt{\bar\alpha_t}x_0.
 $$
 
-For the covariance, scaling a random vector by a scalar multiplies its covariance by the square of that scalar. Also, the fresh noise $$\eta_t$$ is independent of $$x_{t-1}$$ conditional on the fixed $$x_0$$, so the cross-covariance terms vanish. Therefore,
+<span style="color:red">For the covariance, scaling a random vector by a scalar multiplies its covariance by the square of that scalar. Also, the fresh noise $$\eta_t$$ is independent of $$x_{t-1}$$ conditional on the fixed $$x_0$$, so the cross-covariance terms vanish.</span> ([can be add together for total variance](https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables)) Therefore,
 
 $$
 \begin{aligned}
