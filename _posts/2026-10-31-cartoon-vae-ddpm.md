@@ -497,195 +497,183 @@ The distinction between **modeling choices** and **derived distributions** is im
 
 - ###  4.1 Variables, distributions, and the connection to VAE
 
-Following the notation in Part I, let an image have $$D$$ scalar coordinates. DDPM introduces states
-
-$$
-x_0,x_1,\ldots,x_T,
-$$
-
-where $$x_0$$ is a clean image and the remaining states represent progressively corrupted versions of it under the forward process.
-
-| Symbol | Meaning |
-|---|---|
-| $$x_0$$ | The observed clean image during training, or the final output during generation. |
-| $$x_t\in\mathbb{R}^D$$ | An intermediate noisy image at timestep $$t$$, generally containing both signal and noise. |
-| $$z=x_{1:T}$$ | The complete latent variable: the collection $$(x_1,\ldots,x_T)$$. |
-| $$q$$ | The probability model defined by the forward-noising process. |
-| $$p_\theta$$ | The learned generative probability model. |
-| $$\theta$$ | Trainable parameters of the denoising network. |
-| $$\epsilon_\theta(x_t,t)$$ | The network's prediction of noise from a noisy image and its timestep. |
-
-All intermediate states have the same dimensionality as the observed image. Calling them *latent variables* does not mean that they must be low-dimensional or pure noise; it means that the dataset does not provide them as observations.
-
-The correspondence to VAE is:
-
-| Role | VAE | DDPM |
-|---|---|---|
-| Observed variable | $$x$$ | $$x_0$$ |
-| Complete latent variable | $$z$$ | $$z=x_{1:T}$$ |
-| Variational distribution | Learned encoder $$q_\phi(z\mid x)$$ | Fixed noising process $$q(x_{1:T}\mid x_0)$$ |
-| Prior over all latents | $$p(z)$$ | $$p_\theta(x_{1:T})$$ |
-| Observation likelihood | $$p_\theta(x\mid z)$$ | $$p_\theta(x_0\mid x_1)$$ |
-| Exact model posterior | $$p_\theta(z\mid x)$$ | $$p_\theta(x_{1:T}\mid x_0)$$ |
-
-As in a VAE, the exact posterior is implied by the generative model through Bayes' rule. The variational distribution is a separately specified distribution used to make training tractable. ([Kingma and Welling, 2013][vae-paper])
-
-In DDPM,
-
-$$
-p_\theta(z\mid x_0)
-=
-\frac{p_\theta(x_0,z)}{p_\theta(x_0)}.
-$$
-
-Although the forward distribution $$q(z\mid x_0)$$ is exactly specified, it generally differs from this model posterior. "Exactly specified" describes our knowledge of $$q$$; "approximate posterior" describes the role that $$q$$ plays relative to $$p_\theta(z\mid x_0)$$.
-
-
----
-**The prior over the complete latent trajectory.** Since $$z=x_{1:T}$$, the notation $$p_\theta(z)$$ refers to the joint distribution of all latent states before conditioning on an observed image. To identify this distribution, separate the final observation-generating step from the reverse-process factorization:
-
-$$
-\begin{aligned}
-p_\theta(x_0,z)
-&=
-p(x_T)
-\left[
-\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
-\right]
-p_\theta(x_0\mid x_1).
-\end{aligned}
-$$
-
-The factors inside the first part generate only the latent states: first $$x_T$$, then $$x_{T-1}$$, and eventually $$x_1$$. The final factor generates the observed image $$x_0$$. This gives the grouping
-
-$$
-\boxed{
-p_\theta(x_0,z)
-=
-\underbrace{
-p(x_T)\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
-}_{p_\theta(z)}
-p_\theta(x_0\mid x_1).
-}
-$$
-
-This factorization is the DDPM counterpart of the VAE factorization $$p_\theta(x,z)=p(z)p_\theta(x\mid z)$$. ([Ho et al., 2020][ddpm-paper])
-
-More formally, the latent-path prior is obtained by marginalizing out the observation. For discrete images, sum over all possible image values $$u$$:
-
-$$
-\begin{aligned}
-p_\theta(z)
-&=
-\sum_u p_\theta(u,z)\\[4pt]
-&=
-p(x_T)
-\left[
-\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
-\right]
-\underbrace{
-\sum_u p_\theta(u\mid x_1)
-}_{1}\\[4pt]
-&=
-p(x_T)\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t).
-\end{aligned}
-$$
-
-For a continuous observation likelihood, the sum over $$u$$ is replaced by an integral, which also equals one. Thus, marginalizing the observation removes the normalized final decoder factor and leaves the joint distribution of the latent trajectory.
-
-<span style="color:red">The word *prior* means that this distribution is not conditioned on the observed image.</span> It does **not** require the distribution to be fixed, independent of $$\theta$$, or standard Gaussian. **In DDPM, only the starting prior $$p(x_T)=\mathcal{N}(0,I)$$ is prescribed to be standard Gaussian. The complete latent-path prior $$p_\theta(z)$$ also contains the learned transitions and therefore depends on $$\theta$$.**
-
-<span style="color:red">**Why the observation likelihood conditions only on the last latent state?**</span> The complete observation likelihood is $$p_\theta(x_0\mid z)$$. Using the factorization above,
-
-$$
-\begin{aligned}
-p_\theta(x_0\mid z)
-&=
-\frac{p_\theta(x_0,z)}{p_\theta(z)}\\[4pt]
-&=
-\frac{
-p_\theta(z)p_\theta(x_0\mid x_1)
-}{
-p_\theta(z)
-}\\[4pt]
-&=
-p_\theta(x_0\mid x_1).
-\end{aligned}
-$$
-
-Therefore,
-
-$$
-\boxed{
-p_\theta(x_0\mid x_1,\ldots,x_T)
-=
-p_\theta(x_0\mid x_1).
-}
-$$
-
-<span style="color:red">This simplification follows from the reverse model's Markov structure, not from the Gaussian assumption.</span> Once $$x_1$$ is known, the earlier generative states provide no additional information for the final transition. Those states have not disappeared from the model: they still determine the distribution of $$x_1$$.
-
-- **The marginal likelihood and maximum likelihood estimation:** 
-
-  Like a VAE, DDPM defines the probability of an observed image by integrating out its latent variables:
+  Following the notation in Part I, let an image have $$D$$ scalar coordinates. DDPM introduces states
 
   $$
-  \boxed{
-  \begin{aligned}
-  p_\theta(x_0)
-  &=
-  \int p_\theta(x_0,z)\,dz\\[4pt]
-  &=
-  \int p_\theta(x_0\mid z)p_\theta(z)\,dz\\[4pt]
-  &=
-  \int
-  p_\theta(x_0\mid x_1)
-  p(x_T)
-  \left[
-  \prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
-  \right]
-  \,dx_{1:T},
-  \end{aligned}
-  }
+  x_0,x_1,\ldots,x_T,
   $$
 
-  where $$dx_{1:T}=dx_1\cdots dx_T$$.
+  where $$x_0$$ is a clean image and the remaining states represent progressively corrupted versions of it under the forward process.
 
-  Although the final conditional likelihood depends only on $$x_1$$, the marginal likelihood averages over the entire latent trajectory that can lead to it. Accordingly, $$p_\theta(x_0\mid x_1)$$ and $$p_\theta(x_0)$$ are different quantities: the former is the observation likelihood given a latent state, while the latter is the model's likelihood of the observed image alone.
+  | Symbol | Meaning |
+  |---|---|
+  | $$x_0$$ | The observed clean image during training, or the final output during generation. |
+  | $$x_t\in\mathbb{R}^D$$ | An intermediate noisy image at timestep $$t$$, generally containing both signal and noise. |
+  | $$z=x_{1:T}$$ | The complete latent variable: the collection $$(x_1,\ldots,x_T)$$. |
+  | $$q$$ | The probability model defined by the forward-noising process. |
+  | $$p_\theta$$ | The learned generative probability model. |
+  | $$\theta$$ | Trainable parameters of the denoising network. |
+  | $$\epsilon_\theta(x_t,t)$$ | The network's prediction of noise from a noisy image and its timestep. |
 
-  For a dataset of $$N$$ independent clean images, the maximum likelihood estimation problem is
+  All intermediate states have the same dimensionality as the observed image. Calling them *latent variables* does not mean that they must be low-dimensional or pure noise; it means that the dataset does not provide them as observations.
 
-  $$
-  \boxed{
-  \hat\theta_{\mathrm{MLE}}
-  \in
-  \operatorname*{arg\,max}_{\theta}
-  \frac1N\sum_{n=1}^{N}
-  \log p_\theta\!\left(x_0^{(n)}\right).
-  }
-  $$
+  The correspondence to VAE is:
 
-  This is the same marginal-likelihood principle used for VAE models, with a hierarchical latent trajectory replacing the single latent layer. The expression above states the exact likelihood-based objective; the practical DDPM training loss will be derived separately. ([Kingma and Welling, 2013][vae-paper])
+  | Role | VAE | DDPM |
+  |---|---|---|
+  | Observed variable | $$x$$ | $$x_0$$ |
+  | Complete latent variable | $$z$$ | $$z=x_{1:T}$$ |
+  | Variational distribution | Learned encoder $$q_\phi(z\mid x)$$ | Fixed noising process $$q(x_{1:T}\mid x_0)$$ |
+  | Prior over all latents | $$p(z)$$ | $$p_\theta(x_{1:T})$$ |
+  | Observation likelihood | $$p_\theta(x\mid z)$$ | $$p_\theta(x_0\mid x_1)$$ |
+  | Exact model posterior | $$p_\theta(z\mid x)$$ | $$p_\theta(x_{1:T}\mid x_0)$$ |
 
-  Finally, the exact model posterior is
+  - The prior over the complete latent trajectory 
 
-  $$
-  \boxed{
-  p_\theta(z\mid x_0)
-  =
-  \frac{p_\theta(x_0,z)}{p_\theta(x_0)}
-  =
-  \frac{
-  p_\theta(x_0\mid x_1)p_\theta(z)
-  }{
-  p_\theta(x_0)
-  }.
-  }
-  $$
+    Since $$z=x_{1:T}$$, the notation $$p_\theta(z)$$ refers to the joint distribution of all latent states before conditioning on an observed image. To identify this distribution, separate the final observation-generating step from the reverse-process factorization:
 
-  This posterior is implied by the learned generator. It is distinct from the prescribed forward-noising distribution $$q(z\mid x_0)$$. The latter is exactly specified as a corruption process, but serves as an approximate inference distribution for the former.
+    $$
+    \begin{aligned}
+    p_\theta(x_0,z)
+    &=
+    p(x_T)
+    \left[
+    \prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
+    \right]
+    p_\theta(x_0\mid x_1).
+    \end{aligned}
+    $$
 
----
+    The factors inside the first part generate only the latent states: first $$x_T$$, then $$x_{T-1}$$, and eventually $$x_1$$. The final factor generates the observed image $$x_0$$. This gives the grouping
+
+    $$
+    \boxed{
+    p_\theta(x_0,z)
+    =
+    \underbrace{
+    p(x_T)\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
+    }_{p_\theta(z)}
+    p_\theta(x_0\mid x_1).
+    }
+    $$
+
+    This factorization is the DDPM counterpart of the VAE factorization $$p_\theta(x,z)=p(z)p_\theta(x\mid z)$$. ([Ho et al., 2020][ddpm-paper])
+
+    **More formally, the latent-path prior is obtained by marginalizing out the observation.** For discrete images, sum over all possible image values $$u$$:
+
+    $$
+    \begin{aligned}
+    p_\theta(z)
+    &=
+    \sum_u p_\theta(u,z)\\[4pt]
+    &=
+    p(x_T)
+    \left[
+    \prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
+    \right]
+    \underbrace{
+    \sum_u p_\theta(u\mid x_1)
+    }_{1}\\[4pt]
+    &=
+    p(x_T)\prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t).
+    \end{aligned}
+    $$
+
+    For a continuous observation likelihood, the sum over $$u$$ is replaced by an integral, which also equals one. Thus, marginalizing the observation removes the normalized final decoder factor and leaves the joint distribution of the latent trajectory.
+
+    <span style="color:red">The word *prior* means that this distribution is not conditioned on the observed image.</span> It does **not** require the distribution to be fixed, independent of $$\theta$$, or standard Gaussian. **In DDPM, only the starting prior $$p(x_T)=\mathcal{N}(0,I)$$ is prescribed to be standard Gaussian. The complete latent-path prior $$p_\theta(z)$$ also contains the learned transitions and therefore depends on $$\theta$$.**
+
+  - Observation likelihood conditions only on the last latent state
+
+    The complete observation likelihood is $$p_\theta(x_0\mid z)$$. Using the factorization above,
+
+    $$
+    \begin{aligned}
+    p_\theta(x_0\mid z)
+    &=
+    \frac{p_\theta(x_0,z)}{p_\theta(z)}\\[4pt]
+    &=
+    \frac{
+    p_\theta(z)p_\theta(x_0\mid x_1)
+    }{
+    p_\theta(z)
+    }\\[4pt]
+    &=
+    p_\theta(x_0\mid x_1).
+    \end{aligned}
+    $$
+
+    Therefore,
+
+    $$
+    \boxed{
+    p_\theta(x_0\mid x_1,\ldots,x_T)
+    =
+    p_\theta(x_0\mid x_1).
+    }
+    $$
+
+    <span style="color:red">This simplification follows from the reverse model's Markov structure, not from the Gaussian assumption.</span> Once $$x_1$$ is known, the earlier generative states provide no additional information for the final transition. Those states have not disappeared from the model: they still determine the distribution of $$x_1$$.
+
+  - **The marginal likelihood and maximum likelihood estimation:** 
+
+    Like a VAE, DDPM defines the probability of an observed image by integrating out its latent variables:
+
+    $$
+    \boxed{
+    \begin{aligned}
+    p_\theta(x_0)
+    &=
+    \int p_\theta(x_0,z)\,dz\\[4pt]
+    &=
+    \int p_\theta(x_0\mid z)p_\theta(z)\,dz\\[4pt]
+    &=
+    \int
+    p_\theta(x_0\mid x_1)
+    p(x_T)
+    \left[
+    \prod_{t=2}^{T}p_\theta(x_{t-1}\mid x_t)
+    \right]
+    \,dx_{1:T},
+    \end{aligned}
+    }
+    $$
+
+    where $$dx_{1:T}=dx_1\cdots dx_T$$.
+
+    Although the final conditional likelihood depends only on $$x_1$$, the marginal likelihood averages over the entire latent trajectory that can lead to it. Accordingly, $$p_\theta(x_0\mid x_1)$$ and $$p_\theta(x_0)$$ are different quantities: the former is the observation likelihood given a latent state, while the latter is the model's likelihood of the observed image alone.
+
+    For a dataset of $$N$$ independent clean images, the maximum likelihood estimation problem is
+
+    $$
+    \boxed{
+    \hat\theta_{\mathrm{MLE}}
+    \in
+    \operatorname*{arg\,max}_{\theta}
+    \frac1N\sum_{n=1}^{N}
+    \log p_\theta\!\left(x_0^{(n)}\right).
+    }
+    $$
+
+    This is the same marginal-likelihood principle used for VAE models, with a hierarchical latent trajectory replacing the single latent layer. The expression above states the exact likelihood-based objective; the practical DDPM training loss will be derived separately. ([Kingma and Welling, 2013][vae-paper])
+
+    Finally, the exact model posterior is
+
+    $$
+    \boxed{
+    p_\theta(z\mid x_0)
+    =
+    \frac{p_\theta(x_0,z)}{p_\theta(x_0)}
+    =
+    \frac{
+    p_\theta(x_0\mid x_1)p_\theta(z)
+    }{
+    p_\theta(x_0)
+    }.
+    }
+    $$
+
+    This posterior is implied by the learned generator. It is distinct from the prescribed forward-noising distribution $$q(z\mid x_0)$$. The latter is exactly specified as a corruption process, but serves as an approximate inference distribution for the former.
 
 - ### 4.2 The forward model and the original DDPM noise schedule
 
