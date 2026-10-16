@@ -1557,6 +1557,536 @@ The derivation has two stages. First, we replace the difficult marginal-likeliho
 
   Section 7 will carry out that evaluation, convert mean matching into noise prediction, and distinguish the exact variational objective from DDPM's simplified training loss.
 
+### 7. From Gaussian KL to Noise-Prediction Training
+
+Section 6 expressed the negative ELBO as
+
+$$
+\mathcal{L}_{\mathrm{bound}}(x_0)
+=
+C_{\mathrm{prior}}(x_0)
++
+\sum_{t=2}^{T}J_t(x_0)
++
+J_1(x_0).
+$$
+
+The intermediate terms compare the analytic posterior from Section 5 with the learned reverse transition. We now evaluate those comparisons and convert them into a loss that can train the noise-prediction network.
+
+Throughout this section, we retain the fixed reverse-variance convention introduced in Section 4.3:
+
+$$
+\sigma_t^2=\tilde\beta_t,
+\qquad t\geq2.
+$$
+
+We first keep the formulas general enough to show where the variance enters. The detailed Gaussian calculations and the final decoder treatment are provided in [Appendix C](#ddpm-appendix-c).
+
+- ### 7.1 Evaluating the local Gaussian KL
+
+  For one fixed timestep $$t\geq2$$, the target distribution is
+
+  $$
+  q(x_{t-1}\mid x_t,x_0)
+  =
+  \mathcal{N}\!\left(
+  x_{t-1};
+  \tilde\mu_t(x_t,x_0),
+  \tilde\beta_t I
+  \right),
+  $$
+
+  while the learned reverse transition is
+
+  $$
+  p_\theta(x_{t-1}\mid x_t)
+  =
+  \mathcal{N}\!\left(
+  x_{t-1};
+  \mu_\theta(x_t,t),
+  \sigma_t^2 I
+  \right).
+  $$
+
+  When evaluating their KL, $$x_t$$ and $$x_0$$ are fixed. Both distributions describe possible values of the same previous state $$x_{t-1}$$.
+
+  Substituting the Gaussian density formulas into the KL definition gives
+
+  $$
+  \boxed{
+  \begin{aligned}
+  &D_{\mathrm{KL}}\!\left(
+  q(x_{t-1}\mid x_t,x_0)
+  \,\Vert\,
+  p_\theta(x_{t-1}\mid x_t)
+  \right)\\[4pt]
+  &=
+  \frac{
+  \lVert\tilde\mu_t(x_t,x_0)-\mu_\theta(x_t,t)\rVert^2
+  }{
+  2\sigma_t^2
+  }
+  +C_t,
+  \end{aligned}
+  }
+  \tag{9}
+  $$
+
+  where
+
+  $$
+  C_t
+  =
+  \frac D2
+  \left[
+  \frac{\tilde\beta_t}{\sigma_t^2}
+  -1+
+  \log\frac{\sigma_t^2}{\tilde\beta_t}
+  \right].
+  $$
+
+  Here, $$D$$ is the number of scalar image coordinates. Appendix C.1 derives this expression by taking the expectation of the Gaussian log-density ratio.
+
+  With prescribed variances, $$C_t$$ does not depend on $$\theta$$. Under our particular choice $$\sigma_t^2=\tilde\beta_t$$,
+
+  $$
+  C_t=0.
+  $$
+
+  Consequently, the intermediate loss becomes
+
+  $$
+  J_t(x_0)
+  =
+  \mathbb{E}_{q(x_t\mid x_0)}
+  \left[
+  \frac{
+  \lVert\tilde\mu_t(x_t,x_0)-\mu_\theta(x_t,t)\rVert^2
+  }{
+  2\sigma_t^2
+  }
+  \right]
+  +C_t.
+  $$
+
+  **Distribution matching has reduced to weighted mean prediction.** The analytic posterior mean $$\tilde\mu_t(x_t,x_0)$$ is the target, and $$\mu_\theta(x_t,t)$$ is the prediction.
+
+  The expectation over $$x_{t-1}$$ has already been evaluated analytically inside the KL. Only the average over noisy inputs $$x_t$$ remains. This is the fixed-variance Gaussian reduction used in the original DDPM derivation. ([Ho et al., 2020][ddpm-paper])
+
+- ### 7.2 Parameterizing the reverse mean through predicted noise
+
+  The model could predict the reverse mean directly. DDPM instead uses a network that predicts the noise in a corrupted image, then converts that prediction into the reverse mean. These are different parameterizations of the same Gaussian transition family. ([Nichol and Dhariwal, 2021][improved-ddpm-paper])
+
+  Recall the direct noising formula from Equation (1):
+
+  $$
+  x_t
+  =
+  \sqrt{\bar\alpha_t}x_0
+  +
+  \sqrt{1-\bar\alpha_t}\epsilon,
+  \qquad
+  \epsilon\sim\mathcal{N}(0,I).
+  $$
+
+  Rearranging,
+
+  $$
+  x_0
+  =
+  \frac{
+  x_t-\sqrt{1-\bar\alpha_t}\epsilon
+  }{
+  \sqrt{\bar\alpha_t}
+  }.
+  $$
+
+  Substituting this expression into the analytic posterior mean in Equation (3) gives
+
+  $$
+  \boxed{
+  \tilde\mu_t(x_t,x_0)
+  =
+  \frac1{\sqrt{\alpha_t}}
+  \left(
+  x_t-
+  \frac{\beta_t}{\sqrt{1-\bar\alpha_t}}\epsilon
+  \right).
+  }
+  \tag{10}
+  $$
+
+  Appendix C.2 shows the substitution explicitly.
+
+  Equation (10) has not removed the clean image from the training construction: $$x_t$$ was created using $$x_0$$ and $$\epsilon$$. It has rewritten the target mean in terms of quantities already available when constructing that training example.
+
+  Now define the learned mean by replacing the injected noise with a prediction:
+
+  $$
+  \boxed{
+  \mu_\theta(x_t,t)
+  :=
+  \frac1{\sqrt{\alpha_t}}
+  \left(
+  x_t-
+  \frac{\beta_t}{\sqrt{1-\bar\alpha_t}}
+  \epsilon_\theta(x_t,t)
+  \right).
+  }
+  \tag{11}
+  $$
+
+  The network receives only $$x_t$$ and $$t$$. It does not receive the true noise or the clean image.
+
+  Subtracting Equations (10) and (11),
+
+  $$
+  \tilde\mu_t-\mu_\theta
+  =
+  \frac{\beta_t}
+  {\sqrt{\alpha_t}\sqrt{1-\bar\alpha_t}}
+  \left(
+  \epsilon_\theta(x_t,t)-\epsilon
+  \right).
+  $$
+
+  Therefore,
+
+  $$
+  \lVert\tilde\mu_t-\mu_\theta\rVert^2
+  =
+  \frac{\beta_t^2}
+  {\alpha_t(1-\bar\alpha_t)}
+  \lVert\epsilon-\epsilon_\theta(x_t,t)\rVert^2.
+  $$
+
+  Substituting into Equation (9),
+
+  $$
+  \boxed{
+  \begin{aligned}
+  &D_{\mathrm{KL}}\!\left(
+  q(x_{t-1}\mid x_t,x_0)
+  \,\Vert\,
+  p_\theta(x_{t-1}\mid x_t)
+  \right)\\[4pt]
+  &=
+  w_t
+  \lVert\epsilon-\epsilon_\theta(x_t,t)\rVert^2
+  +C_t,
+  \\[6pt]
+  &w_t
+  :=
+  \frac{\beta_t^2}
+  {2\sigma_t^2\alpha_t(1-\bar\alpha_t)}.
+  \end{aligned}
+  }
+  \tag{12}
+  $$
+
+  The weighting coefficient has two sources:
+
+  $$
+  \boxed{
+  w_t
+  =
+  \underbrace{\frac1{2\sigma_t^2}}_{\text{Gaussian KL}}
+  \underbrace{
+  \left(
+  \frac{\beta_t}
+  {\sqrt{\alpha_t}\sqrt{1-\bar\alpha_t}}
+  \right)^2
+  }_{\text{noise error to mean error}}.
+  }
+  $$
+
+  It is not an arbitrary hyperparameter introduced after the derivation.
+
+  For the reverse variance used in this post,
+
+  $$
+  \sigma_t^2
+  =
+  \frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t,
+  $$
+
+  the coefficient simplifies to
+
+  $$
+  \boxed{
+  w_t
+  =
+  \frac{\beta_t}
+  {2\alpha_t(1-\bar\alpha_{t-1})},
+  \qquad t\geq2.
+  }
+  $$
+
+  The intermediate training term can now be written as
+
+  $$
+  \boxed{
+  J_t(x_0)
+  =
+  \mathbb{E}_{\epsilon\sim\mathcal{N}(0,I)}
+  \left[
+  w_t
+  \lVert\epsilon-\epsilon_\theta(x_t,t)\rVert^2
+  \right]
+  +C_t,
+  }
+  $$
+
+  where $$x_t$$ is constructed from $$x_0$$ and the sampled $$\epsilon$$.
+
+  This expression is equal to the original local KL expectation. We have changed how it is calculated, not changed the objective.
+
+- ### 7.3 What does the network's output represent?
+
+  The supervised-learning interpretation is now explicit:
+
+  $$
+  \boxed{
+  \text{input}=(x_t,t),
+  \qquad
+  \text{target}=\epsilon.
+  }
+  $$
+
+  The target is the normalized aggregate noise used in the direct noising formula. It is not the simple difference $$x_t-x_0$$, because the forward process also scales the clean signal.
+
+  The noise prediction determines a corresponding clean-image estimate:
+
+  $$
+  \boxed{
+  \hat x_{0,\theta}(x_t,t)
+  =
+  \frac{
+  x_t-\sqrt{1-\bar\alpha_t}\epsilon_\theta(x_t,t)
+  }{
+  \sqrt{\bar\alpha_t}
+  }.
+  }
+  $$
+
+  This follows by replacing the true noise with its prediction in the rearranged forward equation.
+
+  The learned reverse mean can equivalently be calculated by inserting this clean-image estimate into the analytic posterior-mean formula:
+
+  $$
+  \boxed{
+  \mu_\theta(x_t,t)
+  =
+  \tilde\mu_t\!\left(
+  x_t,\hat x_{0,\theta}(x_t,t)
+  \right).
+  }
+  $$
+
+  Thus, the two means use different sources of clean-image information:
+
+  $$
+  \begin{aligned}
+  \text{Training target:}\quad
+  &\tilde\mu_t(x_t,x_0),\\[4pt]
+  \text{Learned prediction:}\quad
+  &\tilde\mu_t\!\left(x_t,\hat x_{0,\theta}(x_t,t)\right).
+  \end{aligned}
+  $$
+
+  The authors' implementation includes this conversion from predicted noise to a clean estimate and then to the reverse mean. ([DDPM implementation][ddpm-code])
+
+  The network is not expected to identify the exact injected noise perfectly for every input. Different clean-image/noise pairs can produce compatible noisy observations. Under squared-error regression, the unrestricted population-optimal predictor is
+
+  $$
+  \epsilon^*(x_t,t)
+  =
+  \mathbb{E}[\epsilon\mid x_t,t],
+  $$
+
+  where the expectation includes the data distribution and forward corruption. This is a conditional estimate, not access to the hidden clean origin.
+
+- ### 7.4 Treating the final reconstruction term
+
+  The intermediate derivation applies to $$t\geq2$$. The final contribution remains
+
+  $$
+  J_1(x_0)
+  =
+  -\mathbb{E}_{q(x_1\mid x_0)}
+  [\log p_\theta(x_0\mid x_1)].
+  $$
+
+  Section 4 specified a discretized Gaussian observation model. For 8-bit images scaled to $$[-1,1]$$, the observed pixels lie on a discrete grid, even though the intermediate noisy states are continuous. The original DDPM assigns probability to a pixel by integrating a Gaussian density over its quantization bin. ([Ho et al., 2020, Section 3.3][ddpm-decoder])
+
+  Let $$b_i^-,b_i^+$$ be the bin boundaries associated with the observed pixel $$x_0^i$$. Then
+
+  $$
+  \boxed{
+  p_\theta(x_0\mid x_1)
+  =
+  \prod_{i=1}^{D}
+  \int_{b_i^-}^{b_i^+}
+  \mathcal{N}\!\left(
+  r;\mu_\theta^i(x_1,1),\sigma_1^2
+  \right)\,dr.
+  }
+  $$
+
+  The positive decoder variance is specified separately from the intermediate rule. For concreteness, take
+
+  $$
+  \sigma_1^2=\beta_1
+  $$
+
+  in this post. It must not be replaced by $$\tilde\beta_1=0$$, which belongs to the degenerate clean-conditioned posterior rather than this observation likelihood.
+
+  The exact $$J_1$$ involves logarithms of bin probabilities, so it is **not exactly a quadratic reconstruction loss**.
+
+  For an interior bin of width $$\Delta=2/255$$, a small-bin approximation gives
+
+  $$
+  \int_{x_0^i-\Delta/2}^{x_0^i+\Delta/2}f(r)\,dr
+  \approx
+  f(x_0^i)\Delta.
+  $$
+
+  Applying this to the Gaussian decoder gives
+
+  $$
+  J_1(x_0)
+  \approx
+  \frac1{2\sigma_1^2}
+  \mathbb{E}_{q(x_1\mid x_0)}
+  \left[
+  \lVert x_0-\mu_\theta(x_1,1)\rVert^2
+  \right]
+  +C_{\mathrm{dec}},
+  $$
+
+  where $$C_{\mathrm{dec}}$$ is independent of $$\theta$$. This approximation requires care at the boundary bins and when the density varies substantially within a bin.
+
+  At $$t=1$$,
+
+  $$
+  x_1
+  =
+  \sqrt{\alpha_1}x_0+\sqrt{\beta_1}\epsilon,
+  $$
+
+  and Equation (11) gives
+
+  $$
+  \mu_\theta(x_1,1)-x_0
+  =
+  \sqrt{\frac{\beta_1}{\alpha_1}}
+  \left(
+  \epsilon-\epsilon_\theta(x_1,1)
+  \right).
+  $$
+
+  Consequently,
+
+  $$
+  \boxed{
+  J_1(x_0)
+  \approx
+  \frac{\beta_1}{2\sigma_1^2\alpha_1}
+  \mathbb{E}_\epsilon
+  \left[
+  \lVert\epsilon-\epsilon_\theta(x_1,1)\rVert^2
+  \right]
+  +C_{\mathrm{dec}}.
+  }
+  $$
+
+  With a continuous Gaussian observation likelihood, the corresponding squared-error relationship is exact up to a constant. For the discretized Gaussian likelihood, it uses the bin approximation described above. Appendix C.3-C.4 provides the details.
+
+- ### 7.5 From the weighted bound to the simplified DDPM loss
+
+  Define the per-example noise error
+
+  $$
+  \ell_t(\theta;x_0,\epsilon)
+  :=
+  \left\lVert
+  \epsilon-
+  \epsilon_\theta\!\left(
+  \sqrt{\bar\alpha_t}x_0+
+  \sqrt{1-\bar\alpha_t}\epsilon,
+  t
+  \right)
+  \right\rVert^2.
+  $$
+
+  The exact bound has the form
+
+  $$
+  \boxed{
+  \mathcal{L}_{\mathrm{bound}}(x_0)
+  =
+  C_{\mathrm{prior}}(x_0)
+  +
+  \sum_{t=2}^{T}
+  \left(
+  w_t\mathbb{E}_\epsilon[\ell_t]+C_t
+  \right)
+  +
+  J_1(x_0).
+  }
+  $$
+
+  Here, $$J_1$$ still denotes the exact decoder likelihood term. Under our intermediate variance convention, all $$C_t$$ in the sum are zero.
+
+  The commonly used DDPM objective instead applies unweighted noise prediction at every timestep:
+
+  $$
+  \boxed{
+  \mathcal{L}_{\mathrm{simple}}(\theta)
+  =
+  \mathbb{E}_{\substack{
+  x_0\sim p_{\mathrm{data}}\\
+  t\sim\mathrm{Uniform}\{1,\ldots,T\}\\
+  \epsilon\sim\mathcal{N}(0,I)
+  }}
+  \left[
+  \lVert\epsilon-\epsilon_\theta(x_t,t)\rVert^2
+  \right],
+  }
+  \tag{13}
+  $$
+
+  where $$x_t$$ is constructed using Equation (1). This is the simplified objective introduced in DDPM. The original paper reports that its reweighting improves sample quality in its experiments. ([Ho et al., 2020, Section 3.4][ddpm-paper])
+
+  The distinction between the mathematical steps matters:
+
+  | Operation | Effect on optimization |
+  |---|---|
+  | Remove additive terms independent of $$\theta$$. | Leaves gradients unchanged. |
+  | Replace a sum over timesteps by its uniform average. | Introduces a common factor $$1/T$$, preserving minimizers. |
+  | Replace timestep-dependent $$w_t$$ by equal weights. | Changes the relative importance of the denoising tasks. |
+  | Replace the exact discrete reconstruction term by noise MSE at $$t=1$$. | Uses the decoder approximation and removes its scaling coefficient. |
+
+  In particular, a multiplicative coefficient cannot be discarded merely because it does not depend on $$\theta$$:
+
+  $$
+  \nabla_\theta\!\left(w_t\ell_t\right)
+  =
+  w_t\nabla_\theta\ell_t.
+  $$
+
+  When one network is shared across timesteps, changing their relative weights changes how their gradients are combined. **The simplified loss is therefore not exactly the original negative ELBO or exact maximum likelihood.**
+
+  It also does not remove the noise schedule from the model. The coefficients $$\alpha_t,\bar\alpha_t,\beta_t$$ remain necessary for constructing noisy inputs and computing reverse means. The reverse variance remains prescribed; the unweighted noise loss does not learn an additional variance output.
+
+  The connection to the VAE calculation in Section 3.3 is direct. A fixed-variance Gaussian observation likelihood produces a squared reconstruction error. Here, a fixed-variance Gaussian **conditional KL** produces a squared mean error, which the noise parameterization converts into a squared noise error.
+
+  The resulting supervised task uses the current noisy image and timestep to predict the injected noise. Neither a sampled target $$x_{t-1}$$ nor explicit numerical evaluation of a KL integral is required in the simplified training loop. The original implementation computes the noisy input and applies squared error directly to the noise prediction. ([DDPM implementation][ddpm-code])
+
+  Section 8 will use this loss to describe the training procedure and show how the trained network determines each reverse-sampling transition.
+
+
+
 ### DDPM Results
 
 <!-- Place Appendix A after the remaining main DDPM sections in the full post. -->
@@ -2422,6 +2952,561 @@ Throughout this derivation, $$x_0$$ is fixed. Averaging over different training 
 [ddpm-decoder]: https://arxiv.org/html/2006.11239v2#S3.SS3
 [vae-paper]: https://arxiv.org/abs/1312.6114
 
+<!-- Place Appendix C after Appendix B, following the remaining main DDPM sections. -->
+
+<a id="ddpm-appendix-c"></a>
+
+## Appendix C. Gaussian KL, Noise Parameterization, and the Reconstruction Term
+
+Appendix A derived the target posterior's parameters, and Appendix B derived the local loss decomposition. This appendix supplies the calculations that connect those results to the practical noise-prediction objective.
+
+### C.1 Deriving the Gaussian KL as a mean-prediction error
+
+Fix $$x_0,x_t$$, and a timestep $$t\geq2$$. Write
+
+$$
+y=x_{t-1},
+\qquad
+m_q=\tilde\mu_t(x_t,x_0),
+\qquad
+m_p=\mu_\theta(x_t,t).
+$$
+
+For this calculation, abbreviate
+
+$$
+q_y(y):=q(y\mid x_t,x_0),
+\qquad
+p_y(y):=p_\theta(y\mid x_t).
+$$
+
+These are normalized densities over $$y$$:
+
+$$
+q_y(y)
+=
+\frac1{(2\pi\tilde\beta_t)^{D/2}}
+\exp\!\left(
+-\frac{\lVert y-m_q\rVert^2}{2\tilde\beta_t}
+\right),
+$$
+
+$$
+p_y(y)
+=
+\frac1{(2\pi\sigma_t^2)^{D/2}}
+\exp\!\left(
+-\frac{\lVert y-m_p\rVert^2}{2\sigma_t^2}
+\right).
+$$
+
+Taking logarithms and subtracting,
+
+$$
+\boxed{
+\log\frac{q_y(y)}{p_y(y)}
+=
+\frac D2\log\frac{\sigma_t^2}{\tilde\beta_t}
+-
+\frac{\lVert y-m_q\rVert^2}{2\tilde\beta_t}
++
+\frac{\lVert y-m_p\rVert^2}{2\sigma_t^2}.
+}
+\tag{C.1}
+$$
+
+This is the Gaussian log-density ratio. It becomes a KL divergence only after taking its expectation under $$q_y$$.
+
+Under this target distribution,
+
+$$
+\mathbb{E}_{q_y}[y]=m_q,
+\qquad
+\operatorname{Cov}_{q_y}(y)=\tilde\beta_t I.
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+\mathbb{E}_{q_y}[\lVert y-m_q\rVert^2]
+&=
+\sum_{i=1}^{D}
+\mathbb{E}_{q_y}[(y_i-m_{q,i})^2]\\[4pt]
+&=
+D\tilde\beta_t.
+\end{aligned}
+$$
+
+To calculate the distance from the predicted mean, write
+
+$$
+y-m_p=(y-m_q)+(m_q-m_p).
+$$
+
+Expanding,
+
+$$
+\begin{aligned}
+\lVert y-m_p\rVert^2
+={}&
+\lVert y-m_q\rVert^2
++
+2(y-m_q)^\top(m_q-m_p)\\[4pt]
+&+
+\lVert m_q-m_p\rVert^2.
+\end{aligned}
+$$
+
+The expectation of the cross term is zero because
+
+$$
+\mathbb{E}_{q_y}[y-m_q]=0.
+$$
+
+Hence,
+
+$$
+\mathbb{E}_{q_y}[\lVert y-m_p\rVert^2]
+=
+D\tilde\beta_t+\lVert m_q-m_p\rVert^2.
+$$
+
+Taking the expectation of Equation (C.1),
+
+$$
+\begin{aligned}
+D_{\mathrm{KL}}(q_y\Vert p_y)
+&=
+\frac D2\log\frac{\sigma_t^2}{\tilde\beta_t}
+-
+\frac{D\tilde\beta_t}{2\tilde\beta_t}
++
+\frac{D\tilde\beta_t+\lVert m_q-m_p\rVert^2}
+{2\sigma_t^2}\\[4pt]
+&=
+\frac{\lVert m_q-m_p\rVert^2}{2\sigma_t^2}
++
+\frac D2
+\left[
+\frac{\tilde\beta_t}{\sigma_t^2}
+-1+
+\log\frac{\sigma_t^2}{\tilde\beta_t}
+\right].
+\end{aligned}
+$$
+
+This is Equation (9).
+
+The additional covariance contribution is independent of $$\theta$$ only because the variances are prescribed. If the model variance were learned, its terms would need to remain in the optimization objective.
+
+### C.2 Converting the posterior mean into the noise parameterization
+
+Begin with the posterior mean from Equation (3):
+
+$$
+\tilde\mu_t(x_t,x_0)
+=
+\frac{\sqrt{\alpha_t}(1-\bar\alpha_{t-1})}
+{1-\bar\alpha_t}x_t
++
+\frac{\sqrt{\bar\alpha_{t-1}}\beta_t}
+{1-\bar\alpha_t}x_0.
+$$
+
+The forward sample satisfies
+
+$$
+x_t
+=
+\sqrt{\bar\alpha_t}x_0+
+\sqrt{1-\bar\alpha_t}\epsilon,
+$$
+
+so
+
+$$
+x_0
+=
+\frac{x_t-\sqrt{1-\bar\alpha_t}\epsilon}
+{\sqrt{\bar\alpha_t}}.
+$$
+
+Substitute this into the posterior mean:
+
+$$
+\begin{aligned}
+\tilde\mu_t
+={}&
+\frac{\sqrt{\alpha_t}(1-\bar\alpha_{t-1})}
+{1-\bar\alpha_t}x_t\\[4pt]
+&+
+\frac{\sqrt{\bar\alpha_{t-1}}\beta_t}
+{1-\bar\alpha_t}
+\frac{x_t-\sqrt{1-\bar\alpha_t}\epsilon}
+{\sqrt{\bar\alpha_t}}.
+\end{aligned}
+$$
+
+Since
+
+$$
+\bar\alpha_t=\alpha_t\bar\alpha_{t-1},
+$$
+
+we have
+
+$$
+\frac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}}
+=
+\frac1{\sqrt{\alpha_t}}.
+$$
+
+Therefore,
+
+$$
+\begin{aligned}
+\tilde\mu_t
+={}&
+\frac{
+\alpha_t(1-\bar\alpha_{t-1})+\beta_t
+}{
+\sqrt{\alpha_t}(1-\bar\alpha_t)
+}x_t\\[4pt]
+&-
+\frac{\beta_t}
+{\sqrt{\alpha_t}\sqrt{1-\bar\alpha_t}}\epsilon.
+\end{aligned}
+$$
+
+The numerator in the first coefficient simplifies as
+
+$$
+\begin{aligned}
+\alpha_t(1-\bar\alpha_{t-1})+\beta_t
+&=
+\alpha_t+\beta_t-\alpha_t\bar\alpha_{t-1}\\[4pt]
+&=
+1-\bar\alpha_t.
+\end{aligned}
+$$
+
+Consequently,
+
+$$
+\boxed{
+\tilde\mu_t(x_t,x_0)
+=
+\frac1{\sqrt{\alpha_t}}
+\left(
+x_t-
+\frac{\beta_t}{\sqrt{1-\bar\alpha_t}}\epsilon
+\right),
+}
+$$
+
+which is Equation (10).
+
+Define $$\mu_\theta$$ by replacing $$\epsilon$$ with $$\epsilon_\theta(x_t,t)$$. Their difference is
+
+$$
+\tilde\mu_t-\mu_\theta
+=
+\frac{\beta_t}
+{\sqrt{\alpha_t}\sqrt{1-\bar\alpha_t}}
+\left(\epsilon_\theta(x_t,t)-\epsilon\right).
+$$
+
+Substitution into Equation (9) yields the coefficient
+
+$$
+w_t
+=
+\frac{\beta_t^2}
+{2\sigma_t^2\alpha_t(1-\bar\alpha_t)}.
+$$
+
+Under $$\sigma_t^2=\tilde\beta_t$$,
+
+$$
+\begin{aligned}
+w_t
+&=
+\frac{\beta_t^2}{
+2
+\left[
+\frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t
+\right]
+\alpha_t(1-\bar\alpha_t)
+}\\[4pt]
+&=
+\boxed{
+\frac{\beta_t}
+{2\alpha_t(1-\bar\alpha_{t-1})}
+}.
+\end{aligned}
+$$
+
+This derivation applies to $$t\geq2$$. Substituting $$t=1$$ into this last expression would divide by $$1-\bar\alpha_0=0$$, which is another reason to treat the observation likelihood separately.
+
+### C.3 The exact discretized Gaussian decoder
+
+An 8-bit pixel $$k\in\{0,\ldots,255\}$$, scaled to $$[-1,1]$$, takes the value
+
+$$
+v=-1+\frac{2k}{255}.
+$$
+
+Neighboring values are separated by
+
+$$
+\Delta=\frac2{255}.
+$$
+
+A continuous Gaussian assigns probability through areas under its density, rather than through the density value at an isolated point. To obtain a probability mass for the observed discrete pixel, integrate over the interval that rounds to that pixel.
+
+Define
+
+$$
+b^-(v)
+=
+\begin{cases}
+-\infty,&v=-1,\\[4pt]
+v-\Delta/2,&v>-1,
+\end{cases}
+$$
+
+and
+
+$$
+b^+(v)
+=
+\begin{cases}
++\infty,&v=1,\\[4pt]
+v+\Delta/2,&v<1.
+\end{cases}
+$$
+
+The extreme bins include the Gaussian tails, ensuring that the probabilities across all allowed pixel values sum to one.
+
+For coordinate $$i$$, let
+
+$$
+m_i=\mu_\theta^i(x_1,1).
+$$
+
+The decoder is
+
+$$
+\boxed{
+p_\theta(x_0\mid x_1)
+=
+\prod_{i=1}^{D}
+\int_{b^-(x_0^i)}^{b^+(x_0^i)}
+\mathcal{N}(r;m_i,\sigma_1^2)\,dr.
+}
+\tag{C.2}
+$$
+
+This is the discretized Gaussian observation model used in DDPM, with a separately prescribed positive decoder variance. ([Ho et al., 2020, Section 3.3][ddpm-decoder])
+
+Using the standard normal cumulative distribution function $$\Phi$$, each factor is
+
+$$
+\Phi\left(
+\frac{b^+(x_0^i)-m_i}{\sigma_1}
+\right)
+-
+\Phi\left(
+\frac{b^-(x_0^i)-m_i}{\sigma_1}
+\right).
+$$
+
+Therefore, the exact reconstruction term is
+
+$$
+\boxed{
+\begin{aligned}
+J_1(x_0)
+=
+-\mathbb{E}_{q(x_1\mid x_0)}
+\Bigg[
+\sum_{i=1}^{D}
+\log\Bigg(
+&
+\Phi\left(
+\frac{b^+(x_0^i)-m_i}{\sigma_1}
+\right)\\[-2pt]
+&-
+\Phi\left(
+\frac{b^-(x_0^i)-m_i}{\sigma_1}
+\right)
+\Bigg)
+\Bigg].
+\end{aligned}
+}
+$$
+
+The network supplies the predicted means $$m_i$$. The observed image supplies the bin boundaries at which that predicted distribution is evaluated. These are distinct roles.
+
+This exact expression is not a squared-error loss.
+
+### C.4 Approximating the reconstruction term by noise error
+
+For an interior bin, when a density $$f$$ varies little across its width,
+
+$$
+\int_{v-\Delta/2}^{v+\Delta/2}f(r)\,dr
+\approx
+f(v)\Delta.
+$$
+
+Apply this to Equation (C.2), temporarily ignoring the boundary-bin effects:
+
+$$
+p_\theta(x_0\mid x_1)
+\approx
+\prod_{i=1}^{D}
+\left[
+\mathcal{N}(x_0^i;m_i,\sigma_1^2)\Delta
+\right].
+$$
+
+Taking the negative logarithm,
+
+$$
+\begin{aligned}
+-\log p_\theta(x_0\mid x_1)
+&\approx
+-\sum_{i=1}^{D}
+\log\mathcal{N}(x_0^i;m_i,\sigma_1^2)
+-D\log\Delta\\[4pt]
+&=
+\frac{
+\lVert x_0-\mu_\theta(x_1,1)\rVert^2
+}{
+2\sigma_1^2
+}
++
+C_{\mathrm{dec}},
+\end{aligned}
+$$
+
+where
+
+$$
+C_{\mathrm{dec}}
+=
+\frac D2\log(2\pi\sigma_1^2)-D\log\Delta.
+$$
+
+The constant does not depend on the network parameters.
+
+Now use
+
+$$
+x_1=\sqrt{\alpha_1}x_0+\sqrt{\beta_1}\epsilon.
+$$
+
+Since $$1-\bar\alpha_1=\beta_1$$, Equation (11) at $$t=1$$ becomes
+
+$$
+\mu_\theta(x_1,1)
+=
+\frac1{\sqrt{\alpha_1}}
+\left(
+x_1-\sqrt{\beta_1}\epsilon_\theta(x_1,1)
+\right).
+$$
+
+Substituting the forward expression for $$x_1$$,
+
+$$
+\begin{aligned}
+\mu_\theta(x_1,1)
+&=
+\frac{
+\sqrt{\alpha_1}x_0
++
+\sqrt{\beta_1}\epsilon
+-
+\sqrt{\beta_1}\epsilon_\theta(x_1,1)
+}{
+\sqrt{\alpha_1}
+}\\[4pt]
+&=
+x_0+
+\sqrt{\frac{\beta_1}{\alpha_1}}
+\left(
+\epsilon-\epsilon_\theta(x_1,1)
+\right).
+\end{aligned}
+$$
+
+Hence,
+
+$$
+\lVert x_0-\mu_\theta(x_1,1)\rVert^2
+=
+\frac{\beta_1}{\alpha_1}
+\lVert\epsilon-\epsilon_\theta(x_1,1)\rVert^2.
+$$
+
+Averaging over the sampled noise gives
+
+$$
+\boxed{
+J_1(x_0)
+\approx
+w_1\,
+\mathbb{E}_\epsilon
+\left[
+\lVert\epsilon-\epsilon_\theta(x_1,1)\rVert^2
+\right]
++
+C_{\mathrm{dec}},
+}
+$$
+
+with
+
+$$
+w_1
+=
+\frac{\beta_1}{2\sigma_1^2\alpha_1}.
+$$
+
+For the decoder choice $$\sigma_1^2=\beta_1$$,
+
+$$
+w_1=\frac1{2\alpha_1}.
+$$
+
+If a continuous Gaussian likelihood were used instead, the squared reconstruction error would follow exactly from its negative log-density, with constant $$\frac D2\log(2\pi\sigma_1^2)$$ and no bin-width term. This is the same likelihood-to-squared-error relationship discussed for VAE in Section 3.3. ([Kingma and Welling, 2013][vae-paper])
+
+For the discrete-pixel model, the steps must remain distinct:
+
+$$
+\boxed{
+\begin{gathered}
+\text{Exact discrete reconstruction likelihood}\\[4pt]
+\Downarrow\ \text{approximate bin probabilities}\\[4pt]
+\text{Weighted clean-image squared error}\\[4pt]
+\Downarrow\ \text{exact noise reparameterization}\\[4pt]
+\text{Weighted noise-prediction error}\\[4pt]
+\Downarrow\ \text{change the loss weighting}\\[4pt]
+\text{Unweighted noise-prediction error}.
+\end{gathered}
+}
+$$
+
+The intermediate Gaussian KL calculations are exact. The final decoder approximation and the removal of timestep-dependent weights are separate changes introduced when moving to the simplified training objective.
+
+[ddpm-paper]: https://arxiv.org/html/2006.11239v2
+[ddpm-decoder]: https://arxiv.org/html/2006.11239v2#S3.SS3
+[improved-ddpm-paper]: https://arxiv.org/html/2102.09672v1
+[ddpm-code]: https://github.com/hojonathanho/diffusion/blob/master/diffusion_tf/diffusion_utils_2.py
+[vae-paper]: https://arxiv.org/abs/1312.6114
 
 ## References
  1. <i class="fab fa-youtube"></i> [Variational Autoencoder - Model, ELBO, loss function and maths explained easily!](https://www.youtube.com/watch?v=iwEzwTTalbg) 
