@@ -2085,6 +2085,368 @@ We first keep the formulas general enough to show where the variance enters. The
 
   Section 8 will use this loss to describe the training procedure and show how the trained network determines each reverse-sampling transition.
 
+### 8. Training and Reverse Generation
+
+Section 7 reduced the DDPM training objective to noise prediction. We now translate that objective into a training procedure and use the learned predictions to generate images.
+
+The two procedures use the same network but perform different tasks:
+
+**During training, we corrupt known images and learn to predict the injected noise. During generation, we start from Gaussian noise and repeatedly sample learned reverse transitions.**
+
+We retain the conventions established earlier: the forward schedule is fixed, and the intermediate reverse variance is
+
+$$
+\sigma_t^2=\tilde\beta_t
+=
+\frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t,
+\qquad t\geq2.
+$$
+
+The coefficients are determined by the schedule, not predicted by the network.
+
+- ### 8.1 Training using randomly corrupted images
+
+  Use one shared network $$\epsilon_\theta(x_t,t)$$ for every timestep. The timestep input identifies the noise level, allowing the same parameters to represent different denoising tasks. The original DDPM uses a timestep-conditioned U-Net with parameters shared across time. ([Ho et al., 2020][ddpm-paper])
+
+  A training example is constructed by sampling
+
+  $$
+  x_0\sim p_{\mathrm{data}},
+  \qquad
+  t\sim\mathrm{Uniform}\{1,\ldots,T\},
+  \qquad
+  \epsilon\sim\mathcal{N}(0,I).
+  $$
+
+  The selected timestep and noise are sampled independently of the clean image. Construct the noisy input using Equation (1):
+
+  $$
+  x_t
+  =
+  \sqrt{\bar\alpha_t}x_0
+  +
+  \sqrt{1-\bar\alpha_t}\epsilon.
+  $$
+
+  Then evaluate
+
+  $$
+  \hat\epsilon=\epsilon_\theta(x_t,t).
+  $$
+
+  The supervised-learning pair is
+
+  $$
+  \boxed{
+  \text{network input}=(x_t,t),
+  \qquad
+  \text{training target}=\epsilon.
+  }
+  $$
+
+  The clean image determines how the input is constructed, but it is not separately supplied to the network. The target noise is known because we sampled it ourselves.
+
+  For a minibatch of $$B$$ images, independently choose $$t_b$$ and $$\epsilon^{(b)}$$ for each image $$x_0^{(b)}$$. The minibatch loss is
+
+  $$
+  \boxed{
+  \widehat{\mathcal{L}}_{\mathrm{simple}}
+  =
+  \frac1B
+  \sum_{b=1}^{B}
+  \left\lVert
+  \epsilon^{(b)}
+  -
+  \epsilon_\theta\!\left(
+  x_{t_b}^{(b)},t_b
+  \right)
+  \right\rVert^2.
+  }
+  $$
+
+  A gradient-descent update takes the form
+
+  $$
+  \theta
+  \leftarrow
+  \theta-\gamma
+  \nabla_\theta\widehat{\mathcal{L}}_{\mathrm{simple}},
+  $$
+
+  where $$\gamma$$ is the learning rate. Only the network parameters are optimized; the forward schedule and prescribed reverse variances remain unchanged.
+
+  An implementation commonly averages the squared error over image coordinates as well as batch elements. For fixed image dimension $$D$$, this introduces an additional factor $$1/D$$, changing the loss scale but not its minimizers. The authors' implementation uses such a mean-squared-error calculation. ([DDPM training implementation][ddpm-training-code])
+
+  **Training procedure**
+
+  ```text
+  Precompute the forward noise-schedule coefficients.
+
+  Repeat:
+      Sample a minibatch of clean images x0.
+      Sample one timestep t for each image.
+      Draw Gaussian noise epsilon with the same shape as x0.
+
+      xt = sqrt(alpha_bar[t]) * x0
+          + sqrt(1 - alpha_bar[t]) * epsilon
+
+      predicted_noise = noise_network(xt, t)
+      loss = mean((epsilon - predicted_noise)^2)
+
+      Backpropagate the loss and update the network parameters.
+  ```
+
+  No explicit target $$x_{t-1}$$, complete noisy trajectory, or reverse rollout is required in this loop. The derivations in Sections 6 and 7 have already transformed the local distribution-matching objective into a noise-prediction error.
+
+  - ### Why sampling one timestep is sufficient
+
+    For a fixed clean image, define
+
+    $$
+    g_t(x_0)
+    =
+    \mathbb{E}_\epsilon
+    \left[
+    \left\lVert
+    \epsilon-\epsilon_\theta(x_t,t)
+    \right\rVert^2
+    \right].
+    $$
+
+    Uniform timestep sampling satisfies
+
+    $$
+    \mathbb{E}_t[g_t(x_0)]
+    =
+    \frac1T\sum_{t=1}^{T}g_t(x_0).
+    $$
+
+    Thus, random-timestep training estimates the average over all denoising tasks. Across updates, the network encounters different images, noise realizations, and timesteps.
+
+    This is an estimate of the **simplified objective in Equation (13)**. It does not reinstate the timestep-dependent weights or exact decoder likelihood discarded when moving away from the original negative ELBO.
+
+    There is also no requirement that the noisy inputs in a minibatch belong to one consistent Markov trajectory. Each input is a separate sample from the appropriate marginal $$q(x_t\mid x_0)$$.
+
+- ### 8.2 Generating images through learned reverse transitions
+
+  After training, fix the network parameters. Generation requires no clean image, training target, loss calculation, or gradient update.
+
+  Start by sampling an image-sized noise vector:
+
+  $$
+  \boxed{x_T\sim\mathcal{N}(0,I).}
+  $$
+
+  Unlike a noisy training input, this initial state is sampled directly from the model prior. It is not constructed by corrupting a particular clean image.
+
+  For each intermediate timestep $$t=T,\ldots,2$$, predict the noise and compute the reverse mean using Equation (11):
+
+  $$
+  \mu_\theta(x_t,t)
+  =
+  \frac1{\sqrt{\alpha_t}}
+  \left(
+  x_t-
+  \frac{\beta_t}{\sqrt{1-\bar\alpha_t}}
+  \epsilon_\theta(x_t,t)
+  \right).
+  $$
+
+  The learned transition is
+
+  $$
+  p_\theta(x_{t-1}\mid x_t)
+  =
+  \mathcal{N}\!\left(
+  x_{t-1};\mu_\theta(x_t,t),\sigma_t^2I
+  \right).
+  $$
+
+  Sampling this Gaussian gives
+
+  $$
+  \boxed{
+  \begin{aligned}
+  x_{t-1}
+  &=
+  \frac1{\sqrt{\alpha_t}}
+  \left(
+  x_t-
+  \frac{\beta_t}{\sqrt{1-\bar\alpha_t}}
+  \epsilon_\theta(x_t,t)
+  \right)
+  +
+  \sigma_t\xi_t,\\[4pt]
+  &\hspace{2em}\xi_t\sim\mathcal{N}(0,I).
+  \end{aligned}
+  }
+  \tag{14}
+  $$
+
+  Each $$\xi_t$$ is a fresh draw, independent of the current state and previous random draws.
+
+  Under the variance convention used in this post,
+
+  $$
+  \boxed{
+  \sigma_t
+  =
+  \sqrt{
+  \frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t
+  },
+  \qquad t\geq2.
+  }
+  $$
+
+  The square root is essential: $$\tilde\beta_t$$ is a variance, whereas the sampling equation multiplies noise by its standard deviation. These coefficients can be precomputed and selected by timestep, as in the original implementation. ([DDPM implementation][ddpm-code])
+
+  - ### The final step
+
+    At $$t=1$$, the original DDPM sampling procedure returns the predicted mean without adding fresh noise. ([Ho et al., 2020, Algorithm 2][ddpm-paper])
+
+    Since $$1-\bar\alpha_1=\beta_1$$,
+
+    $$
+    \boxed{
+    x_0^{\mathrm{gen}}
+    =
+    \mu_\theta(x_1,1)
+    =
+    \frac{
+    x_1-\sqrt{\beta_1}\epsilon_\theta(x_1,1)
+    }{
+    \sqrt{\alpha_1}
+    }.
+    }
+    $$
+
+    This is the generated image.
+
+    Returning the mean is an **output convention**. It does not mean that the discretized Gaussian decoder in Section 7.4 has zero variance. That positive-variance likelihood defines how the observed pixels are scored during likelihood evaluation; displaying its underlying mean is a different operation.
+
+    **Reverse-generation procedure**
+
+    ```text
+    Fix the trained network parameters.
+    Precompute sigma[t] = sqrt(posterior_variance[t]) for t >= 2.
+
+    Sample x from a standard Gaussian.
+
+    For t = T, ..., 1:
+        predicted_noise = noise_network(x, t)
+
+        mean = (x - beta[t] / sqrt(1 - alpha_bar[t])
+                    * predicted_noise) / sqrt(alpha[t])
+
+        If t > 1:
+            Draw fresh standard Gaussian noise xi.
+            x = mean + sigma[t] * xi
+        Otherwise:
+            x = mean
+
+    Return x.
+    ```
+
+    This pseudocode uses the mathematical timestep convention $$t=1,\ldots,T$$. Appendix D.2 explains the offset in zero-based implementations.
+
+    For the three-step illustration used in Appendix B, the procedure is
+
+    $$
+    \begin{aligned}
+    x_3&\sim\mathcal{N}(0,I),\\[4pt]
+    x_2&=\mu_\theta(x_3,3)+\sqrt{\tilde\beta_3}\,\xi_3,\\[4pt]
+    x_1&=\mu_\theta(x_2,2)+\sqrt{\tilde\beta_2}\,\xi_2,\\[4pt]
+    x_0^{\mathrm{gen}}&=\mu_\theta(x_1,1).
+    \end{aligned}
+    $$
+
+    This short chain illustrates the ordering, rather than proposing that three ordinary noise increments are sufficient for useful image generation. The schedule in Section 4 uses $$T=1000$$, so the corresponding ancestral sampler performs 1000 sequential network evaluations for each generated image or batch. ([Ho et al., 2020, Section 4][ddpm-paper])
+
+- ### 8.3 Why the reverse sampler adds noise
+
+  The network determines the **mean** of the next reverse distribution. A mean is not, by itself, a sample from that distribution.
+
+  For a fixed current state $$x_t$$, returning only
+
+  $$
+  x_{t-1}=\mu_\theta(x_t,t)
+  $$
+
+  would give
+
+  $$
+  \operatorname{Cov}(x_{t-1}\mid x_t)=0.
+  $$
+
+  By contrast, the chosen model specifies
+
+  $$
+  \operatorname{Cov}(x_{t-1}\mid x_t)=\sigma_t^2I.
+  $$
+
+  The random residual in Equation (14) supplies that spread:
+
+  $$
+  \begin{aligned}
+  \mathbb{E}[x_{t-1}\mid x_t]
+  &=\mu_\theta(x_t,t),\\[4pt]
+  \operatorname{Cov}(x_{t-1}\mid x_t)
+  &=\sigma_t^2I.
+  \end{aligned}
+  $$
+
+  Thus, the predicted mean and the added noise perform different roles. The mean determines the center of the distribution of less-noisy states; the random term produces a sample around that center.
+
+  This does not mean that the network first reconstructs the exact clean image and then corrupts it again. At an intermediate timestep, it defines a distribution for the **previous noisy state**, not a complete deterministic reconstruction of $$x_0$$.
+
+  The distinction between the noise symbols is:
+
+  | Quantity | Role |
+  |---|---|
+  | $$\epsilon$$ | Known aggregate noise used to construct a training input. |
+  | $$\epsilon_\theta(x_t,t)$$ | The network's prediction of that noise. |
+  | $$\xi_t$$ | Fresh randomness used to sample a learned reverse transition. |
+  | $$x_T$$ | The initial image-sized sample from the generation prior. |
+
+  During generation, there is no known "correct injected noise" attached to the current state. The network evaluates the function learned during training, and its output parameterizes the next transition.
+
+  Removing every $$\xi_t$$ while leaving the rest of Equation (14) unchanged would define a different conditional process. It would no longer sample the Gaussian transitions specified in Section 4. [Appendix D](#ddpm-appendix-d), Section D.1, gives a concrete example showing why adding a random residual can still be consistent with moving toward a less-noisy distribution.
+
+- ### 8.4 Completing the connection between VAE and DDPM
+
+  The training and generation procedures can now be separated clearly:
+
+  | | Training | Generation |
+  |---|---|---|
+  | Starting information | Clean dataset images. | Samples from the Gaussian prior. |
+  | Source of the current noisy input | Direct forward corruption. | The preceding reverse-sampling step. |
+  | Network evaluation | At randomly selected timesteps. | Sequentially from $$T$$ to $$1$$. |
+  | Target and loss | Known noise and a prediction loss. | No target or loss. |
+  | Network parameters | Updated by backpropagation. | Held fixed. |
+
+  As with the VAE in Part I, the inference mechanism used during training is not required to generate a new image. A VAE samples its prior and evaluates its decoder; the encoder is unnecessary for this unconditional generation step. ([Kingma and Welling, 2013][vae-paper])
+
+  DDPM replaces that single decoding stage with a hierarchy of learned transitions. Its fixed forward process supplies tractable training distributions, while the trained network is repeatedly evaluated to generate the latent path in reverse.
+
+  The full development is therefore
+
+  $$
+  \boxed{
+  \begin{gathered}
+  \text{Latent-variable generative model}\\[3pt]
+  \Downarrow\\[3pt]
+  \text{Variational likelihood bound}\\[3pt]
+  \Downarrow\\[3pt]
+  \text{Local Gaussian distribution matching}\\[3pt]
+  \Downarrow\\[3pt]
+  \text{Noise-prediction training}\\[3pt]
+  \Downarrow\\[3pt]
+  \text{Sequential reverse generation}.
+  \end{gathered}
+  }
+  $$
+
+  The probabilistic derivation explains the role of the training target and the sampling rule. The implementation then becomes two distinct loops: **learn from randomly corrupted images, and generate by repeatedly applying the learned reverse transitions.**
 
 
 ### DDPM Results
@@ -2093,7 +2455,7 @@ We first keep the formulas general enough to show where the variance enters. The
 
 <a id="ddpm-appendix-a"></a>
 
-## Appendix A. Conditional Bayes' Rule and the Gaussian Reverse Posterior
+### Appendix A. Conditional Bayes' Rule and the Gaussian Reverse Posterior
 
 This appendix derives the target distribution in Section 5.3. The calculation uses only the specified forward process; no neural-network approximation is involved.
 
@@ -2541,7 +2903,7 @@ The restriction $$t\geq2$$ avoids the degenerate case $$1-\bar\alpha_0=0$$. At $
 
 <a id="ddpm-appendix-b"></a>
 
-## Appendix B. Reverse-Order Factorization and the ELBO Decomposition
+### Appendix B. Reverse-Order Factorization and the ELBO Decomposition
 
 Appendix A derives the Gaussian posterior parameters. This appendix explains a different part of the argument: how the full-path expectation in Equation (5) becomes the local terms in Equation (8).
 
@@ -2956,7 +3318,7 @@ Throughout this derivation, $$x_0$$ is fixed. Averaging over different training 
 
 <a id="ddpm-appendix-c"></a>
 
-## Appendix C. Gaussian KL, Noise Parameterization, and the Reconstruction Term
+### Appendix C. Gaussian KL, Noise Parameterization, and the Reconstruction Term
 
 Appendix A derived the target posterior's parameters, and Appendix B derived the local loss decomposition. This appendix supplies the calculations that connect those results to the practical noise-prediction objective.
 
@@ -3505,6 +3867,223 @@ The intermediate Gaussian KL calculations are exact. The final decoder approxima
 [ddpm-paper]: https://arxiv.org/html/2006.11239v2
 [ddpm-decoder]: https://arxiv.org/html/2006.11239v2#S3.SS3
 [improved-ddpm-paper]: https://arxiv.org/html/2102.09672v1
+[ddpm-code]: https://github.com/hojonathanho/diffusion/blob/master/diffusion_tf/diffusion_utils_2.py
+[vae-paper]: https://arxiv.org/abs/1312.6114
+
+<!-- Place Appendix D after Appendix C, following the main DDPM sections. -->
+
+<a id="ddpm-appendix-d"></a>
+
+### Appendix D. Reverse-Sampling Randomness and Implementation Conventions
+
+The main derivations are complete in Appendices A-C. This appendix addresses the remaining distinction between a conditional mean and a sample, together with two implementation conventions that can otherwise obscure the equations.
+
+### D.1 A reverse step can add noise while reducing overall corruption
+
+Consider a scalar example using the same forward-process form as DDPM. Let
+
+$$
+x_0=0,
+\qquad
+\alpha_1=\alpha_2=\frac12,
+\qquad
+\beta_1=\beta_2=\frac12.
+$$
+
+Then
+
+$$
+x_1=\sqrt{\frac12}\eta_1,
+$$
+
+$$
+x_2=\sqrt{\frac12}x_1+\sqrt{\frac12}\eta_2,
+$$
+
+where $$\eta_1,\eta_2$$ are independent standard Gaussian variables.
+
+The forward conditional variances are
+
+$$
+\operatorname{Var}(x_1\mid x_0)=\frac12
+$$
+
+and
+
+$$
+\operatorname{Var}(x_2\mid x_0)
+=
+\frac12\left(\frac12\right)+\frac12
+=
+\frac34.
+$$
+
+Applying the analytic posterior formulas from Section 5,
+
+$$
+\tilde\beta_2
+=
+\frac{1-\bar\alpha_1}{1-\bar\alpha_2}\beta_2
+=
+\frac{1/2}{3/4}\frac12
+=
+\frac13.
+$$
+
+Because $$x_0=0$$, the posterior mean simplifies to
+
+$$
+\tilde\mu_2(x_2,0)
+=
+\frac{\sqrt{\alpha_2}(1-\bar\alpha_1)}
+{1-\bar\alpha_2}x_2
+=
+\frac{\sqrt2}{3}x_2.
+$$
+
+Thus,
+
+$$
+\boxed{
+q(x_1\mid x_2,x_0=0)
+=
+\mathcal{N}\!\left(
+x_1;\frac{\sqrt2}{3}x_2,\frac13
+\right).
+}
+$$
+
+A correct sample from this conditional is
+
+$$
+x_1^{\mathrm{sample}}
+=
+\frac{\sqrt2}{3}x_2
++
+\sqrt{\frac13}\xi,
+\qquad
+\xi\sim\mathcal{N}(0,1),
+$$
+
+with $$\xi$$ independent of $$x_2$$.
+
+Now average over $$x_2\sim q(x_2\mid x_0=0)$$. The generated previous state has variance
+
+$$
+\begin{aligned}
+\operatorname{Var}(x_1^{\mathrm{sample}}\mid x_0=0)
+&=
+\frac{2}{9}\operatorname{Var}(x_2\mid x_0=0)
++\frac13\\[4pt]
+&=
+\frac{2}{9}\frac34+\frac13\\[4pt]
+&=
+\frac12.
+\end{aligned}
+$$
+
+We have moved from variance $$3/4$$ at $$x_2$$ to the correct variance $$1/2$$ at $$x_1$$, **despite adding fresh noise**.
+
+If we returned only the posterior mean,
+
+$$
+x_1^{\mathrm{mean}}=\frac{\sqrt2}{3}x_2,
+$$
+
+its variance would instead be
+
+$$
+\operatorname{Var}(x_1^{\mathrm{mean}}\mid x_0=0)
+=
+\frac{2}{9}\frac34
+=
+\frac16.
+$$
+
+The mean-only result is a conditional estimate, but it does not reproduce the required distribution of $$x_1$$.
+
+This example uses the known analytic posterior to isolate the sampling principle. It does not claim that the learned generator knows $$x_0$$, or that every learned reverse trajectory decreases its error monotonically. The general point is that **sampling must represent conditional uncertainty, whereas returning a mean removes it**.
+
+### D.2 Mathematical timesteps and zero-based array indices
+
+The equations in this post use
+
+$$
+t=1,\ldots,T
+$$
+
+for the forward noise steps, with $$x_0$$ reserved for the clean image.
+
+Code commonly stores the schedule in an array indexed by
+
+$$
+k=0,\ldots,T-1,
+\qquad
+k=t-1.
+$$
+
+Accordingly,
+
+$$
+\texttt{betas}[k]=\beta_{k+1},
+$$
+
+and
+
+$$
+\texttt{alphas\_cumprod}[k]
+=
+\bar\alpha_{k+1}.
+$$
+
+The authors' implementation uses this zero-based convention: its schedule index $$0$$ corresponds to an image after the **first** noising step. Therefore, its "no noise when index equals zero" condition means the final mathematical transition $$x_1\rightarrow x_0$$, not a network evaluation on the clean input $$x_0$$. ([DDPM implementation][ddpm-code])
+
+This offset affects both the coefficients retrieved from arrays and the timestep passed to the network. Training and sampling must use the same convention.
+
+### D.3 Optional clean-image clipping
+
+Equation (14) uses the unmodified noise-to-mean parameterization. The original implementation also supports clipping the predicted clean image to the data range before computing the reverse mean. ([DDPM implementation][ddpm-code])
+
+First compute
+
+$$
+\hat x_{0,\theta}(x_t,t)
+=
+\frac{
+x_t-\sqrt{1-\bar\alpha_t}\epsilon_\theta(x_t,t)
+}{
+\sqrt{\bar\alpha_t}
+}.
+$$
+
+Then define
+
+$$
+\hat x_{0,\theta}^{\mathrm{clip}}
+=
+\operatorname{clip}\!\left(
+\hat x_{0,\theta},-1,1
+\right).
+$$
+
+For $$t\geq2$$, use the clipped estimate in the posterior-mean formula:
+
+$$
+\mu_\theta^{\mathrm{clip}}(x_t,t)
+=
+\tilde\mu_t\!\left(
+x_t,\hat x_{0,\theta}^{\mathrm{clip}}
+\right).
+$$
+
+This clips the **estimated clean image**, not the noisy state $$x_t$$. The noisy state is a continuous random vector and is not restricted to the clean image's value range.
+
+Without clipping, this computation is algebraically equivalent to Equation (11). When clipping changes the clean estimate, it also changes the reverse mean; the result is no longer the unmodified expression in Equation (14). At the final step, the clipped clean estimate can be returned directly.
+
+Clipping is therefore an implementation choice layered on top of the derivation, not a consequence of the Gaussian posterior calculation.
+
+[ddpm-paper]: https://arxiv.org/html/2006.11239v2
+[ddpm-training-code]: https://github.com/hojonathanho/diffusion/blob/master/diffusion_tf/diffusion_utils.py
 [ddpm-code]: https://github.com/hojonathanho/diffusion/blob/master/diffusion_tf/diffusion_utils_2.py
 [vae-paper]: https://arxiv.org/abs/1312.6114
 
