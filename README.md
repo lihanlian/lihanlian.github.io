@@ -48,7 +48,7 @@ Open <http://127.0.0.2:4001/>. Changes rebuild the site and reload the browser;
 restart the server after changing `_config.yml`. Press `Ctrl+C` to stop it.
 The preview uses the loopback address `127.0.0.2` and port `4001` from `_config.yml`.
 LiveReload uses `127.0.0.2:35729`, so this site can run alongside
-`robotic-manipulation-notebook` on `127.0.0.1`. Jekyll 3.10 requires a command-line
+`robotics-notebook` on `127.0.0.1`. Jekyll 3.10 requires a command-line
 `--livereload-port` option to change that port; it ignores the YAML setting.
 
 On the configured local machine, `~/.local/bin/bundle` runs with system Ruby.
