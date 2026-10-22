@@ -482,6 +482,43 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
 
 - ### 3.5 VAE Implementation
 
+  To connect the Gaussian loss to the implementation, let `x_recon` denote the decoder mean $$m_\theta(z)$$. Each $$x_j$$ is an observed pixel-channel value normalized to $$[-1,1]$$; an RGB $$64\times64$$ image has $$D=3\times64\times64=12{,}288$$ such values. Vector notation is only shorthand: the code keeps image-shaped tensors.
+
+  With observation variance $$\tau^2$$ (`sigma_x^2` below), each value has density
+
+  $$
+  p_\theta(x_j\mid z)
+  =
+  \frac{1}{\sqrt{2\pi\tau^2}}
+  \exp\!\left[-\frac{(x_j-m_{\theta,j}(z))^2}{2\tau^2}\right].
+  $$
+
+  The covariance $$\tau^2I$$ makes these values independent **conditional on $$z$$**, so the image density is
+
+  $$
+  p_\theta(x\mid z)=\prod_{j=1}^{D}p_\theta(x_j\mid z).
+  $$
+
+  Taking the negative logarithm turns the product into a sum, recovering Section 3.3's reconstruction loss:
+
+  $$
+  -\log p_\theta(x\mid z)
+  =
+  \frac{D}{2}\log(2\pi\tau^2)
+  +
+  \frac{1}{2\tau^2}\sum_{j=1}^{D}(x_j-m_{\theta,j}(z))^2.
+  $$
+
+  For fixed $$\tau^2$$, the first term is constant and can be omitted during training. The code uses **summed squared error with coefficient one**; with `KL_WEIGHT = 1`, its Gaussian interpretation is
+
+  $$
+  \frac{1}{2\tau^2}=1
+  \quad\Longrightarrow\quad
+  \tau^2=\frac12.
+  $$
+
+  Thus, the fixed observation variance is **implicit in the loss coefficient**, in normalized pixel units; no decoder standard-deviation tensor is needed. It is separate from the encoder's learned latent variance, which enters the analytic KL term. Using one sampled $$z$$ per image gives the following minibatch loss, up to the omitted constant:
+
   ```python
   # --- 4) Loss function ---
   # Interpret p(x | z) as Normal(x_recon, sigma_x^2 * I) with fixed pixel variance.
