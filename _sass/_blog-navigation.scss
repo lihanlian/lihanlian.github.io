@@ -1,0 +1,221 @@
+/* Blog-only post navigation and article outline. */
+
+#main.blog-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "posts" "toc" "content" "related";
+  gap: 16px;
+  width: 100%;
+  max-width: 1600px;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  /* The theme's clearfix pseudo-elements must not become grid items. */
+  &::before,
+  &::after {
+    display: none;
+  }
+
+  > .blog-content,
+  > .page__related {
+    float: none;
+    clear: none;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  > .blog-content {
+    grid-area: content;
+  }
+
+  > .page__related {
+    grid-area: related;
+  }
+
+  .page__content {
+    min-width: 0;
+    overflow-wrap: anywhere;
+
+    pre,
+    .highlighter-rouge,
+    figure.highlight {
+      max-width: 100%;
+    }
+
+    table {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    mjx-container[display="true"],
+    .MathJax_Display {
+      /* MathJax writes an inline minimum width for aligned equations. */
+      min-width: 0 !important;
+      max-width: 100%;
+      line-height: normal;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    /* Long inline formulas must also fit inside indented list items. */
+    mjx-container:not([display="true"]) {
+      display: inline-block;
+      max-width: 100%;
+      line-height: normal;
+      overflow-x: auto;
+      overflow-y: hidden;
+      vertical-align: middle;
+    }
+  }
+
+  .page__content h1[id],
+  .page__content h2[id],
+  .page__content h3[id],
+  .page__content h4[id],
+  .page__content h5[id],
+  .page__content h6[id],
+  .archive__subtitle[id] {
+    scroll-margin-top: 86px;
+  }
+}
+
+.blog-navigation {
+  min-width: 0;
+  color: $text-color;
+  font-family: $global-font-family;
+  font-size: 14px;
+  line-height: 1.5;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &--posts {
+    grid-area: posts;
+  }
+
+  &--toc {
+    grid-area: toc;
+  }
+
+  &__details {
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    background: $background-color;
+  }
+
+  summary {
+    padding: 12px;
+    color: $dark-gray;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  &__scroll {
+    max-height: 60vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 8px 8px;
+    scrollbar-width: thin;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 0;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    .blog-navigation__list {
+      margin: 0 0 0 12px;
+      border-left: 1px solid $border-color;
+      padding-left: 4px;
+    }
+
+    a {
+      display: block;
+      padding: 7px 8px;
+      border-left: 3px solid transparent;
+      border-radius: 0 $border-radius $border-radius 0;
+      color: $text-color;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+
+      &:hover {
+        color: mix(#000, $link-color, 40%);
+        background: $lighter-gray;
+        text-decoration: none;
+      }
+
+      &.is-active,
+      &[aria-current] {
+        border-left-color: $link-color-hover;
+        color: mix(#000, $link-color, 40%);
+        background: mix(#fff, $link-color, 92%);
+        font-weight: bold;
+      }
+    }
+  }
+
+  summary:focus-visible,
+  a:focus-visible {
+    outline: 2px solid $link-color-hover;
+    outline-offset: -2px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  #main.blog-layout {
+    grid-template-columns: 240px minmax(0, 1fr) 240px;
+    grid-template-areas: "posts content toc" "posts related toc";
+    gap: 24px;
+  }
+
+  .blog-navigation {
+    position: sticky;
+    top: 86px;
+    align-self: start;
+
+    &__details {
+      max-height: calc(100vh - 102px);
+      border: 0;
+    }
+
+    summary {
+      display: block;
+      padding: 0 8px 12px;
+      list-style: none;
+      cursor: default;
+
+      &::marker,
+      &::-webkit-details-marker {
+        display: none;
+      }
+    }
+
+    &__scroll {
+      max-height: calc(100vh - 150px);
+      padding: 0 4px 4px 0;
+    }
+  }
+}
+
+@media print {
+  #main.blog-layout {
+    display: block;
+    max-width: none;
+    padding: 0;
+  }
+
+  .blog-navigation {
+    display: none;
+  }
+}

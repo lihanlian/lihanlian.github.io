@@ -1,0 +1,14 @@
+<aside class="blog-navigation blog-navigation--posts">
+  <details class="blog-navigation__details" open>
+    <summary>Blog posts</summary>
+    <nav class="blog-navigation__scroll" aria-label="Blog posts">
+      <ul class="blog-navigation__list">
+        {% for post in site.posts %}
+          <li>
+            <a href="{{ post.url | relative_url }}"{% if post.url == page.url %} aria-current="page"{% endif %}>{{ post.title | markdownify | strip_html | strip_newlines | escape }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </details>
+</aside>
