@@ -36,11 +36,11 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   | Distribution | Statistical meaning | Role |
   |---|---|---|
   | $$p(z)$$ | Prior over latent variables | Usually fixed as $$\mathcal{N}(0,I)$$. |
-  | $$p_\theta(x\mid z)$$ | Conditional image likelihood | Probabilistic decoder. |
+  | $$p_\theta(x\mid z)$$ | Conditional image (observation) likelihood | Probabilistic (**Gaussian**) decoder. |
   | $$p_\theta(x,z)$$ | Joint distribution | Complete generative model. |
   | $$p_\theta(x)$$ | <span style="color:red">Marginal likelihood, or evidence </span> | <span style="color:red"> Quantity targeted by maximum likelihood. </span> |
-  | $$p_\theta(z\mid x)$$ | Exact posterior under the current model | Implied by the prior and decoder. |
-  | $$q_\phi(z\mid x)$$ | Approximate posterior | Probabilistic encoder. |
+  | $$p_\theta(z\mid x)$$ | **Exact** posterior under the current model | Implied by the prior and decoder. |
+  | $$q_\phi(z\mid x)$$ | **Approximate** posterior | Probabilistic encoder. |
 
   For continuous variables, these functions represent probability **densities**, not probabilities of individual exact vectors.
 
@@ -381,7 +381,7 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
 
 - ### 3.3 Concrete Gaussian terms
 
-  Choose a fixed-variance Gaussian decoder:
+  Choose a <span style="color: red">fixed-variance Gaussian decoder: </span>
 
   $$
   p_\theta(x\mid z)
@@ -480,7 +480,23 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
   [vi]: https://arxiv.org/abs/1601.00670 "Variational Inference: A Review for Statisticians"
   [rezende]: https://proceedings.mlr.press/v32/rezende14.html "Stochastic Backpropagation and Approximate Inference in Deep Generative Models"
 
-### VAE Results
+- ### 3.5 VAE Implementation
+
+  ```python
+  # --- 4) Loss function ---
+  # Interpret p(x | z) as Normal(x_recon, sigma_x^2 * I) with fixed pixel variance.
+  # Gaussian negative log likelihood = sum((x-x_recon)^2)/(2*sigma_x^2) + constant.
+  # This unit-weight summed MSE, with KL_WEIGHT=1, corresponds to sigma_x^2=0.5
+  # (std=1/sqrt(2)) in normalized pixel units. No decoder std tensor is needed.
+  mse = nn.MSELoss(reduction='sum')
+  def loss_fn(x_recon, x, mu, logvar):
+      # x_recon uses one sampled z, giving a Monte Carlo estimate of expected NLL.
+      recon_loss = mse(x_recon, x)
+      # mu and logvar describe latent q(z | x), separate from the pixel variance.
+      kl_loss = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
+      total_loss = recon_loss + KL_WEIGHT * kl_loss
+      return total_loss, recon_loss, kl_loss
+  ```
   <figure style="display: block; margin: 0 auto; width: 80%;">
     <img src='/images/blog/cartoon-vae-ddpm/vae_result.png' style="width: 100%;">
     <figcaption style="text-align: center;">VAE sampling result. Trained with z_dim = 512, epochs = 100.</figcaption>
