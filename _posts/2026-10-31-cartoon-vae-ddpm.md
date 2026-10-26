@@ -534,7 +534,9 @@ Given a dataset $$\mathcal{D}=\{x^{(i)}\}_{i=1}^{N}$$, we want to learn a distri
       total_loss = recon_loss + KL_WEIGHT * kl_loss
       return total_loss, recon_loss, kl_loss
   ```
-  <figure style="display: block; margin: 0 auto; width: 80%;">
+
+  VAE training result is illustrated below, full implementation can be found at this [repository](https://github.com/lihanlian/cartoon-vae-ddpm).
+  <figure style="display: block; margin: 0 auto; width: 60%;">
     <img src='/images/blog/cartoon-vae-ddpm/vae_result.png' style="width: 100%;">
     <figcaption style="text-align: center;">VAE sampling result. Trained with z_dim = 512, epochs = 100.</figcaption>
   </figure>
