@@ -60,16 +60,6 @@
       overflow-x: auto;
       overflow-y: hidden;
     }
-
-    /* Long inline formulas must also fit inside indented list items. */
-    mjx-container:not([display="true"]) {
-      display: inline-block;
-      max-width: 100%;
-      line-height: normal;
-      overflow-x: auto;
-      overflow-y: hidden;
-      vertical-align: middle;
-    }
   }
 
   .page__content h1[id],
